@@ -4,11 +4,9 @@ import { useFrame, useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  BoxGeometry,
   DirectionalLight,
   Group,
   MeshPhysicalMaterial,
-  MeshStandardMaterial,
   PerspectiveCamera,
   RepeatWrapping,
   SRGBColorSpace,
@@ -46,26 +44,6 @@ export function MatchaScene() {
   const gsapState = useRef({ glow: 0, lift: 0 });
   const woodTexture = useTexture(asset('textures/wood-tray.png'));
 
-  const trayGeometry = useMemo(() => new BoxGeometry(4.7, 0.12, 2.5, 4, 1, 4), []);
-  const trayMaterial = useMemo(
-    () => {
-      woodTexture.colorSpace = SRGBColorSpace;
-      woodTexture.wrapS = RepeatWrapping;
-      woodTexture.wrapT = RepeatWrapping;
-      woodTexture.repeat.set(1.65, 0.9);
-
-      return new MeshPhysicalMaterial({
-        map: woodTexture,
-        color: '#c89858',
-        roughness: 0.58,
-        metalness: 0,
-        clearcoat: 0.12,
-        clearcoatRoughness: 0.6,
-        envMapIntensity: 0.7,
-      });
-    },
-    [woodTexture],
-  );
   const tabletopMaterial = useMemo(() => {
     const texture = woodTexture.clone();
     texture.colorSpace = SRGBColorSpace;
@@ -202,12 +180,10 @@ export function MatchaScene() {
       <Environment preset="apartment" environmentIntensity={0.65} />
 
       <group position={[0, -0.62, 0]}>
-        <mesh
-          geometry={trayGeometry}
+        <Model
+          src={asset('models/tea-tray.glb')}
           position={[0, 0.02, 0]}
-          receiveShadow
-          castShadow
-          material={trayMaterial}
+          keepOriginalMaterials
         />
         <mesh
           rotation={[-Math.PI / 2, 0, 0]}
