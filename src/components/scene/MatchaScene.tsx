@@ -22,6 +22,7 @@ import { WaterStream } from './WaterStream';
 gsap.registerPlugin(ScrollTrigger);
 
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const supportSurfaceY = -1.36;
 
 const cameraTargets = [
   new Vector3(0, 6.6, 3.15),
@@ -179,7 +180,7 @@ export function MatchaScene() {
       <pointLight position={[0, 3.5, 1.5]} intensity={0.25} color="#d8e7b6" distance={10} decay={2} />
       <Environment preset="apartment" environmentIntensity={0.65} />
 
-      <group position={[0, -0.62, 0]}>
+      <group position={[0, supportSurfaceY, 0]}>
         <Model
           src={asset('models/tea-tray.glb')}
           position={[0, 0.02, 0]}
@@ -221,7 +222,7 @@ export function MatchaScene() {
       <PowderParticles progress={scroll.offset} count={mobile ? 170 : 460} />
 
       <group ref={sieveRef} visible={false}>
-        <Model src={asset('models/sieve.glb')} scale={0.82} />
+        <Model src={asset('models/sieve.glb')} scale={14} keepOriginalMaterials />
       </group>
 
       <group ref={kettleRef} visible={false}>
