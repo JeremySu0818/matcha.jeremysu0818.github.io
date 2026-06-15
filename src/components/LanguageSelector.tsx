@@ -34,9 +34,40 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
 
   const currentLang = typeof window !== 'undefined' ? getBrowserLanguage() : 'en';
+
+  // Automatically scroll active language into view when dropdown opens
+  useEffect(() => {
+    if (isOpen && scrollContainerRef.current) {
+      const timer = setTimeout(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const activeElement = container.querySelector('[aria-selected="true"]') as HTMLElement;
+        if (activeElement) {
+          const containerRect = container.getBoundingClientRect();
+          const elemRect = activeElement.getBoundingClientRect();
+          const relativeTop = elemRect.top - containerRect.top + container.scrollTop;
+
+          const isAbove = relativeTop < container.scrollTop;
+          const isBelow = relativeTop + elemRect.height > container.scrollTop + container.clientHeight;
+
+          if (isAbove || isBelow) {
+            const targetScrollTop = relativeTop - container.clientHeight / 2 + elemRect.height / 2;
+            container.scrollTo({
+              top: Math.max(0, targetScrollTop),
+              behavior: 'smooth',
+            });
+          }
+        }
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   // Calculate position of the portal dropdown relative to the button
   const updatePosition = useCallback(() => {
@@ -115,6 +146,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
           }}
         >
           <div
+            ref={scrollContainerRef}
             className={`lang-dropdown-glass frosted-surface ${
               darkTheme ? 'frosted-surface-dark' : 'frosted-surface-light'
             }`}

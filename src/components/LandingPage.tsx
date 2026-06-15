@@ -12,55 +12,7 @@ interface LandingPageProps {
   onEnter: () => void;
 }
 
-interface ScrollRevealProps {
-  children: React.ReactNode;
-  className?: string;
-  delay?: string;
-}
-
-function ScrollReveal({ children, className = '', delay = '' }: ScrollRevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px',
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: delay }}
-      className={`relative transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isVisible
-          ? 'top-0 opacity-100'
-          : 'top-16 opacity-0'
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
+import { ScrollReveal } from './ScrollReveal';
 
 export function LandingPage({ onEnter }: LandingPageProps) {
   const { t } = useTranslation();

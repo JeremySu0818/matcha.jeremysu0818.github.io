@@ -23,8 +23,39 @@ export function NavigationDots({
   const [isOpen, setIsOpen] = useState(false);
   const dotsRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Automatically scroll active item into view when dropdown opens or activeStep changes
+  useEffect(() => {
+    if (isOpen && scrollContainerRef.current) {
+      const timer = setTimeout(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const activeElement = container.querySelector('[aria-selected="true"]') as HTMLElement;
+        if (activeElement) {
+          const containerRect = container.getBoundingClientRect();
+          const elemRect = activeElement.getBoundingClientRect();
+          const relativeTop = elemRect.top - containerRect.top + container.scrollTop;
+
+          const isAbove = relativeTop < container.scrollTop;
+          const isBelow = relativeTop + elemRect.height > container.scrollTop + container.clientHeight;
+
+          if (isAbove || isBelow) {
+            const targetScrollTop = relativeTop - container.clientHeight / 2 + elemRect.height / 2;
+            container.scrollTo({
+              top: Math.max(0, targetScrollTop),
+              behavior: 'smooth',
+            });
+          }
+        }
+      }, 50);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, activeStep]);
 
   // Calculate position of the portal dropdown relative to the dots column
   const updatePosition = useCallback(() => {
@@ -108,6 +139,7 @@ export function NavigationDots({
           }}
         >
           <div
+            ref={scrollContainerRef}
             className={`lang-dropdown-glass frosted-surface ${
               darkTheme ? 'frosted-surface-dark' : 'frosted-surface-light'
             }`}
