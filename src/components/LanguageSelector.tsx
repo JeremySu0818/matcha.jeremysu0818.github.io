@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { SupportedLanguage, SUPPORTED_LANGUAGES, getBrowserLanguage } from '../i18n/language';
+import { getScrollPositionForRoute, saveScrollPosition } from '../utils/scrollRegistry';
 
 const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   'zh-tw': '繁體中文',
@@ -83,30 +84,8 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
 
     localStorage.setItem('matcha_language', langCode);
 
-    let scrollTop = 0;
     const hash = window.location.hash;
-    if (hash === '' || hash === '#') {
-      const landingScroll = document.getElementById('landing-scroll-container');
-      if (landingScroll) scrollTop = landingScroll.scrollTop;
-    } else if (hash === '#3d') {
-      const canvasWrapper = document.querySelector('.relative.z-10.h-full.w-full');
-      if (canvasWrapper) {
-        const divs = canvasWrapper.querySelectorAll('div');
-        for (const div of divs) {
-          const s = div.style;
-          if (s.overflow === 'auto' || s.overflowY === 'auto' || s.overflow === 'scroll' || s.overflowY === 'scroll') {
-            scrollTop = div.scrollTop;
-            break;
-          }
-        }
-      }
-    } else if (hash === '#make') {
-      const calculatorPage = document.querySelector('.calculator-page');
-      if (calculatorPage) scrollTop = calculatorPage.scrollTop;
-    }
-
-    sessionStorage.setItem('matcha_scroll_position', String(scrollTop));
-    sessionStorage.setItem('matcha_scroll_route', hash);
+    saveScrollPosition(hash, getScrollPositionForRoute(hash));
     window.location.reload();
   };
 

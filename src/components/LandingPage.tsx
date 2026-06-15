@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '../i18n';
 import { Header } from './Header';
 import { NavigationDots } from './NavigationDots';
+import {
+  clearSavedScrollPosition,
+  readSavedScrollPosition,
+  registerScrollPositionGetter,
+} from '../utils/scrollRegistry';
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -62,22 +67,24 @@ export function LandingPage({ onEnter }: LandingPageProps) {
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    const savedRoute = sessionStorage.getItem('matcha_scroll_route');
-    const savedPos = sessionStorage.getItem('matcha_scroll_position');
-    const hash = window.location.hash;
-    if ((hash === '' || hash === '#') && (savedRoute === '' || savedRoute === '#') && savedPos) {
-      const targetPos = parseInt(savedPos, 10);
-      const container = document.getElementById('landing-scroll-container');
-      if (container && !isNaN(targetPos)) {
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            container.scrollTop = targetPos;
-            sessionStorage.removeItem('matcha_scroll_position');
-            sessionStorage.removeItem('matcha_scroll_route');
-          }, 50);
-        });
-      }
+    const container = document.getElementById('landing-scroll-container');
+    if (!container) return undefined;
+
+    const unregisterHome = registerScrollPositionGetter('', () => container.scrollTop);
+    const unregisterHashHome = registerScrollPositionGetter('#', () => container.scrollTop);
+    const savedPosition = readSavedScrollPosition(window.location.hash || '#');
+
+    if (savedPosition !== null) {
+      requestAnimationFrame(() => {
+        container.scrollTo({ top: savedPosition });
+        clearSavedScrollPosition();
+      });
     }
+
+    return () => {
+      unregisterHome();
+      unregisterHashHome();
+    };
   }, []);
 
   useEffect(() => {
@@ -136,12 +143,6 @@ export function LandingPage({ onEnter }: LandingPageProps) {
 
   return (
     <div id="landing-scroll-container" className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white">
-      <div
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/matcha-background.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/35" />
-      </div>
 
       {/* Bottom fade mask */}
       <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />

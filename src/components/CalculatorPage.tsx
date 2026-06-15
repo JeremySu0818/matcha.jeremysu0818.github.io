@@ -3,35 +3,35 @@ import { Header } from './Header';
 import { TeaCalculator } from '../features/calculator/TeaCalculator';
 import { useTranslation } from '../i18n';
 import { calculatorTranslations } from '../i18n/calculatorTranslations';
+import {
+  clearSavedScrollPosition,
+  readSavedScrollPosition,
+  registerScrollPositionGetter,
+} from '../utils/scrollRegistry';
 
 export function CalculatorPage() {
   const { t, lang } = useTranslation();
   const copy = calculatorTranslations[lang] ?? calculatorTranslations.en;
 
   useEffect(() => {
-    const savedRoute = sessionStorage.getItem('matcha_scroll_route');
-    const savedPosition = sessionStorage.getItem('matcha_scroll_position');
-    if (savedRoute !== '#make' || !savedPosition) return;
+    const container = document.getElementById('calculator-scroll-container');
+    if (!container) return undefined;
 
-    const position = Number.parseInt(savedPosition, 10);
-    if (!Number.isNaN(position)) {
+    const unregister = registerScrollPositionGetter('#make', () => container.scrollTop);
+    const savedPosition = readSavedScrollPosition('#make');
+
+    if (savedPosition !== null) {
       requestAnimationFrame(() => {
-        document.getElementById('calculator-scroll-container')?.scrollTo({ top: position });
+        container.scrollTo({ top: savedPosition });
+        clearSavedScrollPosition();
       });
     }
-    sessionStorage.removeItem('matcha_scroll_route');
-    sessionStorage.removeItem('matcha_scroll_position');
+
+    return unregister;
   }, []);
 
   return (
     <div id="calculator-scroll-container" className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white">
-      <div
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/matcha-background.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/35" />
-      </div>
-
       {/* Bottom fade mask */}
       <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />
 

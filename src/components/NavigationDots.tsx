@@ -160,7 +160,7 @@ export function NavigationDots({
     <>
       <div
         ref={dotsRef}
-        className="fixed right-6 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
+        className="hidden md:block fixed right-6 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
         onMouseEnter={openMenu}
         onMouseLeave={closeMenuWithDelay}
       >
