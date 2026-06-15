@@ -13,9 +13,10 @@ interface LandingPageProps {
 }
 
 import { ScrollReveal } from "./ScrollReveal";
+import { ShadeSimulator } from "./interactive/ShadeSimulator";
 
 export function LandingPage({ onEnter }: LandingPageProps) {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
@@ -213,7 +214,7 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           id="section-chapter-2"
           className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24"
         >
-          <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+          <ScrollReveal className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter2.eyebrow}
             </span>
@@ -230,7 +231,9 @@ export function LandingPage({ onEnter }: LandingPageProps) {
             <p className="body-text text-lg leading-relaxed text-white">
               {t.chapters.chapter2.p3}
             </p>
-          </div>
+
+            <ShadeSimulator lang={lang} />
+          </ScrollReveal>
         </section>
 
         <section
