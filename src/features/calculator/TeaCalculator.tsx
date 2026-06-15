@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CalculatorCopy } from '../../i18n/calculatorTranslations';
 import { CalculatorSlider } from './CalculatorSlider';
 import {
@@ -12,45 +12,86 @@ interface TeaCalculatorProps {
   copy: CalculatorCopy;
 }
 
+const getDefaultValues = () =>
+  Object.fromEntries(
+    TEA_TYPES.map((type) => {
+      const config = TEA_CONFIGS[type];
+      return [
+        type,
+        {
+          serving: config.servingDefault,
+          concentration: config.concentrationDefault,
+          temperature: config.temperatureDefault,
+          milkRatio: config.milkRatioDefault ?? 3.75,
+          coldTemperature: 0,
+          hotTemperature: 100,
+        },
+      ];
+    }),
+  ) as Record<
+    TeaType,
+    {
+      serving: number;
+      concentration: number;
+      temperature: number;
+      milkRatio: number;
+      coldTemperature: number;
+      hotTemperature: number;
+    }
+  >;
+
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <h2 className="calculator-card-title">
-      <span aria-hidden="true" />
       {children}
     </h2>
   );
 }
 
 export function TeaCalculator({ copy }: TeaCalculatorProps) {
-  const [teaType, setTeaType] = useState<TeaType>('usucha');
-  const [values, setValues] = useState(() =>
-    Object.fromEntries(
-      TEA_TYPES.map((type) => {
-        const config = TEA_CONFIGS[type];
-        return [
-          type,
-          {
-            serving: config.servingDefault,
-            concentration: config.concentrationDefault,
-            temperature: config.temperatureDefault,
-            milkRatio: config.milkRatioDefault ?? 3.75,
-            coldTemperature: 0,
-            hotTemperature: 100,
-          },
-        ];
-      }),
-    ) as Record<
-      TeaType,
-      {
-        serving: number;
-        concentration: number;
-        temperature: number;
-        milkRatio: number;
-        coldTemperature: number;
-        hotTemperature: number;
+  const [teaType, setTeaType] = useState<TeaType>(() => {
+    const saved = localStorage.getItem('matcha_tea_type');
+    if (saved === 'koicha' || saved === 'usucha' || saved === 'latte') {
+      return saved as TeaType;
+    }
+    return 'usucha';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('matcha_tea_type', teaType);
+  }, [teaType]);
+
+  const [values, setValues] = useState(() => {
+    const saved = localStorage.getItem('matcha_tea_calculator_values');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        const defaults = getDefaultValues();
+        const merged = { ...defaults };
+        for (const type of TEA_TYPES) {
+          if (parsed[type]) {
+            merged[type] = {
+              ...defaults[type],
+              ...parsed[type],
+            };
+          }
+        }
+        return merged;
+      } catch (e) {
+        console.error('Failed to parse saved values:', e);
       }
-    >,
-  );
+    }
+    return getDefaultValues();
+  });
+
+  useEffect(() => {
+    localStorage.setItem('matcha_tea_calculator_values', JSON.stringify(values));
+  }, [values]);
+
+  const handleReset = () => {
+    setTeaType('usucha');
+    setValues(getDefaultValues());
+  };
 
   const config = TEA_CONFIGS[teaType];
   const current = values[teaType];
@@ -60,6 +101,7 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
       [teaType]: { ...previous[teaType], ...patch },
     }));
   };
+
 
   const waterPercent = 100 / (1 + current.milkRatio);
   const result = useMemo(
@@ -80,27 +122,40 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
       ? Math.round((100 / current.concentration) * 10) / 10
       : 0;
   const totalWater = result.hotWaterMl + result.coldWaterMl;
-  const hotPercent = totalWater > 0 ? (result.hotWaterMl / totalWater) * 100 : 0;
+  const hotPercentRaw = totalWater > 0 ? (result.hotWaterMl / totalWater) * 100 : 0;
+  const hotPercent = Math.round(hotPercentRaw);
   const coldPercent = 100 - hotPercent;
 
   return (
     <div className="calculator-shell">
-      <div className="calculator-tabs" role="tablist" aria-label={copy.teaType}>
-        {TEA_TYPES.map((type) => (
-          <button
-            key={type}
-            type="button"
-            role="tab"
-            aria-selected={teaType === type}
-            className={`border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl ${
-              teaType === type ? 'is-active' : ''
-            }`}
-            onClick={() => setTeaType(type)}
-          >
-            <strong>{copy.types[type]}</strong>
-            <span>{type}</span>
-          </button>
-        ))}
+      <div className="flex flex-col sm:flex-row sm:items-stretch sm:justify-between gap-3 mb-4">
+        <div className="calculator-tabs !mb-0 flex-1" role="tablist" aria-label={copy.teaType}>
+          {TEA_TYPES.map((type) => (
+            <button
+              key={type}
+              type="button"
+              role="tab"
+              aria-selected={teaType === type}
+              className={`border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl ${
+                teaType === type ? 'is-active' : ''
+              }`}
+              onClick={() => setTeaType(type)}
+            >
+              <strong>{copy.types[type]}</strong>
+              <span>{type}</span>
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="border border-white/30 bg-white/20 hover:bg-white/35 active:bg-white/45 text-white/95 hover:text-white rounded-[1.25rem] shadow-glass backdrop-blur-2xl transition-all duration-300 flex items-center justify-center gap-2 px-5 py-3 sm:py-0 text-sm font-semibold tracking-wide cursor-pointer min-h-[50px] sm:min-h-0"
+        >
+          <svg className="w-4 h-4 opacity-90 transition-transform duration-500 hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+          {copy.reset}
+        </button>
       </div>
 
       <div className="calculator-grid">
@@ -221,15 +276,34 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
           <section className="calculator-card border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl">
             <SectionTitle>{copy.waterMix}</SectionTitle>
             <p className="calculator-target">
-              <span />
               {copy.targetTemperature} {result.targetTemperature}°C
             </p>
             <div className="calculator-water-bar">
-              <div className="hot" style={{ width: `${hotPercent}%` }}>
-                {copy.hotWater} {Math.round(hotPercent)}%
+              <div
+                className="hot"
+                style={{
+                  width: `${hotPercent}%`,
+                  display: hotPercent === 0 ? 'none' : undefined,
+                }}
+              >
+                {hotPercent >= 15 && (
+                  <span className="truncate min-w-0 px-1">
+                    {copy.hotWater} {hotPercent}%
+                  </span>
+                )}
               </div>
-              <div className="cold" style={{ width: `${coldPercent}%` }}>
-                {copy.coldWater} {Math.round(coldPercent)}%
+              <div
+                className="cold"
+                style={{
+                  width: `${coldPercent}%`,
+                  display: coldPercent === 0 ? 'none' : undefined,
+                }}
+              >
+                {coldPercent >= 15 && (
+                  <span className="truncate min-w-0 px-1">
+                    {copy.coldWater} {coldPercent}%
+                  </span>
+                )}
               </div>
             </div>
             <div className="calculator-water-detail">

@@ -28,6 +28,7 @@ export interface CalculatorCopy {
   strong: string;
   moreMilk: string;
   moreTea: string;
+  reset: string;
 }
 
 export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> = {
@@ -61,7 +62,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "خفيف",
     "strong": "قوي",
     "moreMilk": "المزيد من الحليب",
-    "moreTea": "المزيد من الشاي"
+    "moreTea": "المزيد من الشاي",
+    "reset": "إعادة ضبط"
   },
   "cs": {
     "nav": "Připravit",
@@ -93,7 +95,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Slabý",
     "strong": "Silný",
     "moreMilk": "Více mléka",
-    "moreTea": "Více čaje"
+    "moreTea": "Více čaje",
+    "reset": "Resetovat"
   },
   "de": {
     "nav": "Zubereiten",
@@ -125,7 +128,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Mild",
     "strong": "Kräftig",
     "moreMilk": "Mehr Milch",
-    "moreTea": "Mehr Tee"
+    "moreTea": "Mehr Tee",
+    "reset": "Zurücksetzen"
   },
   "en": {
     "nav": "Make Matcha",
@@ -157,7 +161,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Light",
     "strong": "Strong",
     "moreMilk": "More milk",
-    "moreTea": "More tea"
+    "moreTea": "More tea",
+    "reset": "Reset"
   },
   "es": {
     "nav": "Preparar",
@@ -189,7 +194,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Suave",
     "strong": "Fuerte",
     "moreMilk": "Más leche",
-    "moreTea": "Más té"
+    "moreTea": "Más té",
+    "reset": "Restablecer"
   },
   "fr": {
     "nav": "Préparer",
@@ -221,7 +227,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Léger",
     "strong": "Fort",
     "moreMilk": "Plus de lait",
-    "moreTea": "Plus de thé"
+    "moreTea": "Plus de thé",
+    "reset": "Réinitialiser"
   },
   "hi": {
     "nav": "माचा बनाएँ",
@@ -253,7 +260,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "हल्का",
     "strong": "कड़क",
     "moreMilk": "दूध ज़्यादा",
-    "moreTea": "चाय ज़्यादा"
+    "moreTea": "चाय ज़्यादा",
+    "reset": "रीसेट करें"
   },
   "hu": {
     "nav": "Elkészítés",
@@ -285,7 +293,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Gyenge",
     "strong": "Erős",
     "moreMilk": "Több tej",
-    "moreTea": "Több tea"
+    "moreTea": "Több tea",
+    "reset": "Visszaállítás"
   },
   "id": {
     "nav": "Buat Matcha",
@@ -317,7 +326,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Ringan",
     "strong": "Pekat",
     "moreMilk": "Lebih banyak susu",
-    "moreTea": "Lebih banyak teh"
+    "moreTea": "Lebih banyak teh",
+    "reset": "Reset"
   },
   "it": {
     "nav": "Prepara",
@@ -349,7 +359,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Leggero",
     "strong": "Forte",
     "moreMilk": "Più latte",
-    "moreTea": "Più tè"
+    "moreTea": "Più tè",
+    "reset": "Ripristina"
   },
   "ja": {
     "nav": "抹茶を点てる",
@@ -381,7 +392,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "薄め",
     "strong": "濃いめ",
     "moreMilk": "ミルク多め",
-    "moreTea": "お茶多め"
+    "moreTea": "お茶多め",
+    "reset": "リセット"
   },
   "ko": {
     "nav": "말차 만들기",
@@ -413,7 +425,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "연하게",
     "strong": "진하게",
     "moreMilk": "우유 많이",
-    "moreTea": "티 많이"
+    "moreTea": "티 많이",
+    "reset": "초기화"
   },
   "nl": {
     "nav": "Bereiden",
@@ -445,7 +458,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Milt",
     "strong": "Sterk",
     "moreMilk": "Meer melk",
-    "moreTea": "Meer thee"
+    "moreTea": "Meer thee",
+    "reset": "Resetten"
   },
   "pl": {
     "nav": "Przygotuj",
@@ -477,7 +491,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Łagodna",
     "strong": "Mocna",
     "moreMilk": "Więcej mleka",
-    "moreTea": "Więcej herbaty"
+    "moreTea": "Więcej herbaty",
+    "reset": "Resetuj"
   },
   "pt-br": {
     "nav": "Preparar",
@@ -509,7 +524,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Suave",
     "strong": "Forte",
     "moreMilk": "Mais leite",
-    "moreTea": "Mais chá"
+    "moreTea": "Mais chá",
+    "reset": "Redefinir"
   },
   "ru": {
     "nav": "Приготовить",
@@ -541,7 +557,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Мягкий",
     "strong": "Крепкий",
     "moreMilk": "Больше молока",
-    "moreTea": "Больше чая"
+    "moreTea": "Больше чая",
+    "reset": "Сбросить"
   },
   "tr": {
     "nav": "Matcha Yap",
@@ -573,7 +590,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Hafif",
     "strong": "Sert",
     "moreMilk": "Bol süt",
-    "moreTea": "Bol çay"
+    "moreTea": "Bol çay",
+    "reset": "Sıfırla"
   },
   "vi": {
     "nav": "Pha matcha",
@@ -605,7 +623,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "Nhạt",
     "strong": "Đậm",
     "moreMilk": "Nhiều sữa",
-    "moreTea": "Nhiều trà"
+    "moreTea": "Nhiều trà",
+    "reset": "Đặt lại"
   },
   "zh-cn": {
     "nav": "制作抹茶",
@@ -637,7 +656,8 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "淡",
     "strong": "浓",
     "moreMilk": "奶多",
-    "moreTea": "茶多"
+    "moreTea": "茶多",
+    "reset": "重置"
   },
   "zh-tw": {
     "nav": "製作抹茶",
@@ -669,6 +689,7 @@ export const calculatorTranslations: Record<SupportedLanguage, CalculatorCopy> =
     "light": "淡",
     "strong": "濃",
     "moreMilk": "奶多",
-    "moreTea": "茶多"
+    "moreTea": "茶多",
+    "reset": "重設"
   }
 };

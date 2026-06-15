@@ -459,15 +459,7 @@ select {
   color: white;
 }
 
-.calculator-card-title > span,
-.calculator-target > span {
-  width: 0.5rem;
-  height: 0.5rem;
-  flex: none;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.2);
-}
+
 
 .calculator-serving,
 .calculator-slider-header {
@@ -594,11 +586,7 @@ select {
   font-size: 0.75rem;
 }
 
-.calculator-target > span {
-  width: 0.4rem;
-  height: 0.4rem;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
+
 
 .calculator-water-bar {
   display: flex;
@@ -611,7 +599,9 @@ select {
 
 .calculator-water-bar > div {
   display: flex;
-  min-width: 4.5rem;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
   align-items: center;
   justify-content: center;
   transition: width 0.25s ease;

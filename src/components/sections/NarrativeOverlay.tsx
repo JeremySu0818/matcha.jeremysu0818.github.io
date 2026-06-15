@@ -2,10 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useScroll } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { type Step } from '../../data/steps';
 import { useTranslation } from '../../i18n';
 
 gsap.registerPlugin(ScrollTrigger);
+
+export type Step = {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  body: string;
+  align: 'left' | 'right' | 'center';
+};
 
 function getStepAlignment(align: Step['align']) {
   if (align === 'center') {
