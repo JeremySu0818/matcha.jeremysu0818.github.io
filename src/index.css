@@ -372,6 +372,18 @@ select {
   }
 }
 
+@keyframes navDropdownIn {
+  from {
+    opacity: 0;
+    right: -4px;
+  }
+  to {
+    opacity: 1;
+    right: 0;
+  }
+}
+
+
 .lang-dropdown-glass::-webkit-scrollbar {
   display: none;
 }

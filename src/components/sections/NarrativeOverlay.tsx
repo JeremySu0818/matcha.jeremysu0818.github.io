@@ -3,6 +3,7 @@ import { useScroll } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTranslation } from '../../i18n';
+import { NavigationDots } from '../NavigationDots';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -155,6 +156,25 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
     return () => clearInterval(interval);
   }, [scroll]);
 
+  const steps = [
+    { id: 'intro', label: t.steps.intro.title, subLabel: t.overlay.ritual },
+    { id: 'powder', label: t.steps.powder.title, subLabel: t.steps.powder.eyebrow },
+    { id: 'sift', label: t.steps.sift.title, subLabel: t.steps.sift.eyebrow },
+    { id: 'water', label: t.steps.water.title, subLabel: t.steps.water.eyebrow },
+    { id: 'whisk', label: t.steps.whisk.title, subLabel: t.steps.whisk.eyebrow },
+    { id: 'finish', label: t.steps.finish.title, subLabel: t.overlay.finalRecipe },
+  ];
+
+  const handleStepClick = (index: number) => {
+    if (scroll.el) {
+      const containerHeight = scroll.el.clientHeight;
+      scroll.el.scrollTo({
+        top: index * containerHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <>
       <div className="nav-bar text-white">
@@ -162,6 +182,13 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
           {currentStep === 0 ? '' : currentStep >= 5 ? t.overlay.ritual : `${String(currentStep).padStart(2, '0')} / 04`}
         </span>
       </div>
+
+      <NavigationDots
+        steps={steps}
+        activeStep={currentStep}
+        onStepClick={handleStepClick}
+        darkTheme={false}
+      />
 
       <div
         ref={rootRef}
