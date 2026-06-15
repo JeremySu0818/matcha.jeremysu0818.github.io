@@ -5,7 +5,8 @@ import { MatchaScene } from './components/scene/MatchaScene';
 import { NarrativeOverlay } from './components/sections/NarrativeOverlay';
 import { LandingPage } from './components/LandingPage';
 import { useTranslation } from './i18n';
-import { LanguageSelector } from './components/LanguageSelector';
+import { CalculatorPage } from './components/CalculatorPage';
+import { Header } from './components/Header';
 
 function SceneReadyTrigger({ onReady }: { onReady: () => void }) {
   useEffect(() => {
@@ -86,6 +87,10 @@ function App() {
     return <LandingPage onEnter={() => { window.location.hash = '#3d'; }} />;
   }
 
+  if (route === '#make') {
+    return <CalculatorPage />;
+  }
+
   return (
     <main className={`relative h-screen w-screen overflow-hidden text-white ${loaded ? 'is-loaded' : ''}`}>
       <div className={`loader-overlay ${loaded ? 'loaded' : ''}`}>
@@ -93,36 +98,7 @@ function App() {
         <span className="loader-text">{t.loader.preparing}</span>
       </div>
 
-      <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between px-8 py-8 md:px-16 pointer-events-none">
-        <div className="flex items-center gap-8">
-          <div className="heading-serif text-3xl tracking-widest text-matcha-ink drop-shadow-md animate-fade-in-up-on-load delay-100">
-            {t.header.title}
-          </div>
-          <nav className="flex items-center gap-6 animate-fade-in-up-on-load delay-200 pointer-events-auto">
-            <a
-              href="#"
-              className="flex flex-col items-center group cursor-pointer"
-            >
-              <span className="font-sans text-sm tracking-wider text-matcha-ink/60 group-hover:text-matcha-ink transition-colors duration-300 drop-shadow-sm">
-                {t.nav.home}
-              </span>
-              <span className="w-full h-[1.5px] bg-transparent rounded-full mt-1 transition-transform duration-300 origin-center scale-x-0 group-hover:scale-x-50 group-hover:bg-matcha-ink/40" />
-            </a>
-            <a
-              href="#3d"
-              className="flex flex-col items-center group cursor-pointer"
-            >
-              <span className="font-sans text-sm tracking-wider text-matcha-ink font-medium transition-colors duration-300 drop-shadow-sm">
-                {t.nav.scene3d}
-              </span>
-              <span className="w-full h-[1.5px] bg-matcha-ink rounded-full mt-1 transition-transform duration-300 origin-center scale-x-100" />
-            </a>
-          </nav>
-        </div>
-        <div className="animate-fade-in-up-on-load delay-300">
-          <LanguageSelector darkTheme={false} />
-        </div>
-      </header>
+      <Header activeLink="3d" darkTheme={false} pointerEventsNone={true} onLoadAnimation={false} />
       
       <div className="relative z-10 h-full w-full">
         <Canvas

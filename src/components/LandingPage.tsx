@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '../i18n';
-import { LanguageSelector } from './LanguageSelector';
+import { Header } from './Header';
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -45,10 +45,10 @@ function ScrollReveal({ children, className = '', delay = '' }: ScrollRevealProp
     <div
       ref={ref}
       style={{ transitionDelay: delay }}
-      className={`transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`relative transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isVisible
-          ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-16'
+          ? 'top-0 opacity-100'
+          : 'top-16 opacity-0'
       } ${className}`}
     >
       {children}
@@ -101,36 +101,7 @@ export function LandingPage({ onEnter }: LandingPageProps) {
 
       <div className="relative z-10 w-full">
 
-        <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between px-8 py-8 md:px-16">
-          <div className="flex items-center gap-8">
-            <div className="heading-serif text-3xl tracking-widest text-white drop-shadow-md animate-fade-in-up delay-100">
-              {t.header.title}
-            </div>
-            <nav className="flex items-center gap-6 animate-fade-in-up delay-200">
-              <a
-                href="#"
-                className="flex flex-col items-center group cursor-pointer"
-              >
-                <span className="font-sans text-sm tracking-wider text-white font-medium transition-colors duration-300 drop-shadow-sm">
-                  {t.nav.home}
-                </span>
-                <span className="w-full h-[1.5px] bg-white rounded-full mt-1 transition-transform duration-300 origin-center scale-x-100" />
-              </a>
-              <a
-                href="#3d"
-                className="flex flex-col items-center group cursor-pointer"
-              >
-                <span className="font-sans text-sm tracking-wider text-white/60 group-hover:text-white transition-colors duration-300 drop-shadow-sm">
-                  {t.nav.scene3d}
-                </span>
-                <span className="w-full h-[1.5px] bg-transparent rounded-full mt-1 transition-transform duration-300 origin-center scale-x-0 group-hover:scale-x-50 group-hover:bg-white/40" />
-              </a>
-            </nav>
-          </div>
-          <div className="animate-fade-in-up delay-300">
-            <LanguageSelector darkTheme={true} />
-          </div>
-        </header>
+        <Header activeLink="home" darkTheme={true} pointerEventsNone={false} onLoadAnimation={true} />
 
         <section className="relative flex min-h-screen w-full flex-col justify-center px-8 md:px-24">
           <div className="max-w-4xl">

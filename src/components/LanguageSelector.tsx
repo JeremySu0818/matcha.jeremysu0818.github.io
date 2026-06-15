@@ -100,6 +100,9 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
           }
         }
       }
+    } else if (hash === '#make') {
+      const calculatorPage = document.querySelector('.calculator-page');
+      if (calculatorPage) scrollTop = calculatorPage.scrollTop;
     }
 
     sessionStorage.setItem('matcha_scroll_position', String(scrollTop));
@@ -133,19 +136,15 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
           }}
         >
           <div
-            className="lang-dropdown-glass"
+            className={`lang-dropdown-glass frosted-surface ${
+              darkTheme ? 'frosted-surface-dark' : 'frosted-surface-light'
+            }`}
             style={{
               width: '11rem',
               maxHeight: '260px',
               overflowY: 'auto',
               borderRadius: '1rem',
-              border: darkTheme ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(31,49,40,0.1)',
-              background: darkTheme ? 'rgba(255,255,255,0.18)' : 'rgba(251,250,244,0.55)',
-              backdropFilter: 'blur(40px) saturate(1.12)',
-              WebkitBackdropFilter: 'blur(40px) saturate(1.12)',
-              boxShadow: darkTheme
-                ? '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'
-                : '0 8px 32px rgba(53,73,56,0.06), inset 0 1px 0 rgba(255,255,255,0.4)',
+              border: '1px solid var(--glass-border)',
               color: darkTheme ? '#fff' : '#1f3128',
               fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
               animation: 'langDropdownIn 0.25s cubic-bezier(0.16,1,0.3,1)',
@@ -183,14 +182,14 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <div className={`flex items-center gap-1.5 transition-colors duration-300 text-sm tracking-wider ${buttonTextColor}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-80">
+        <div className={`flex items-center gap-1.5 transition-colors duration-300 text-sm scalable-lang-btn tracking-wider ${buttonTextColor}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-80 w-[1em] h-[1em]">
             <circle cx="12" cy="12" r="10" />
             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
             <path d="M2 12h20" />
           </svg>
           <span>{LANGUAGE_NAMES[currentLang] || currentLang}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} opacity-60`}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} opacity-60 w-[0.7em] h-[0.7em]`}>
             <path d="m6 9 6 6 6-6" />
           </svg>
         </div>
