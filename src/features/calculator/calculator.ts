@@ -1,4 +1,4 @@
-export type TeaType = 'koicha' | 'usucha' | 'latte';
+export type TeaType = "koicha" | "usucha" | "latte";
 
 export interface TeaConfig {
   labelKey: TeaType;
@@ -27,11 +27,11 @@ export interface CalculationResult {
   coldTemperature: number;
 }
 
-export const TEA_TYPES: TeaType[] = ['koicha', 'usucha', 'latte'];
+export const TEA_TYPES: TeaType[] = ["koicha", "usucha", "latte"];
 
 export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
   koicha: {
-    labelKey: 'koicha',
+    labelKey: "koicha",
     servingMin: 20,
     servingMax: 120,
     servingDefault: 40,
@@ -43,7 +43,7 @@ export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
     temperatureDefault: 70,
   },
   usucha: {
-    labelKey: 'usucha',
+    labelKey: "usucha",
     servingMin: 40,
     servingMax: 200,
     servingDefault: 70,
@@ -55,7 +55,7 @@ export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
     temperatureDefault: 75,
   },
   latte: {
-    labelKey: 'latte',
+    labelKey: "latte",
     servingMin: 100,
     servingMax: 400,
     servingDefault: 380,
@@ -77,7 +77,10 @@ export function calculateWaterMix(
   coldTemperature: number,
   hotTemperature: number,
 ) {
-  if (hotTemperature === coldTemperature || targetTemperature >= hotTemperature) {
+  if (
+    hotTemperature === coldTemperature ||
+    targetTemperature >= hotTemperature
+  ) {
     return { hotMl: totalWaterMl, coldMl: 0 };
   }
   if (targetTemperature <= coldTemperature) {
@@ -102,7 +105,7 @@ export function calculateRecipe(
   let waterMl = servingMl;
   let milkMl = 0;
 
-  if (teaType === 'latte') {
+  if (teaType === "latte") {
     waterMl = servingMl * (waterPercent / 100);
     milkMl = servingMl - waterMl;
   }
@@ -126,4 +129,3 @@ export function calculateRecipe(
     coldTemperature,
   };
 }
-

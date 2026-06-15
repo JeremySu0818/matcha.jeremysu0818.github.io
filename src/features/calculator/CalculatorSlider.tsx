@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface CalculatorSliderProps {
   label: string;
@@ -78,4 +78,3 @@ export function CalculatorSlider({
     </div>
   );
 }
-

@@ -1,24 +1,27 @@
-import { useEffect } from 'react';
-import { Header } from './Header';
-import { TeaCalculator } from '../features/calculator/TeaCalculator';
-import { useTranslation } from '../i18n';
-import { calculatorTranslations } from '../i18n/calculatorTranslations';
+import { useEffect } from "react";
+import { Header } from "./Header";
+import { TeaCalculator } from "../features/calculator/TeaCalculator";
+import { useTranslation } from "../i18n";
+import { calculatorTranslations } from "../i18n/calculatorTranslations";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
   registerScrollPositionGetter,
-} from '../utils/scrollRegistry';
+} from "../utils/scrollRegistry";
 
 export function CalculatorPage() {
   const { t, lang } = useTranslation();
   const copy = calculatorTranslations[lang] ?? calculatorTranslations.en;
 
   useEffect(() => {
-    const container = document.getElementById('calculator-scroll-container');
+    const container = document.getElementById("calculator-scroll-container");
     if (!container) return undefined;
 
-    const unregister = registerScrollPositionGetter('#make', () => container.scrollTop);
-    const savedPosition = readSavedScrollPosition('#make');
+    const unregister = registerScrollPositionGetter(
+      "#make",
+      () => container.scrollTop,
+    );
+    const savedPosition = readSavedScrollPosition("#make");
 
     if (savedPosition !== null) {
       requestAnimationFrame(() => {
@@ -31,12 +34,19 @@ export function CalculatorPage() {
   }, []);
 
   return (
-    <div id="calculator-scroll-container" className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white">
-      {/* Bottom fade mask */}
+    <div
+      id="calculator-scroll-container"
+      className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
+    >
       <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />
 
       <div className="relative z-10 w-full">
-        <Header activeLink="make" darkTheme={true} pointerEventsNone={false} onLoadAnimation={true} />
+        <Header
+          activeLink="make"
+          darkTheme={true}
+          pointerEventsNone={false}
+          onLoadAnimation={true}
+        />
 
         <main className="mx-auto w-full max-w-5xl px-8 pb-32 pt-32 md:px-16 md:pt-40">
           <div className="mb-12 max-w-2xl animate-fade-in-up delay-300">
@@ -53,7 +63,7 @@ export function CalculatorPage() {
               {copy.description}
             </p>
           </div>
-          
+
           <div>
             <TeaCalculator copy={copy} />
           </div>

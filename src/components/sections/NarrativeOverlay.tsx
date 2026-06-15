@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { useScroll } from '@react-three/drei';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useTranslation } from '../../i18n';
+import { useEffect, useRef } from "react";
+import { useScroll } from "@react-three/drei";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslation } from "../../i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,31 +11,31 @@ export type Step = {
   eyebrow?: string;
   title: string;
   body: string;
-  align: 'left' | 'right' | 'center';
+  align: "left" | "right" | "center";
 };
 
-function getStepAlignment(align: Step['align']) {
-  if (align === 'center') {
-    return 'items-center text-left md:text-center px-8 md:px-24';
+function getStepAlignment(align: Step["align"]) {
+  if (align === "center") {
+    return "items-center text-left md:text-center px-8 md:px-24";
   }
 
-  if (align === 'left') {
-    return 'items-center md:items-start text-left px-8 md:px-24';
+  if (align === "left") {
+    return "items-center md:items-start text-left px-8 md:px-24";
   }
 
-  return 'items-center md:items-end text-left px-8 md:px-24';
+  return "items-center md:items-end text-left px-8 md:px-24";
 }
 
 function getPanelMargin(isFinal: boolean, index: number) {
   if (isFinal) {
-    return 'mt-[10vh]';
+    return "mt-[10vh]";
   }
 
   if (index === 0) {
-    return 'mt-[16vh]';
+    return "mt-[16vh]";
   }
 
-  return 'mt-[22vh]';
+  return "mt-[22vh]";
 }
 
 interface NarrativeOverlayProps {
@@ -49,51 +49,51 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
 
   const localizedSteps = [
     {
-      id: 'intro',
+      id: "intro",
       title: t.steps.intro.title,
       body: t.steps.intro.body,
-      align: 'center' as const,
+      align: "center" as const,
     },
     {
-      id: 'powder',
+      id: "powder",
       eyebrow: t.steps.powder.eyebrow,
       title: t.steps.powder.title,
       body: t.steps.powder.body,
-      align: 'right' as const,
+      align: "right" as const,
     },
     {
-      id: 'sift',
+      id: "sift",
       eyebrow: t.steps.sift.eyebrow,
       title: t.steps.sift.title,
       body: t.steps.sift.body,
-      align: 'left' as const,
+      align: "left" as const,
     },
     {
-      id: 'water',
+      id: "water",
       eyebrow: t.steps.water.eyebrow,
       title: t.steps.water.title,
       body: t.steps.water.body,
-      align: 'right' as const,
+      align: "right" as const,
     },
     {
-      id: 'whisk',
+      id: "whisk",
       eyebrow: t.steps.whisk.eyebrow,
       title: t.steps.whisk.title,
       body: t.steps.whisk.body,
-      align: 'left' as const,
+      align: "left" as const,
     },
     {
-      id: 'finish',
+      id: "finish",
       title: t.steps.finish.title,
       body: t.steps.finish.body,
-      align: 'center' as const,
+      align: "center" as const,
     },
   ];
 
   const recipeRows = [
-    [t.overlay.matcha, '2 g'],
-    [t.overlay.warmWater, '70 ml'],
-    [t.overlay.waterTemp, '75°C'],
+    [t.overlay.matcha, "2 g"],
+    [t.overlay.warmWater, "70 ml"],
+    [t.overlay.waterTemp, "75°C"],
   ];
 
   useEffect(() => {
@@ -102,39 +102,39 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>('.hero-copy-panel').forEach((panel) => {
+      gsap.utils.toArray<HTMLElement>(".hero-copy-panel").forEach((panel) => {
         gsap.fromTo(
           panel,
           { autoAlpha: 0, y: 60 },
           {
             autoAlpha: 1,
             y: 0,
-            ease: 'power3.out',
-            clearProps: 'transform',
+            ease: "power3.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: panel,
               scroller: scroll.el,
-              start: 'top 78%',
-              end: 'center 38%',
+              start: "top 78%",
+              end: "center 38%",
               scrub: 0.6,
             },
           },
         );
       });
 
-      gsap.utils.toArray<HTMLElement>('.eyebrow-anim').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>(".eyebrow-anim").forEach((el) => {
         gsap.fromTo(
           el,
           { autoAlpha: 0, x: -16 },
           {
             autoAlpha: 1,
             x: 0,
-            ease: 'power2.out',
+            ease: "power2.out",
             scrollTrigger: {
               trigger: el,
               scroller: scroll.el,
-              start: 'top 82%',
-              end: 'center 48%',
+              start: "top 82%",
+              end: "center 48%",
               scrub: 0.5,
             },
           },
@@ -147,13 +147,12 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
 
   return (
     <>
-
       <div
         ref={rootRef}
         className="pointer-events-none relative w-screen overflow-hidden"
       >
         {localizedSteps.map((step, index) => {
-          const isFinal = step.id === 'finish';
+          const isFinal = step.id === "finish";
           const alignment = getStepAlignment(step.align);
           const panelMargin = getPanelMargin(isFinal, index);
 
@@ -164,8 +163,10 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
               aria-label={step.title}
             >
               <div
-                className={`${index === 0 ? 'hero-copy-panel' : 'copy-panel'} z-10 flex w-full flex-col ${
-                  index === 0 ? 'max-w-4xl items-start text-left md:items-center md:text-center' : 'md:w-[460px]'
+                className={`${index === 0 ? "hero-copy-panel" : "copy-panel"} z-10 flex w-full flex-col ${
+                  index === 0
+                    ? "max-w-4xl items-start text-left md:items-center md:text-center"
+                    : "md:w-[460px]"
                 } ${panelMargin}`}
               >
                 {index === 0 ? (
@@ -173,7 +174,7 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
                     <div className="mb-6 inline-flex items-center gap-4 eyebrow-anim animate-fade-in-up-on-load delay-300">
                       <span className="h-[1px] w-12 bg-matcha-ink/60"></span>
                       <span className="font-mono text-sm font-medium uppercase tracking-[0.3em] text-matcha-ink/90">
-                        {step.eyebrow || 'A Ritual of Focus'}
+                        {step.eyebrow || "A Ritual of Focus"}
                       </span>
                     </div>
                     <h1 className="heading-serif text-[4.5rem] font-normal leading-[0.9] tracking-tight md:text-[9rem] text-matcha-ink animate-fade-in-up-on-load delay-500">
@@ -184,11 +185,13 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
                     </p>
                   </>
                 ) : (
-                  <div className={
-                    isFinal
-                      ? "glass-card w-full rounded-[2rem] border border-white/30 bg-white/20 p-8 shadow-glass md:p-10 text-left pointer-events-auto"
-                      : "glass-card-desktop w-full text-left pointer-events-auto p-6 md:rounded-[2rem] md:border md:border-white/30 md:bg-white/20 md:p-10 md:shadow-glass"
-                  }>
+                  <div
+                    className={
+                      isFinal
+                        ? "glass-card w-full rounded-[2rem] border border-white/30 bg-white/20 p-8 shadow-glass md:p-10 text-left pointer-events-auto"
+                        : "glass-card-desktop w-full text-left pointer-events-auto p-6 md:rounded-[2rem] md:border md:border-white/30 md:bg-white/20 md:p-10 md:shadow-glass"
+                    }
+                  >
                     {step.eyebrow ? (
                       <span className="eyebrow block font-mono text-xs uppercase tracking-[0.25em] text-matcha-ink/70 eyebrow-anim">
                         {step.eyebrow}
@@ -200,7 +203,7 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
                         </span>
                       )
                     )}
-                    
+
                     <h2 className="heading-serif mb-6 mt-3 text-3xl leading-tight drop-shadow-sm md:text-4xl text-matcha-ink">
                       {step.title}
                     </h2>
@@ -212,8 +215,12 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
                           {recipeRows.map(([label, value]) => (
                             <div key={label}>
                               <div className="flex items-baseline justify-between gap-8 py-3">
-                                <span className="font-sans text-[0.8125rem] text-matcha-ink/70 tracking-[0.04em]">{label}</span>
-                                <span className="font-mono text-[0.875rem] font-medium text-matcha-ink tracking-[0.02em]">{value}</span>
+                                <span className="font-sans text-[0.8125rem] text-matcha-ink/70 tracking-[0.04em]">
+                                  {label}
+                                </span>
+                                <span className="font-mono text-[0.875rem] font-medium text-matcha-ink tracking-[0.02em]">
+                                  {value}
+                                </span>
                               </div>
                               <div className="h-[1px] w-full bg-white/10"></div>
                             </div>
@@ -249,7 +256,9 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
                 <div className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none z-50">
                   <div className="animate-fade-in-up-on-load delay-900">
                     <div className="flex flex-col items-center gap-4 animate-bounce">
-                      <span className="font-mono text-xs uppercase tracking-[0.2em] text-matcha-ink/80">Scroll</span>
+                      <span className="font-mono text-xs uppercase tracking-[0.2em] text-matcha-ink/80">
+                        Scroll
+                      </span>
                       <div className="h-12 w-[1px] bg-matcha-ink/50"></div>
                     </div>
                   </div>

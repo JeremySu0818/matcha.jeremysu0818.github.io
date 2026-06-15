@@ -1,14 +1,8 @@
-import { useMemo, useRef, type RefObject } from 'react';
-import { MeshTransmissionMaterial, useScroll } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import {
-  CatmullRomCurve3,
-  Group,
-  Mesh,
-  TubeGeometry,
-  Vector3,
-} from 'three';
-import { range, smoothstep } from '../../utils/easing';
+import { useMemo, useRef, type RefObject } from "react";
+import { MeshTransmissionMaterial, useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { CatmullRomCurve3, Group, Mesh, TubeGeometry, Vector3 } from "three";
+import { range, smoothstep } from "../../utils/easing";
 
 type WaterStreamProps = {
   mobile: boolean;
@@ -20,13 +14,19 @@ const radialSegments = 18;
 const streamRadius = 0.016;
 
 function createWaterGeometry(curve: CatmullRomCurve3) {
-  const geometry = new TubeGeometry(curve, tubularSegments, streamRadius, radialSegments, false);
+  const geometry = new TubeGeometry(
+    curve,
+    tubularSegments,
+    streamRadius,
+    radialSegments,
+    false,
+  );
   const position = geometry.attributes.position;
 
   for (let ring = 0; ring <= tubularSegments; ring += 1) {
     const t = ring / tubularSegments;
     const center = curve.getPointAt(t);
-    const sourceTaper = smoothstep(range(t, 0, 0.50));
+    const sourceTaper = smoothstep(range(t, 0, 0.5));
     const radiusScale = Math.max(0.001, sourceTaper);
 
     for (let radial = 0; radial <= radialSegments; radial += 1) {
@@ -60,7 +60,7 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
     () =>
       new CatmullRomCurve3([
         new Vector3(-0.45, 1.64, 0.11),
-        new Vector3(-0.30, 1.10, 0.07),
+        new Vector3(-0.3, 1.1, 0.07),
         new Vector3(-0.15, 0.47, 0.036),
         new Vector3(0.0, -0.15, 0.0),
       ]),
@@ -71,7 +71,9 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
 
   useFrame(({ clock }) => {
     const progress = scroll.offset;
-    const pour = smoothstep(range(progress, 0.49, 0.52)) * (1 - smoothstep(range(progress, 0.62, 0.64)));
+    const pour =
+      smoothstep(range(progress, 0.49, 0.52)) *
+      (1 - smoothstep(range(progress, 0.62, 0.64)));
     const isVisible = pour > 0.02;
 
     if (streamRef.current) {
@@ -82,7 +84,7 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
       kettleRef.current.updateMatrixWorld(true);
 
       const p0 = new Vector3();
-      const spout = kettleRef.current.getObjectByName('kettle_spout');
+      const spout = kettleRef.current.getObjectByName("kettle_spout");
       if (spout) {
         spout.localToWorld(p0.set(-12.5852, 11.6278, 0.0));
       } else {
@@ -90,13 +92,19 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
       }
 
       const pourProgress = range(progress, 0.49, 0.64);
-      const bowlPoint = new Vector3(-pourProgress * 0.3, -0.15, -pourProgress * 0.1);
+      const bowlPoint = new Vector3(
+        -pourProgress * 0.3,
+        -0.15,
+        -pourProgress * 0.1,
+      );
       const streamDirection = bowlPoint.clone().sub(p0).normalize();
       const sourcePoint = p0.clone().addScaledVector(streamDirection, 0.06);
       sourcePoint.x -= 0.01;
       sourcePoint.y += 0.02;
       sourcePoint.z += 0.05;
-      const targetPoint = bowlPoint.clone().addScaledVector(streamDirection, 0.08);
+      const targetPoint = bowlPoint
+        .clone()
+        .addScaledVector(streamDirection, 0.08);
       const dx = targetPoint.x - sourcePoint.x;
       const dz = targetPoint.z - sourcePoint.z;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
 export interface ScrollRevealProps {
   children: React.ReactNode;
@@ -8,7 +8,12 @@ export interface ScrollRevealProps {
   glass?: boolean;
 }
 
-export function ScrollReveal({ children, className = '', delay = '', glass = false }: ScrollRevealProps) {
+export function ScrollReveal({
+  children,
+  className = "",
+  delay = "",
+  glass = false,
+}: ScrollRevealProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,8 +27,8 @@ export function ScrollReveal({ children, className = '', delay = '', glass = fal
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px',
-      }
+        rootMargin: "0px 0px -100px 0px",
+      },
     );
 
     if (ref.current) {
@@ -37,8 +42,8 @@ export function ScrollReveal({ children, className = '', delay = '', glass = fal
     };
   }, []);
 
-  const hiddenClass = glass ? 'top-[30px]' : 'top-[30px] opacity-0';
-  const visibleClass = glass ? 'top-0' : 'top-0 opacity-100';
+  const hiddenClass = glass ? "top-[30px]" : "top-[30px] opacity-0";
+  const visibleClass = glass ? "top-0" : "top-0 opacity-100";
 
   return (
     <div

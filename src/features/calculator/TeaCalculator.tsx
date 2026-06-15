@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties, ReactNode } from 'react';
-import type { CalculatorCopy } from '../../i18n/calculatorTranslations';
-import { CalculatorSlider } from './CalculatorSlider';
+import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import type { CalculatorCopy } from "../../i18n/calculatorTranslations";
+import { CalculatorSlider } from "./CalculatorSlider";
 import {
   calculateRecipe,
   TEA_CONFIGS,
   TEA_TYPES,
   type TeaType,
-} from './calculator';
+} from "./calculator";
 
 interface TeaCalculatorProps {
   copy: CalculatorCopy;
@@ -42,50 +42,48 @@ const getDefaultValues = () =>
   >;
 
 function SectionTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="calculator-card-title">
-      {children}
-    </h2>
-  );
+  return <h2 className="calculator-card-title">{children}</h2>;
 }
 
 function GlassSlot({
   children,
-  className = '',
-  shape = 'card',
+  className = "",
+  shape = "card",
 }: {
   children: ReactNode;
   className?: string;
-  shape?: 'tab' | 'reset' | 'card';
+  shape?: "tab" | "reset" | "card";
 }) {
   return (
-    <div className={`calculator-glass-slot calculator-glass-slot-${shape} ${className}`}>
-      <div className={`calculator-live-glass calculator-live-glass-${shape}`} aria-hidden="true" />
-      <div className="calculator-visible-reveal">
-        {children}
-      </div>
+    <div
+      className={`calculator-glass-slot calculator-glass-slot-${shape} ${className}`}
+    >
+      <div
+        className={`calculator-live-glass calculator-live-glass-${shape}`}
+        aria-hidden="true"
+      />
+      <div className="calculator-visible-reveal">{children}</div>
     </div>
   );
 }
 
-const GLASS_REVEAL_TRANSITION =
-  'top 1s cubic-bezier(0.16, 1, 0.3, 1)';
+const GLASS_REVEAL_TRANSITION = "top 1s cubic-bezier(0.16, 1, 0.3, 1)";
 
 export function TeaCalculator({ copy }: TeaCalculatorProps) {
   const [teaType, setTeaType] = useState<TeaType>(() => {
-    const saved = localStorage.getItem('matcha_tea_type');
-    if (saved === 'koicha' || saved === 'usucha' || saved === 'latte') {
+    const saved = localStorage.getItem("matcha_tea_type");
+    if (saved === "koicha" || saved === "usucha" || saved === "latte") {
       return saved as TeaType;
     }
-    return 'usucha';
+    return "usucha";
   });
 
   useEffect(() => {
-    localStorage.setItem('matcha_tea_type', teaType);
+    localStorage.setItem("matcha_tea_type", teaType);
   }, [teaType]);
 
   const [values, setValues] = useState(() => {
-    const saved = localStorage.getItem('matcha_tea_calculator_values');
+    const saved = localStorage.getItem("matcha_tea_calculator_values");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -101,17 +99,19 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
         }
         return merged;
       } catch (e) {
-        console.error('Failed to parse saved values:', e);
+        console.error("Failed to parse saved values:", e);
       }
     }
     return getDefaultValues();
   });
 
   useEffect(() => {
-    localStorage.setItem('matcha_tea_calculator_values', JSON.stringify(values));
+    localStorage.setItem(
+      "matcha_tea_calculator_values",
+      JSON.stringify(values),
+    );
   }, [values]);
 
-  // Mount-based reveal animation
   const [revealed, setRevealed] = useState(false);
   useEffect(() => {
     const raf = requestAnimationFrame(() => setRevealed(true));
@@ -119,7 +119,7 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
   }, []);
 
   const handleReset = () => {
-    setTeaType('usucha');
+    setTeaType("usucha");
     setValues(getDefaultValues());
   };
 
@@ -151,29 +151,34 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
       ? Math.round((100 / current.concentration) * 10) / 10
       : 0;
   const totalWater = result.hotWaterMl + result.coldWaterMl;
-  const hotPercentRaw = totalWater > 0 ? (result.hotWaterMl / totalWater) * 100 : 0;
+  const hotPercentRaw =
+    totalWater > 0 ? (result.hotWaterMl / totalWater) * 100 : 0;
   const hotPercent = Math.round(hotPercentRaw);
   const coldPercent = 100 - hotPercent;
   const revealClass = revealed
-    ? 'calculator-reveal-frame is-revealed'
-    : 'calculator-reveal-frame';
+    ? "calculator-reveal-frame is-revealed"
+    : "calculator-reveal-frame";
   const getRevealStyle = (
     delay: string,
-  ): CSSProperties & { '--reveal-delay': string } => ({
-    position: 'relative' as const,
+  ): CSSProperties & { "--reveal-delay": string } => ({
+    position: "relative" as const,
     top: revealed ? 0 : 30,
     transition: GLASS_REVEAL_TRANSITION,
     transitionDelay: delay,
-    '--reveal-delay': delay,
+    "--reveal-delay": delay,
   });
 
   return (
     <div className="calculator-shell">
       <div
         className={`${revealClass} flex flex-col sm:flex-row sm:items-stretch sm:justify-between gap-3 mb-4`}
-        style={getRevealStyle('500ms')}
+        style={getRevealStyle("500ms")}
       >
-        <div className="calculator-tabs !mb-0 flex-1" role="tablist" aria-label={copy.teaType}>
+        <div
+          className="calculator-tabs !mb-0 flex-1"
+          role="tablist"
+          aria-label={copy.teaType}
+        >
           {TEA_TYPES.map((type) => (
             <GlassSlot key={type} shape="tab">
               <button
@@ -181,7 +186,7 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                 role="tab"
                 aria-selected={teaType === type}
                 className={`border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl ${
-                  teaType === type ? 'is-active' : ''
+                  teaType === type ? "is-active" : ""
                 }`}
                 onClick={() => setTeaType(type)}
               >
@@ -197,8 +202,18 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
             onClick={handleReset}
             className="border border-white/30 bg-white/20 hover:bg-white/35 active:bg-white/45 text-white/95 hover:text-white rounded-[1.25rem] shadow-glass backdrop-blur-2xl transition-all duration-300 flex items-center justify-center gap-2 px-5 py-3 sm:py-0 text-sm font-semibold tracking-wide cursor-pointer min-h-[50px] sm:min-h-0"
           >
-            <svg className="w-4 h-4 opacity-90 transition-transform duration-500 hover:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            <svg
+              className="w-4 h-4 opacity-90 transition-transform duration-500 hover:rotate-180"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+              />
             </svg>
             {copy.reset}
           </button>
@@ -208,12 +223,14 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
       <div className="calculator-grid">
         <div
           className={`${revealClass} calculator-column`}
-          style={getRevealStyle('600ms')}
+          style={getRevealStyle("600ms")}
         >
           <GlassSlot shape="card">
             <section className="calculator-card border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl">
               <SectionTitle>
-                {teaType === 'latte' ? copy.ratioSettings : copy.servingAndStrength}
+                {teaType === "latte"
+                  ? copy.ratioSettings
+                  : copy.servingAndStrength}
               </SectionTitle>
               <div className="calculator-serving">
                 <span>{copy.serving}</span>
@@ -242,13 +259,13 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                 value={current.concentration}
                 min={config.concentrationMin}
                 max={config.concentrationMax}
-                step={teaType === 'usucha' ? 0.01 : 0.1}
+                step={teaType === "usucha" ? 0.01 : 0.1}
                 unit="g/100ml"
                 onChange={(concentration) => update({ concentration })}
                 minLabel={copy.light}
                 maxLabel={copy.strong}
               />
-              {teaType === 'latte' && (
+              {teaType === "latte" && (
                 <CalculatorSlider
                   label={`${copy.teaMilkRatio} (≈ 1 : ${current.milkRatio})`}
                   value={current.milkRatio}
@@ -277,8 +294,14 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                 onChange={(temperature) =>
                   update({
                     temperature,
-                    coldTemperature: Math.min(current.coldTemperature, temperature),
-                    hotTemperature: Math.max(current.hotTemperature, temperature),
+                    coldTemperature: Math.min(
+                      current.coldTemperature,
+                      temperature,
+                    ),
+                    hotTemperature: Math.max(
+                      current.hotTemperature,
+                      temperature,
+                    ),
                   })
                 }
               />
@@ -306,17 +329,19 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
 
         <div
           className={`${revealClass} calculator-column calculator-results`}
-          style={getRevealStyle('700ms')}
+          style={getRevealStyle("700ms")}
         >
           <GlassSlot shape="card">
             <section className="calculator-card border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl">
               <SectionTitle>{copy.recipe}</SectionTitle>
-              <div className={`calculator-result-grid ${teaType === 'latte' ? 'three' : ''}`}>
+              <div
+                className={`calculator-result-grid ${teaType === "latte" ? "three" : ""}`}
+              >
                 {[
-                  [copy.matchaPowder, result.powderG.toFixed(1), 'g'],
-                  [copy.water, Math.round(result.waterMl), 'ml'],
-                  ...(teaType === 'latte'
-                    ? [[copy.milk, Math.round(result.milkMl), 'ml']]
+                  [copy.matchaPowder, result.powderG.toFixed(1), "g"],
+                  [copy.water, Math.round(result.waterMl), "ml"],
+                  ...(teaType === "latte"
+                    ? [[copy.milk, Math.round(result.milkMl), "ml"]]
                     : []),
                 ].map(([label, value, unit]) => (
                   <div
@@ -343,7 +368,7 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                   className="hot"
                   style={{
                     width: `${hotPercent}%`,
-                    display: hotPercent === 0 ? 'none' : undefined,
+                    display: hotPercent === 0 ? "none" : undefined,
                   }}
                 >
                   {hotPercent >= 15 && (
@@ -356,7 +381,7 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                   className="cold"
                   style={{
                     width: `${coldPercent}%`,
-                    display: coldPercent === 0 ? 'none' : undefined,
+                    display: coldPercent === 0 ? "none" : undefined,
                   }}
                 >
                   {coldPercent >= 15 && (
@@ -368,11 +393,15 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
               </div>
               <div className="calculator-water-detail">
                 <div className="border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl">
-                  <span>{copy.hotWater} ({result.hotTemperature}°C)</span>
+                  <span>
+                    {copy.hotWater} ({result.hotTemperature}°C)
+                  </span>
                   <strong>{result.hotWaterMl} ml</strong>
                 </div>
                 <div className="border border-white/30 bg-white/20 shadow-glass backdrop-blur-2xl">
-                  <span>{copy.coldWater} ({result.coldTemperature}°C)</span>
+                  <span>
+                    {copy.coldWater} ({result.coldTemperature}°C)
+                  </span>
                   <strong>{result.coldWaterMl} ml</strong>
                 </div>
               </div>

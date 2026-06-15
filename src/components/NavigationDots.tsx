@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 interface StepItem {
   id: string;
@@ -27,27 +27,32 @@ export function NavigationDots({
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Automatically scroll active item into view when dropdown opens or activeStep changes
   useEffect(() => {
     if (isOpen && scrollContainerRef.current) {
       const timer = setTimeout(() => {
         const container = scrollContainerRef.current;
         if (!container) return;
 
-        const activeElement = container.querySelector('[aria-selected="true"]') as HTMLElement;
+        const activeElement = container.querySelector(
+          '[aria-selected="true"]',
+        ) as HTMLElement;
         if (activeElement) {
           const containerRect = container.getBoundingClientRect();
           const elemRect = activeElement.getBoundingClientRect();
-          const relativeTop = elemRect.top - containerRect.top + container.scrollTop;
+          const relativeTop =
+            elemRect.top - containerRect.top + container.scrollTop;
 
           const isAbove = relativeTop < container.scrollTop;
-          const isBelow = relativeTop + elemRect.height > container.scrollTop + container.clientHeight;
+          const isBelow =
+            relativeTop + elemRect.height >
+            container.scrollTop + container.clientHeight;
 
           if (isAbove || isBelow) {
-            const targetScrollTop = relativeTop - container.clientHeight / 2 + elemRect.height / 2;
+            const targetScrollTop =
+              relativeTop - container.clientHeight / 2 + elemRect.height / 2;
             container.scrollTo({
               top: Math.max(0, targetScrollTop),
-              behavior: 'smooth',
+              behavior: "smooth",
             });
           }
         }
@@ -57,7 +62,6 @@ export function NavigationDots({
     }
   }, [isOpen, activeStep]);
 
-  // Calculate position of the portal dropdown relative to the dots column
   const updatePosition = useCallback(() => {
     if (!dotsRef.current) return;
     const rect = dotsRef.current.getBoundingClientRect();
@@ -70,16 +74,15 @@ export function NavigationDots({
   useEffect(() => {
     if (isOpen) {
       updatePosition();
-      window.addEventListener('resize', updatePosition);
-      window.addEventListener('scroll', updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+      window.addEventListener("scroll", updatePosition, true);
       return () => {
-        window.removeEventListener('resize', updatePosition);
-        window.removeEventListener('scroll', updatePosition, true);
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
       };
     }
   }, [isOpen, updatePosition]);
 
-  // Clean up timeout on unmount
   useEffect(() => {
     return () => {
       if (closeTimeoutRef.current) {
@@ -102,7 +105,7 @@ export function NavigationDots({
     }
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 250); // 250ms delay to smoothly cross the gap
+    }, 250);
   }, []);
 
   const handleItemClick = (index: number) => {
@@ -114,15 +117,15 @@ export function NavigationDots({
     setIsOpen(false);
   };
 
-  const optionStyle = (isSelected: boolean) => darkTheme
-    ? isSelected
-      ? 'bg-white/20 text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]'
-      : 'text-white/75 hover:text-white hover:bg-white/10'
-    : isSelected
-      ? 'bg-matcha-ink/10 text-matcha-ink font-semibold'
-      : 'text-matcha-ink/75 hover:text-matcha-ink hover:bg-matcha-ink/5';
+  const optionStyle = (isSelected: boolean) =>
+    darkTheme
+      ? isSelected
+        ? "bg-white/20 text-white font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+        : "text-white/75 hover:text-white hover:bg-white/10"
+      : isSelected
+        ? "bg-matcha-ink/10 text-matcha-ink font-semibold"
+        : "text-matcha-ink/75 hover:text-matcha-ink hover:bg-matcha-ink/5";
 
-  // Portal dropdown — same pattern as LanguageSelector
   const dropdownMenu = isOpen
     ? createPortal(
         <div
@@ -131,31 +134,31 @@ export function NavigationDots({
           onMouseEnter={openMenu}
           onMouseLeave={closeMenuWithDelay}
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: menuPos.top,
             right: menuPos.right,
-            transform: 'translateY(-50%)',
+            transform: "translateY(-50%)",
             zIndex: 99999,
           }}
         >
           <div
             ref={scrollContainerRef}
             className={`lang-dropdown-glass frosted-surface ${
-              darkTheme ? 'frosted-surface-dark' : 'frosted-surface-light'
+              darkTheme ? "frosted-surface-dark" : "frosted-surface-light"
             }`}
             style={{
-              width: '15rem',
-              maxHeight: '380px',
-              overflowY: 'auto',
-              borderRadius: '1.25rem',
-              border: '1px solid var(--glass-border)',
-              color: darkTheme ? '#fff' : '#1f3128',
-              fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
-              animation: 'navDropdownIn 0.25s cubic-bezier(0.16,1,0.3,1)',
-              transformOrigin: 'right center',
+              width: "15rem",
+              maxHeight: "380px",
+              overflowY: "auto",
+              borderRadius: "1.25rem",
+              border: "1px solid var(--glass-border)",
+              color: darkTheme ? "#fff" : "#1f3128",
+              fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+              animation: "navDropdownIn 0.25s cubic-bezier(0.16,1,0.3,1)",
+              transformOrigin: "right center",
             }}
           >
-            <div style={{ padding: '6px' }}>
+            <div style={{ padding: "6px" }}>
               <div className="flex flex-col gap-1">
                 {steps.map((step, index) => {
                   const isSelected = index === activeStep;
@@ -164,7 +167,7 @@ export function NavigationDots({
                       key={step.id}
                       onClick={() => handleItemClick(index)}
                       className={`w-full text-left px-3.5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer flex flex-col items-start ${optionStyle(
-                        isSelected
+                        isSelected,
                       )}`}
                       role="option"
                       aria-selected={isSelected}
@@ -196,7 +199,6 @@ export function NavigationDots({
         onMouseEnter={openMenu}
         onMouseLeave={closeMenuWithDelay}
       >
-        {/* Vertical Dots column */}
         <div className="flex flex-col items-center gap-3 py-3 px-2">
           {steps.map((step, index) => {
             const isActive = index === activeStep;
@@ -207,19 +209,20 @@ export function NavigationDots({
                 className="group relative flex items-center justify-center w-3 h-3 cursor-pointer"
                 aria-label={`Go to section: ${step.label}`}
               >
-                {/* Outer ring showing active or hovered state */}
                 <div
                   className={`absolute inset-0 rounded-full border transition-all duration-300 scale-0 group-hover:scale-100 ${
-                    isActive ? 'scale-100 opacity-100' : 'opacity-0'
-                  } ${darkTheme ? 'border-white/40' : 'border-matcha-ink/40'}`}
+                    isActive ? "scale-100 opacity-100" : "opacity-0"
+                  } ${darkTheme ? "border-white/40" : "border-matcha-ink/40"}`}
                 />
-                {/* Core dot */}
+
                 <div
                   className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                     isActive
-                      ? `${darkTheme ? 'bg-white' : 'bg-matcha-ink'} scale-110`
+                      ? `${darkTheme ? "bg-white" : "bg-matcha-ink"} scale-110`
                       : `${
-                          darkTheme ? 'bg-white/40 group-hover:bg-white/80' : 'bg-matcha-ink/40 group-hover:bg-matcha-ink/80'
+                          darkTheme
+                            ? "bg-white/40 group-hover:bg-white/80"
+                            : "bg-matcha-ink/40 group-hover:bg-matcha-ink/80"
                         }`
                   }`}
                 />

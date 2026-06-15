@@ -1,14 +1,14 @@
-import { useMemo, useRef } from 'react';
-import { useScroll } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from "react";
+import { useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import {
   BufferAttribute,
   BufferGeometry,
   Color,
   Points,
   ShaderMaterial,
-} from 'three';
-import { range, smoothstep } from '../../utils/easing';
+} from "three";
+import { range, smoothstep } from "../../utils/easing";
 
 type PowderParticlesProps = {
   count: number;
@@ -67,8 +67,8 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
 
   const geometry = useMemo(() => {
     const geom = new BufferGeometry();
-    geom.setAttribute('position', new BufferAttribute(positions, 3));
-    geom.setAttribute('aSize', new BufferAttribute(sizes, 1));
+    geom.setAttribute("position", new BufferAttribute(positions, 3));
+    geom.setAttribute("aSize", new BufferAttribute(sizes, 1));
     return geom;
   }, [positions, sizes]);
 
@@ -76,8 +76,8 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
     () => ({
       uSize: { value: mobile ? 0.06 : 0.18 },
       uOpacity: { value: 0 },
-      uColorA: { value: new Color('#568339') },
-      uColorB: { value: new Color('#9bbd63') },
+      uColorA: { value: new Color("#568339") },
+      uColorB: { value: new Color("#9bbd63") },
     }),
     [mobile],
   );
@@ -89,7 +89,7 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
 
     const progress = scroll.offset;
     const geom = pointsRef.current.geometry;
-    const posAttr = geom.getAttribute('position') as BufferAttribute;
+    const posAttr = geom.getAttribute("position") as BufferAttribute;
     const posArray = posAttr.array as Float32Array;
 
     const fallProgress = range(progress, 0.18, 0.27);
@@ -130,9 +130,12 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
         const clumpY = 3.6 - 1.82 * (fallProgress * fallProgress);
         const dragFactor = rx * 0.22;
 
-        const currentOffsetX = clumpOffsetX + (siftOffsetX - clumpOffsetX) * fallProgress;
-        const currentOffsetZ = clumpOffsetZ + (siftOffsetZ - clumpOffsetZ) * fallProgress;
-        const currentOffsetY = (clumpOffsetY + dragFactor * fallProgress) * (1.0 - fallProgress);
+        const currentOffsetX =
+          clumpOffsetX + (siftOffsetX - clumpOffsetX) * fallProgress;
+        const currentOffsetZ =
+          clumpOffsetZ + (siftOffsetZ - clumpOffsetZ) * fallProgress;
+        const currentOffsetY =
+          (clumpOffsetY + dragFactor * fallProgress) * (1.0 - fallProgress);
 
         x = -0.05 + currentOffsetX;
         z = 0.12 + currentOffsetZ;
@@ -155,7 +158,8 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
         const endX = landX;
         const bowlColliderY = -0.45 + 1.2 * (radiusLand * radiusLand);
 
-        const powderColliderY = 0.08 * Math.exp(-(landX * landX + landZ * landZ) / 0.015);
+        const powderColliderY =
+          0.08 * Math.exp(-(landX * landX + landZ * landZ) / 0.015);
         const endY = bowlColliderY + powderColliderY;
         const endZ = landZ;
 
@@ -164,8 +168,10 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
           const driftX = (ry - 0.5) * spreadFactor;
           const driftZ = (rz - 0.5) * spreadFactor;
 
-          const microDriftX = Math.sin(grainFall * 4.5 + ry * 8) * 0.03 * spreadFactor;
-          const microDriftZ = Math.cos(grainFall * 3.8 + rz * 8) * 0.03 * spreadFactor;
+          const microDriftX =
+            Math.sin(grainFall * 4.5 + ry * 8) * 0.03 * spreadFactor;
+          const microDriftZ =
+            Math.cos(grainFall * 3.8 + rz * 8) * 0.03 * spreadFactor;
 
           const gravityFall = grainFall * grainFall;
 

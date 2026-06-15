@@ -1,24 +1,24 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { Environment, Float, useScroll } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useMemo, useRef } from "react";
+import { Environment, Float, useScroll } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   DirectionalLight,
   Group,
   MeshPhysicalMaterial,
   PerspectiveCamera,
   Vector3,
-} from 'three';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { asset } from '../../utils/assets';
-import { mix, range, smoothstep } from '../../utils/easing';
-import { mixTuple3, type Tuple3 } from '../../utils/threeTransforms';
-import { FoamSurface } from './FoamSurface';
-import { Model } from './Model';
-import { PowderParticles } from './PowderParticles';
-import { WaterFill } from './WaterFill';
-import { WaterStream } from './WaterStream';
+} from "three";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { asset } from "../../utils/assets";
+import { mix, range, smoothstep } from "../../utils/easing";
+import { mixTuple3, type Tuple3 } from "../../utils/threeTransforms";
+import { FoamSurface } from "./FoamSurface";
+import { Model } from "./Model";
+import { PowderParticles } from "./PowderParticles";
+import { WaterFill } from "./WaterFill";
+import { WaterStream } from "./WaterStream";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,7 +27,11 @@ const teaTrayPosition: Tuple3 = [0.5, 0.02, 0];
 const teaTrayTopY = supportSurfaceY + teaTrayPosition[1] + 0.1;
 
 const sieveIdle = {
-  position: [teaTrayPosition[0], teaTrayTopY + 0.3895, teaTrayPosition[2] - 2.5] as Tuple3,
+  position: [
+    teaTrayPosition[0],
+    teaTrayTopY + 0.3895,
+    teaTrayPosition[2] - 2.5,
+  ] as Tuple3,
   rotationY: 0.18 + (80 * Math.PI) / 180 + Math.PI / 2,
 };
 
@@ -37,7 +41,11 @@ const sieveUse = {
 };
 
 const kettleIdle = {
-  position: [teaTrayPosition[0], teaTrayTopY + 0.02, teaTrayPosition[2] + 3] as Tuple3,
+  position: [
+    teaTrayPosition[0],
+    teaTrayTopY + 0.02,
+    teaTrayPosition[2] + 3,
+  ] as Tuple3,
   rotation: [0, -1.285, 0] as Tuple3,
 };
 
@@ -78,11 +86,7 @@ function sampleChasenW(elapsedTime: number): [number, number] {
   const pathX = mix(from[0], to[0], local);
   const pathZ = mix(from[1], to[1], local);
 
-  // Rotate the W 90 degrees counter-clockwise across the tea surface.
-  return [
-    -pathZ * 0.24,
-    pathX * 0.44,
-  ];
+  return [-pathZ * 0.24, pathX * 0.44];
 }
 
 const baseCameraTargets = [
@@ -94,14 +98,14 @@ const baseCameraTargets = [
   new Vector3(0, 5.55, 2.55),
 ];
 
-const cameraTargets = baseCameraTargets.map(v => {
+const cameraTargets = baseCameraTargets.map((v) => {
   const vZoomed = v.clone().multiplyScalar(2.3);
   vZoomed.y *= 0.32;
   return new Vector3(-vZoomed.z, vZoomed.y, vZoomed.x);
 });
 
 export function MatchaScene() {
-  const mobile = useMediaQuery('(max-width: 720px)');
+  const mobile = useMediaQuery("(max-width: 720px)");
   const scroll = useScroll();
   const { camera } = useThree();
   const bowlRef = useRef<Group>(null);
@@ -112,7 +116,7 @@ export function MatchaScene() {
   const gsapState = useRef({ glow: 0, lift: 0 });
   const tabletopMaterial = useMemo(() => {
     return new MeshPhysicalMaterial({
-      color: '#dfc8a8',
+      color: "#dfc8a8",
       roughness: 0.72,
       clearcoat: 0.06,
       clearcoatRoughness: 0.7,
@@ -125,24 +129,24 @@ export function MatchaScene() {
     const intro = gsap.to(target, {
       lift: 0.18,
       glow: 0.45,
-      ease: 'none',
+      ease: "none",
       scrollTrigger: {
         trigger: scroll.el,
         scroller: scroll.el,
-        start: 'top top',
-        end: '18% top',
+        start: "top top",
+        end: "18% top",
         scrub: 1,
       },
     });
 
     const finish = gsap.to(target, {
       glow: 1,
-      ease: 'none',
+      ease: "none",
       scrollTrigger: {
         trigger: scroll.el,
         scroller: scroll.el,
-        start: '78% top',
-        end: '100% bottom',
+        start: "78% top",
+        end: "100% bottom",
         scrub: 1,
       },
     });
@@ -176,8 +180,10 @@ export function MatchaScene() {
 
     const bowlSpin = progress * Math.PI * 1.72;
     if (bowlRef.current) {
-      bowlRef.current.rotation.y = bowlSpin + Math.sin(clock.elapsedTime * 0.35) * 0.08;
-      bowlRef.current.position.y = gsapState.current.lift + Math.sin(clock.elapsedTime * 0.7) * 0.014;
+      bowlRef.current.rotation.y =
+        bowlSpin + Math.sin(clock.elapsedTime * 0.35) * 0.08;
+      bowlRef.current.position.y =
+        gsapState.current.lift + Math.sin(clock.elapsedTime * 0.7) * 0.014;
       const finale = smoothstep(range(progress, 0.82, 1));
       bowlRef.current.position.x = mix(0, 0, finale);
       bowlRef.current.scale.setScalar(mix(1, 1.08, finale));
@@ -187,19 +193,31 @@ export function MatchaScene() {
       const enter = smoothstep(range(progress, 0.08, 0.19));
       const leave = smoothstep(range(progress, 0.41, 0.49));
       const active = enter * (1 - leave);
-      const shakeActive = smoothstep(range(progress, 0.19, 0.22)) * (1 - smoothstep(range(progress, 0.35, 0.38)));
+      const shakeActive =
+        smoothstep(range(progress, 0.19, 0.22)) *
+        (1 - smoothstep(range(progress, 0.35, 0.38)));
       const rollX = Math.sin(clock.elapsedTime * 14) * 0.0175 * shakeActive;
-      sieveRef.current.position.set(...mixTuple3(sieveIdle.position, sieveUse.position, active));
-      sieveRef.current.rotation.order = 'YXZ';
-      sieveRef.current.rotation.set(rollX, mix(sieveIdle.rotationY, sieveUse.rotationY, active), 0);
+      sieveRef.current.position.set(
+        ...mixTuple3(sieveIdle.position, sieveUse.position, active),
+      );
+      sieveRef.current.rotation.order = "YXZ";
+      sieveRef.current.rotation.set(
+        rollX,
+        mix(sieveIdle.rotationY, sieveUse.rotationY, active),
+        0,
+      );
     }
 
     if (kettleRef.current) {
       const enter = smoothstep(range(progress, 0.38, 0.48));
       const leave = smoothstep(range(progress, 0.65, 0.73));
       const active = enter * (1 - leave);
-      kettleRef.current.position.set(...mixTuple3(kettleIdle.position, kettleUse.position, active));
-      kettleRef.current.rotation.set(...mixTuple3(kettleIdle.rotation, kettleUse.rotation, active));
+      kettleRef.current.position.set(
+        ...mixTuple3(kettleIdle.position, kettleUse.position, active),
+      );
+      kettleRef.current.rotation.set(
+        ...mixTuple3(kettleIdle.rotation, kettleUse.rotation, active),
+      );
     }
 
     if (chasenRef.current) {
@@ -256,13 +274,23 @@ export function MatchaScene() {
       if (active <= 0.33) {
         chasenPos = mixTuple3(p1, p2, Math.max(0, Math.min(1, active / 0.33)));
       } else if (active <= 0.67) {
-        chasenPos = mixTuple3(p2, p3, Math.max(0, Math.min(1, (active - 0.33) / 0.34)));
+        chasenPos = mixTuple3(
+          p2,
+          p3,
+          Math.max(0, Math.min(1, (active - 0.33) / 0.34)),
+        );
       } else {
-        chasenPos = mixTuple3(p3, p4, Math.max(0, Math.min(1, (active - 0.67) / 0.33)));
+        chasenPos = mixTuple3(
+          p3,
+          p4,
+          Math.max(0, Math.min(1, (active - 0.67) / 0.33)),
+        );
       }
 
       chasenRef.current.position.set(...chasenPos);
-      chasenRef.current.rotation.set(...mixTuple3(chasenIdle.rotation, chasenUseRotation, active));
+      chasenRef.current.rotation.set(
+        ...mixTuple3(chasenIdle.rotation, chasenUseRotation, active),
+      );
     }
 
     if (keyLightRef.current) {
@@ -292,12 +320,22 @@ export function MatchaScene() {
         shadow-camera-far={20}
       />
       <directionalLight position={[3, 5, -3]} intensity={0.5} color="#e8dcc8" />
-      <directionalLight position={[-1, 2, 6]} intensity={0.35} color="#dce8d0" />
-      <pointLight position={[0, 3.5, 1.5]} intensity={0.25} color="#d8e7b6" distance={10} decay={2} />
+      <directionalLight
+        position={[-1, 2, 6]}
+        intensity={0.35}
+        color="#dce8d0"
+      />
+      <pointLight
+        position={[0, 3.5, 1.5]}
+        intensity={0.25}
+        color="#d8e7b6"
+        distance={10}
+        decay={2}
+      />
       <Environment preset="apartment" environmentIntensity={0.65} />
 
       <Model
-        src={asset('models/room.glb')}
+        src={asset("models/room.glb")}
         position={[-4.26, -5.675, 1.25]}
         scale={5}
         keepOriginalMaterials
@@ -305,7 +343,7 @@ export function MatchaScene() {
 
       <group position={[0, supportSurfaceY, 0]}>
         <Model
-          src={asset('models/tea-tray.glb')}
+          src={asset("models/tea-tray.glb")}
           position={teaTrayPosition as [number, number, number]}
           rotation={[0, Math.PI / 2, 0]}
           keepOriginalMaterials
@@ -314,10 +352,18 @@ export function MatchaScene() {
 
       <Float speed={0.75} rotationIntensity={0.08} floatIntensity={0.08}>
         <group ref={bowlRef}>
-          <Model src={asset('models/tea-bowl.glb')} scale={0.4} rotation={[0, 0, 0]} position={[0, -0.2, 0]} />
-          <FoamSurface textureSrc={asset('textures/matcha-surface.png')} bowlSrc={asset('models/tea-bowl.glb')} />
-          <WaterFill bowlSrc={asset('models/tea-bowl.glb')} />
-          {/* 碗的隱藏碰撞箱 (Bowl internal collision box, hidden per requirements) */}
+          <Model
+            src={asset("models/tea-bowl.glb")}
+            scale={0.4}
+            rotation={[0, 0, 0]}
+            position={[0, -0.2, 0]}
+          />
+          <FoamSurface
+            textureSrc={asset("textures/matcha-surface.png")}
+            bowlSrc={asset("models/tea-bowl.glb")}
+          />
+          <WaterFill bowlSrc={asset("models/tea-bowl.glb")} />
+
           <mesh visible={false} position={[0, -0.35, 0]}>
             <cylinderGeometry args={[0.35, 0.25, 0.3, 16]} />
             <meshBasicMaterial />
@@ -327,18 +373,35 @@ export function MatchaScene() {
 
       <PowderParticles count={20000} mobile={mobile} />
 
-      <group ref={sieveRef} position={sieveIdle.position as [number, number, number]}>
-        <Model src={asset('models/sieve.glb')} scale={14} keepOriginalMaterials />
+      <group
+        ref={sieveRef}
+        position={sieveIdle.position as [number, number, number]}
+      >
+        <Model
+          src={asset("models/sieve.glb")}
+          scale={14}
+          keepOriginalMaterials
+        />
       </group>
 
-      <group ref={kettleRef} position={kettleIdle.position as [number, number, number]}>
-        <Model src={asset('models/kettle.glb')} scale={0.10} />
+      <group
+        ref={kettleRef}
+        position={kettleIdle.position as [number, number, number]}
+      >
+        <Model src={asset("models/kettle.glb")} scale={0.1} />
       </group>
 
       <WaterStream mobile={mobile} kettleRef={kettleRef} />
 
-      <group ref={chasenRef} position={chasenIdle.position as [number, number, number]}>
-        <Model src={asset('models/chasen.glb')} scale={13} rotation={[Math.PI, 0, 0]} />
+      <group
+        ref={chasenRef}
+        position={chasenIdle.position as [number, number, number]}
+      >
+        <Model
+          src={asset("models/chasen.glb")}
+          scale={13}
+          rotation={[Math.PI, 0, 0]}
+        />
       </group>
     </>
   );

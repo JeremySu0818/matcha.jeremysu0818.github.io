@@ -1,7 +1,10 @@
-const scrollPositionGetters = new Map<string, () => number | null | undefined>();
+const scrollPositionGetters = new Map<
+  string,
+  () => number | null | undefined
+>();
 
 function normalizeRoute(route: string) {
-  return route === '' ? '#' : route;
+  return route === "" ? "#" : route;
 }
 
 export function registerScrollPositionGetter(
@@ -22,14 +25,19 @@ export function registerScrollPositionGetter(
 export function getScrollPositionForRoute(route: string) {
   const getter = scrollPositionGetters.get(normalizeRoute(route));
   const position = getter?.();
-  return typeof position === 'number' && Number.isFinite(position) ? position : 0;
+  return typeof position === "number" && Number.isFinite(position)
+    ? position
+    : 0;
 }
 
 export function readSavedScrollPosition(route: string) {
-  const savedRoute = sessionStorage.getItem('matcha_scroll_route');
-  const savedPosition = sessionStorage.getItem('matcha_scroll_position');
+  const savedRoute = sessionStorage.getItem("matcha_scroll_route");
+  const savedPosition = sessionStorage.getItem("matcha_scroll_position");
 
-  if (normalizeRoute(savedRoute || '') !== normalizeRoute(route) || !savedPosition) {
+  if (
+    normalizeRoute(savedRoute || "") !== normalizeRoute(route) ||
+    !savedPosition
+  ) {
     return null;
   }
 
@@ -38,11 +46,14 @@ export function readSavedScrollPosition(route: string) {
 }
 
 export function clearSavedScrollPosition() {
-  sessionStorage.removeItem('matcha_scroll_position');
-  sessionStorage.removeItem('matcha_scroll_route');
+  sessionStorage.removeItem("matcha_scroll_position");
+  sessionStorage.removeItem("matcha_scroll_route");
 }
 
 export function saveScrollPosition(route: string, position: number) {
-  sessionStorage.setItem('matcha_scroll_position', String(Math.max(0, Math.round(position))));
-  sessionStorage.setItem('matcha_scroll_route', normalizeRoute(route));
+  sessionStorage.setItem(
+    "matcha_scroll_position",
+    String(Math.max(0, Math.round(position))),
+  );
+  sessionStorage.setItem("matcha_scroll_route", normalizeRoute(route));
 }

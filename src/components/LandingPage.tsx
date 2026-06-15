@@ -1,30 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from '../i18n';
-import { Header } from './Header';
-import { NavigationDots } from './NavigationDots';
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "../i18n";
+import { Header } from "./Header";
+import { NavigationDots } from "./NavigationDots";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
   registerScrollPositionGetter,
-} from '../utils/scrollRegistry';
+} from "../utils/scrollRegistry";
 
 interface LandingPageProps {
   onEnter: () => void;
 }
 
-import { ScrollReveal } from './ScrollReveal';
+import { ScrollReveal } from "./ScrollReveal";
 
 export function LandingPage({ onEnter }: LandingPageProps) {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    const container = document.getElementById('landing-scroll-container');
+    const container = document.getElementById("landing-scroll-container");
     if (!container) return undefined;
 
-    const unregisterHome = registerScrollPositionGetter('', () => container.scrollTop);
-    const unregisterHashHome = registerScrollPositionGetter('#', () => container.scrollTop);
-    const savedPosition = readSavedScrollPosition(window.location.hash || '#');
+    const unregisterHome = registerScrollPositionGetter(
+      "",
+      () => container.scrollTop,
+    );
+    const unregisterHashHome = registerScrollPositionGetter(
+      "#",
+      () => container.scrollTop,
+    );
+    const savedPosition = readSavedScrollPosition(window.location.hash || "#");
 
     if (savedPosition !== null) {
       requestAnimationFrame(() => {
@@ -40,11 +46,19 @@ export function LandingPage({ onEnter }: LandingPageProps) {
   }, []);
 
   useEffect(() => {
-    const container = document.getElementById('landing-scroll-container');
+    const container = document.getElementById("landing-scroll-container");
     if (!container) return;
 
     const handleScroll = () => {
-      const sectionIds = ['hero', 'chapter-1', 'chapter-2', 'chapter-3', 'chapter-4', 'chapter-5', 'final'];
+      const sectionIds = [
+        "hero",
+        "chapter-1",
+        "chapter-2",
+        "chapter-3",
+        "chapter-4",
+        "chapter-5",
+        "final",
+      ];
       const scrollPos = container.scrollTop + container.clientHeight / 2;
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
@@ -56,54 +70,94 @@ export function LandingPage({ onEnter }: LandingPageProps) {
       }
     };
 
-    container.addEventListener('scroll', handleScroll);
+    container.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => container.removeEventListener('scroll', handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleStepClick = (index: number) => {
-    const sectionIds = ['hero', 'chapter-1', 'chapter-2', 'chapter-3', 'chapter-4', 'chapter-5', 'final'];
+    const sectionIds = [
+      "hero",
+      "chapter-1",
+      "chapter-2",
+      "chapter-3",
+      "chapter-4",
+      "chapter-5",
+      "final",
+    ];
     const el = document.getElementById(`section-${sectionIds[index]}`);
-    const container = document.getElementById('landing-scroll-container');
+    const container = document.getElementById("landing-scroll-container");
     if (el && container) {
       container.scrollTo({
         top: el.offsetTop,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
 
   const steps = [
-    { id: 'hero', label: t.hero.title.replace(/\n/g, ' '), subLabel: t.nav.home },
-    { id: 'chapter-1', label: t.chapters.chapter1.title.replace(/\n/g, ' '), subLabel: t.chapters.chapter1.eyebrow },
-    { id: 'chapter-2', label: t.chapters.chapter2.title.replace(/\n/g, ' '), subLabel: t.chapters.chapter2.eyebrow },
-    { id: 'chapter-3', label: t.chapters.chapter3.title.replace(/\n/g, ' '), subLabel: t.chapters.chapter3.eyebrow },
-    { id: 'chapter-4', label: t.chapters.chapter4.title.replace(/\n/g, ' '), subLabel: t.chapters.chapter4.eyebrow },
-    { id: 'chapter-5', label: t.chapters.chapter5.title.replace(/\n/g, ' '), subLabel: t.chapters.chapter5.eyebrow },
-    { id: 'final', label: t.final.title, subLabel: t.final.eyebrow },
+    {
+      id: "hero",
+      label: t.hero.title.replace(/\n/g, " "),
+      subLabel: t.nav.home,
+    },
+    {
+      id: "chapter-1",
+      label: t.chapters.chapter1.title.replace(/\n/g, " "),
+      subLabel: t.chapters.chapter1.eyebrow,
+    },
+    {
+      id: "chapter-2",
+      label: t.chapters.chapter2.title.replace(/\n/g, " "),
+      subLabel: t.chapters.chapter2.eyebrow,
+    },
+    {
+      id: "chapter-3",
+      label: t.chapters.chapter3.title.replace(/\n/g, " "),
+      subLabel: t.chapters.chapter3.eyebrow,
+    },
+    {
+      id: "chapter-4",
+      label: t.chapters.chapter4.title.replace(/\n/g, " "),
+      subLabel: t.chapters.chapter4.eyebrow,
+    },
+    {
+      id: "chapter-5",
+      label: t.chapters.chapter5.title.replace(/\n/g, " "),
+      subLabel: t.chapters.chapter5.eyebrow,
+    },
+    { id: "final", label: t.final.title, subLabel: t.final.eyebrow },
   ];
 
   const renderTitle = (text: string) => {
-    return text.split('\n').map((line, i) => (
+    return text.split("\n").map((line, i) => (
       <React.Fragment key={i}>
         {line}
-        {i < text.split('\n').length - 1 && <br />}
+        {i < text.split("\n").length - 1 && <br />}
       </React.Fragment>
     ));
   };
 
   return (
-    <div id="landing-scroll-container" className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white">
-
-      {/* Bottom fade mask */}
+    <div
+      id="landing-scroll-container"
+      className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
+    >
       <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />
 
       <div className="relative z-10 w-full">
+        <Header
+          activeLink="home"
+          darkTheme={true}
+          pointerEventsNone={false}
+          onLoadAnimation={true}
+        />
 
-        <Header activeLink="home" darkTheme={true} pointerEventsNone={false} onLoadAnimation={true} />
-
-        <section id="section-hero" className="relative flex min-h-screen w-full flex-col justify-center px-8 md:px-24">
+        <section
+          id="section-hero"
+          className="relative flex min-h-screen w-full flex-col justify-center px-8 md:px-24"
+        >
           <div className="max-w-4xl">
             <div className="mb-6 inline-flex items-center gap-4 animate-fade-in-up delay-300">
               <span className="h-[1px] w-12 bg-white/60"></span>
@@ -131,7 +185,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </div>
         </section>
 
-        <section id="section-chapter-1" className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24">
+        <section
+          id="section-chapter-1"
+          className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
+        >
           <ScrollReveal className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter1.eyebrow}
@@ -152,7 +209,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </ScrollReveal>
         </section>
 
-        <section id="section-chapter-2" className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24">
+        <section
+          id="section-chapter-2"
+          className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24"
+        >
           <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter2.eyebrow}
@@ -173,7 +233,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </div>
         </section>
 
-        <section id="section-chapter-3" className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24">
+        <section
+          id="section-chapter-3"
+          className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
+        >
           <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter3.eyebrow}
@@ -194,7 +257,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </div>
         </section>
 
-        <section id="section-chapter-4" className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24">
+        <section
+          id="section-chapter-4"
+          className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24"
+        >
           <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter4.eyebrow}
@@ -215,7 +281,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </div>
         </section>
 
-        <section id="section-chapter-5" className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24">
+        <section
+          id="section-chapter-5"
+          className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
+        >
           <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.chapters.chapter5.eyebrow}
@@ -236,7 +305,10 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           </div>
         </section>
 
-        <section id="section-final" className="flex min-h-[85vh] w-full flex-col items-center justify-center px-8 py-24 text-center md:px-24">
+        <section
+          id="section-final"
+          className="flex min-h-[85vh] w-full flex-col items-center justify-center px-8 py-24 text-center md:px-24"
+        >
           <div className="flex w-full max-w-4xl flex-col items-center rounded-[2rem] border border-white/30 bg-white/20 p-12 shadow-glass backdrop-blur-3xl md:p-24">
             <span className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-white/70">
               {t.final.eyebrow}
@@ -263,7 +335,6 @@ export function LandingPage({ onEnter }: LandingPageProps) {
             </button>
           </div>
         </section>
-
       </div>
       <NavigationDots
         steps={steps}

@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  base: './',
+  base: "./",
   plugins: [react()],
   server: {
     watch: {
@@ -14,8 +14,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
-          motion: ['gsap'],
+          three: ["three", "@react-three/fiber", "@react-three/drei"],
+          motion: ["gsap"],
         },
       },
     },

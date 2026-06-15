@@ -1,6 +1,6 @@
-import { useMemo, useRef } from 'react';
-import { useGLTF, useScroll, useTexture } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from "react";
+import { useGLTF, useScroll, useTexture } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import {
   CircleGeometry,
   Color,
@@ -12,8 +12,8 @@ import {
   ShaderMaterial,
   Texture,
   Vector3,
-} from 'three';
-import { mix, range, smoothstep } from '../../utils/easing';
+} from "three";
+import { mix, range, smoothstep } from "../../utils/easing";
 
 type FoamSurfaceProps = {
   textureSrc: string;
@@ -78,7 +78,9 @@ function createInnerWallSectionGeometry(bowlScene: Group) {
     }
 
     for (let index = 0; index < position.count; index += 1) {
-      vertex.fromBufferAttribute(position, index).applyMatrix4(object.matrixWorld);
+      vertex
+        .fromBufferAttribute(position, index)
+        .applyMatrix4(object.matrixWorld);
       if (Math.abs(vertex.y - sectionY) <= band) {
         samples.push({ x: vertex.x, z: vertex.z });
       }
@@ -106,14 +108,16 @@ function createInnerWallSectionGeometry(bowlScene: Group) {
 
   samples.forEach((sample) => {
     const angle = Math.atan2(sample.z - centerZ, sample.x - centerX);
-    const bin = Math.floor((((angle + Math.PI) / (Math.PI * 2)) * bins)) % bins;
+    const bin = Math.floor(((angle + Math.PI) / (Math.PI * 2)) * bins) % bins;
     const radius = Math.hypot(sample.x - centerX, sample.z - centerZ);
     innerRadii[bin] = Math.min(innerRadii[bin], radius);
   });
 
-  const fallbackRadius = innerRadii.reduce((sum, radius) => (
-    Number.isFinite(radius) ? sum + radius : sum
-  ), 0) / innerRadii.filter(Number.isFinite).length;
+  const fallbackRadius =
+    innerRadii.reduce(
+      (sum, radius) => (Number.isFinite(radius) ? sum + radius : sum),
+      0,
+    ) / innerRadii.filter(Number.isFinite).length;
 
   const radii = innerRadii.map((radius, index) => {
     if (Number.isFinite(radius)) {
@@ -151,8 +155,8 @@ function createInnerWallSectionGeometry(bowlScene: Group) {
     const angle = (index / bins) * Math.PI * 2 - Math.PI;
     const insetRadius = radius * bowlScale * 0.985;
     return [
-      (centerX * bowlScale) + Math.cos(angle) * insetRadius,
-      (centerZ * bowlScale) + Math.sin(angle) * insetRadius,
+      centerX * bowlScale + Math.cos(angle) * insetRadius,
+      centerZ * bowlScale + Math.sin(angle) * insetRadius,
     ] as [number, number];
   });
 
@@ -165,16 +169,20 @@ function createInnerWallSectionGeometry(bowlScene: Group) {
 }
 
 export function FoamSurface({ textureSrc, bowlSrc }: FoamSurfaceProps) {
-  const meshRef = useRef<Mesh<ShapeGeometry | CircleGeometry, ShaderMaterial>>(null);
+  const meshRef =
+    useRef<Mesh<ShapeGeometry | CircleGeometry, ShaderMaterial>>(null);
   const scroll = useScroll();
   const texture = useTexture(textureSrc) as Texture;
   const bowl = useGLTF(bowlSrc);
 
-  const geometry = useMemo(() => createInnerWallSectionGeometry(bowl.scene), [bowl.scene]);
+  const geometry = useMemo(
+    () => createInnerWallSectionGeometry(bowl.scene),
+    [bowl.scene],
+  );
   const uniforms = useMemo(
     () => ({
       uTexture: { value: texture },
-      uTint: { value: new Color('#8fb960') },
+      uTint: { value: new Color("#8fb960") },
       uOpacity: { value: 0 },
       uImageSize: { value: 2.8 },
       uTextureRotation: { value: 0 },
@@ -188,7 +196,7 @@ export function FoamSurface({ textureSrc, bowlSrc }: FoamSurfaceProps) {
     }
 
     const progress = scroll.offset;
-    const whisk = smoothstep(range(progress, 0.76, 0.90));
+    const whisk = smoothstep(range(progress, 0.76, 0.9));
     const final = smoothstep(range(progress, 0.88, 0.98));
     const fadeIn = Math.max(whisk, final);
     const surface = meshRef.current;
@@ -196,10 +204,12 @@ export function FoamSurface({ textureSrc, bowlSrc }: FoamSurfaceProps) {
 
     surface.visible = fadeIn > 0.01;
     surface.scale.setScalar(1);
-    // Fixed at final position — exactly matches WaterFill Y_TOP (-0.12)
-    surface.position.y = -0.12 + Math.sin(clock.elapsedTime * 1.4) * 0.003 * fadeIn;
+
+    surface.position.y =
+      -0.12 + Math.sin(clock.elapsedTime * 1.4) * 0.003 * fadeIn;
     material.uniforms.uOpacity.value = mix(0, 0.94, fadeIn);
-    material.uniforms.uTextureRotation.value = clock.elapsedTime * 0.1 + whisk * 1.2;
+    material.uniforms.uTextureRotation.value =
+      clock.elapsedTime * 0.1 + whisk * 1.2;
   });
 
   return (
