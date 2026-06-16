@@ -8,6 +8,7 @@ import { useTranslation } from "./i18n";
 import { CalculatorPage } from "./components/CalculatorPage";
 import { Header } from "./components/Header";
 import { NavigationDots } from "./components/NavigationDots";
+import { InteractiveMatchaPowder } from "./components/effects/InteractiveMatchaPowder";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
@@ -17,7 +18,7 @@ import {
 const ROUTE_BACKGROUNDS: Record<string, string> = {
   "": "/home-background.jpg",
   "#": "/home-background.jpg",
-  "#make": "/make-background.jpg",
+  "#make": "/make-background.png",
 };
 
 const UNIQUE_BACKGROUNDS = Array.from(
@@ -108,6 +109,13 @@ function App() {
   const { t } = useTranslation();
   const [active3dStep, setActive3dStep] = useState(0);
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const steps3d = [
     { id: "intro", label: t.steps.intro.title, subLabel: t.overlay.ritual },
@@ -203,6 +211,9 @@ function App() {
             <div className="absolute inset-0 bg-black/35" />
           </div>
         ))}
+        {(isHome || isMake) && (
+          <InteractiveMatchaPowder isMobile={isMobile} />
+        )}
       </div>
 
       <div className="relative z-10 w-full h-full">
