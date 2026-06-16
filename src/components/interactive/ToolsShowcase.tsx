@@ -65,7 +65,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
         <div className="w-full h-full cursor-grab active:cursor-grabbing touch-none">
           <Canvas key={activeTool.id} dpr={[1, 2]} camera={{ position: renderConfig.cameraPosition, fov: 45 }}>
             <Suspense fallback={null}>
-              <Stage environment="city" intensity={0.6} adjustCamera={false} center={false} shadows={false}>
+              <Stage environment="city" intensity={0.6} adjustCamera={false} center={{ disable: true }} shadows={false}>
                 <Center>
                   <Model 
                     src={activeTool.modelSrc} 
