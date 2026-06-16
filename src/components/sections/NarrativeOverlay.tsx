@@ -102,26 +102,6 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".hero-copy-panel").forEach((panel) => {
-        gsap.fromTo(
-          panel,
-          { autoAlpha: 0, y: 60 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            ease: "power3.out",
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: panel,
-              scroller: scroll.el,
-              start: "top 78%",
-              end: "center 38%",
-              scrub: 0.6,
-            },
-          },
-        );
-      });
-
       gsap.utils.toArray<HTMLElement>(".eyebrow-anim").forEach((el) => {
         gsap.fromTo(
           el,

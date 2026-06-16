@@ -25,6 +25,12 @@ const UNIQUE_BACKGROUNDS = Array.from(
   new Set(Object.values(ROUTE_BACKGROUNDS)),
 );
 
+const MAX_SCROLL_RESTORE_FRAMES = 30;
+
+type RestorableScrollState = ReturnType<typeof useScroll> & {
+  scroll: { current: number };
+};
+
 function SceneReadyTrigger({ onReady }: { onReady: () => void }) {
   useEffect(() => {
     onReady();
@@ -43,7 +49,7 @@ function SceneScrollController({
   onStepChange,
   stepCount,
 }: SceneScrollControllerProps) {
-  const scroll = useScroll();
+  const scroll = useScroll() as RestorableScrollState;
   const activeStepRef = useRef(0);
 
   const syncStepFromScrollElement = () => {
@@ -87,11 +93,33 @@ function SceneScrollController({
     const savedPosition = readSavedScrollPosition("#3d");
     if (savedPosition === null) return;
 
-    requestAnimationFrame(() => {
-      scroll.el.scrollTo({ top: savedPosition });
+    let frameId = 0;
+    let frameCount = 0;
+
+    const restoreScrollPosition = () => {
+      const maxScrollTop = scroll.el.scrollHeight - scroll.el.clientHeight;
+      const canRestore = maxScrollTop > 0 || savedPosition === 0;
+
+      if (!canRestore && frameCount < MAX_SCROLL_RESTORE_FRAMES) {
+        frameCount += 1;
+        frameId = requestAnimationFrame(restoreScrollPosition);
+        return;
+      }
+
+      const restoredPosition = Math.min(savedPosition, Math.max(0, maxScrollTop));
+      const restoredProgress =
+        maxScrollTop <= 0 ? 0 : restoredPosition / maxScrollTop;
+
+      scroll.el.scrollTop = restoredPosition;
+      scroll.scroll.current = restoredProgress;
+      scroll.el.dispatchEvent(new Event("scroll"));
       syncStepFromScrollElement();
       clearSavedScrollPosition();
-    });
+    };
+
+    frameId = requestAnimationFrame(restoreScrollPosition);
+
+    return () => cancelAnimationFrame(frameId);
   }, [scroll.el]);
 
   useFrame(() => {
