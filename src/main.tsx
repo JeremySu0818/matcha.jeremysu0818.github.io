@@ -1,6 +1,14 @@
 import { createRoot, type Root } from "react-dom/client";
 import App from "./App";
-import "./index.css";
+import "./styles/tailwind.css";
+import "./styles/base.css";
+import "./styles/glass.css";
+import "./styles/typography.css";
+import "./styles/scene.css";
+import "./styles/animations.css";
+import "./styles/dropdowns.css";
+import "./styles/calculator.css";
+import "./styles/header.css";
 
 declare global {
   interface Window {

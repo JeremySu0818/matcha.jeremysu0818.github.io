@@ -1,0 +1,26 @@
+.scalable-header {
+  --header-scale: 1;
+  white-space: nowrap;
+}
+
+.scalable-header * {
+  white-space: nowrap;
+}
+
+.scalable-title {
+  font-size: calc(1.25rem * var(--header-scale)) !important;
+}
+
+@media (min-width: 768px) {
+  .scalable-title {
+    font-size: calc(1.875rem * var(--header-scale)) !important;
+  }
+}
+
+.scalable-nav-link {
+  font-size: calc(0.875rem * var(--header-scale)) !important;
+}
+
+.scalable-lang-btn {
+  font-size: calc(0.875rem * var(--header-scale)) !important;
+}

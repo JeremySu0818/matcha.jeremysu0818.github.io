@@ -1,6 +1,14 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Scroll, ScrollControls, useScroll } from "@react-three/drei";
+import { Suspense, useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Scroll, ScrollControls } from "@react-three/drei";
+import {
+  SceneReadyTrigger,
+  SceneScrollController,
+} from "./app/SceneScrollController";
+import { ROUTE_BACKGROUNDS, UNIQUE_BACKGROUNDS } from "./app/routes";
+import { getSceneSteps } from "./app/sceneSteps";
+import { useHashRoute } from "./app/useHashRoute";
+import { useViewportMobile } from "./app/useViewportMobile";
 import { MatchaScene } from "./components/scene/MatchaScene";
 import { NarrativeOverlay } from "./components/sections/NarrativeOverlay";
 import { LandingPage } from "./components/LandingPage";
@@ -9,166 +17,18 @@ import { CalculatorPage } from "./components/CalculatorPage";
 import { Header } from "./components/Header";
 import { NavigationDots } from "./components/NavigationDots";
 import { InteractiveMatchaPowder } from "./components/effects/InteractiveMatchaPowder";
-import {
-  clearSavedScrollPosition,
-  readSavedScrollPosition,
-  registerScrollPositionGetter,
-} from "./utils/scrollRegistry";
-
-const ROUTE_BACKGROUNDS: Record<string, string> = {
-  "": "/home-background.jpg",
-  "#": "/home-background.jpg",
-  "#make": "/make-background.png",
-};
-
-const UNIQUE_BACKGROUNDS = Array.from(
-  new Set(Object.values(ROUTE_BACKGROUNDS)),
-);
-
-const MAX_SCROLL_RESTORE_FRAMES = 30;
-
-type RestorableScrollState = ReturnType<typeof useScroll> & {
-  scroll: { current: number };
-};
-
-function SceneReadyTrigger({ onReady }: { onReady: () => void }) {
-  useEffect(() => {
-    onReady();
-  }, [onReady]);
-  return null;
-}
-
-interface SceneScrollControllerProps {
-  onScrollElementChange: (el: HTMLElement | null) => void;
-  onStepChange: (step: number) => void;
-  stepCount: number;
-}
-
-function SceneScrollController({
-  onScrollElementChange,
-  onStepChange,
-  stepCount,
-}: SceneScrollControllerProps) {
-  const scroll = useScroll() as RestorableScrollState;
-  const activeStepRef = useRef(0);
-
-  const syncStepFromScrollElement = () => {
-    const maxScrollTop = Math.max(
-      1,
-      scroll.el.scrollHeight - scroll.el.clientHeight,
-    );
-    const progress = Math.min(
-      1,
-      Math.max(0, scroll.el.scrollTop / maxScrollTop),
-    );
-    const maxStep = Math.max(0, stepCount - 1);
-    const step = Math.min(maxStep, Math.max(0, Math.round(progress * maxStep)));
-
-    if (step !== activeStepRef.current) {
-      activeStepRef.current = step;
-      onStepChange(step);
-    }
-  };
-
-  useEffect(() => {
-    onScrollElementChange(scroll.el);
-    return () => onScrollElementChange(null);
-  }, [onScrollElementChange, scroll.el]);
-
-  useEffect(() => {
-    const handleScroll = () => syncStepFromScrollElement();
-    const handleResize = () => syncStepFromScrollElement();
-
-    scroll.el.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
-    syncStepFromScrollElement();
-
-    return () => {
-      scroll.el.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [scroll.el, onStepChange, stepCount]);
-
-  useEffect(() => {
-    const savedPosition = readSavedScrollPosition("#3d");
-    if (savedPosition === null) return;
-
-    let frameId = 0;
-    let frameCount = 0;
-
-    const restoreScrollPosition = () => {
-      const maxScrollTop = scroll.el.scrollHeight - scroll.el.clientHeight;
-      const canRestore = maxScrollTop > 0 || savedPosition === 0;
-
-      if (!canRestore && frameCount < MAX_SCROLL_RESTORE_FRAMES) {
-        frameCount += 1;
-        frameId = requestAnimationFrame(restoreScrollPosition);
-        return;
-      }
-
-      const restoredPosition = Math.min(savedPosition, Math.max(0, maxScrollTop));
-      const restoredProgress =
-        maxScrollTop <= 0 ? 0 : restoredPosition / maxScrollTop;
-
-      scroll.el.scrollTop = restoredPosition;
-      scroll.scroll.current = restoredProgress;
-      scroll.el.dispatchEvent(new Event("scroll"));
-      syncStepFromScrollElement();
-      clearSavedScrollPosition();
-    };
-
-    frameId = requestAnimationFrame(restoreScrollPosition);
-
-    return () => cancelAnimationFrame(frameId);
-  }, [scroll.el]);
-
-  useFrame(() => {
-    syncStepFromScrollElement();
-  });
-
-  return null;
-}
+import { registerScrollPositionGetter } from "./utils/scrollRegistry";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
-  const [route, setRoute] = useState(() => window.location.hash || "");
+  const route = useHashRoute();
   const [sceneReady, setSceneReady] = useState(false);
   const [minTimePassed, setMinTimePassed] = useState(false);
   const { t } = useTranslation();
   const [active3dStep, setActive3dStep] = useState(0);
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const steps3d = [
-    { id: "intro", label: t.steps.intro.title, subLabel: t.overlay.ritual },
-    {
-      id: "powder",
-      label: t.steps.powder.title,
-      subLabel: t.steps.powder.eyebrow,
-    },
-    { id: "sift", label: t.steps.sift.title, subLabel: t.steps.sift.eyebrow },
-    {
-      id: "water",
-      label: t.steps.water.title,
-      subLabel: t.steps.water.eyebrow,
-    },
-    {
-      id: "whisk",
-      label: t.steps.whisk.title,
-      subLabel: t.steps.whisk.eyebrow,
-    },
-    {
-      id: "finish",
-      label: t.steps.finish.title,
-      subLabel: t.overlay.finalRecipe,
-    },
-  ];
+  const isMobile = useViewportMobile(768);
+  const steps3d = getSceneSteps(t);
 
   const handle3dStepClick = (index: number) => {
     if (!sceneScrollEl) return;
@@ -187,14 +47,6 @@ function App() {
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setRoute(window.location.hash || "");
-    };
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
 
   useEffect(() => {
     if (route === "#3d") {

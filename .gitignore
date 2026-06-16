@@ -6,6 +6,8 @@ dist/
 
 # TypeScript cache
 *.tsbuildinfo
+vite.config.js
+vite.config.d.ts
 
 # Environment and local overrides
 .env*

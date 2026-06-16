@@ -1,0 +1,30 @@
+@keyframes langDropdownIn {
+  from {
+    opacity: 0;
+    top: -4px;
+  }
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+@keyframes navDropdownIn {
+  from {
+    opacity: 0;
+    right: -4px;
+  }
+  to {
+    opacity: 1;
+    right: 0;
+  }
+}
+
+.lang-dropdown-glass::-webkit-scrollbar {
+  display: none;
+}
+.lang-dropdown-glass {
+  position: relative;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

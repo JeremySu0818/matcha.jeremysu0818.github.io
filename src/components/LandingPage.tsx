@@ -1,157 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "../i18n";
 import { Header } from "./Header";
 import { NavigationDots } from "./NavigationDots";
-import {
-  clearSavedScrollPosition,
-  readSavedScrollPosition,
-  registerScrollPositionGetter,
-} from "../utils/scrollRegistry";
+import { ScrollReveal } from "./ScrollReveal";
+import { ShadeSimulator } from "./interactive/ShadeSimulator";
+import { ToolsShowcase } from "./interactive/ToolsShowcase";
+import { getLandingSteps } from "./landing/landingNavigation";
+import { renderTitle } from "./landing/renderTitle";
+import { useLandingScrollNavigation } from "./landing/useLandingScrollNavigation";
 
 interface LandingPageProps {
   onEnter: () => void;
 }
 
-import { ScrollReveal } from "./ScrollReveal";
-import { ShadeSimulator } from "./interactive/ShadeSimulator";
-import { ToolsShowcase } from "./interactive/ToolsShowcase";
-
 export function LandingPage({ onEnter }: LandingPageProps) {
   const { t, lang } = useTranslation();
-  const [activeStep, setActiveStep] = useState(0);
-  const [bottomMaskFade, setBottomMaskFade] = useState(0);
-
-  useEffect(() => {
-    const container = document.getElementById("landing-scroll-container");
-    if (!container) return undefined;
-
-    const unregisterHome = registerScrollPositionGetter(
-      "",
-      () => container.scrollTop,
-    );
-    const unregisterHashHome = registerScrollPositionGetter(
-      "#",
-      () => container.scrollTop,
-    );
-    const savedPosition = readSavedScrollPosition(window.location.hash || "#");
-
-    if (savedPosition !== null) {
-      requestAnimationFrame(() => {
-        container.scrollTo({ top: savedPosition });
-        clearSavedScrollPosition();
-      });
-    }
-
-    return () => {
-      unregisterHome();
-      unregisterHashHome();
-    };
-  }, []);
-
-  useEffect(() => {
-    const container = document.getElementById("landing-scroll-container");
-    if (!container) return;
-
-    const handleScroll = () => {
-      const sectionIds = [
-        "hero",
-        "chapter-1",
-        "chapter-2",
-        "chapter-3",
-        "chapter-4",
-        "chapter-5",
-        "final",
-      ];
-      const scrollPos = container.scrollTop + container.clientHeight / 2;
-      const maxScrollTop = Math.max(
-        1,
-        container.scrollHeight - container.clientHeight,
-      );
-      const scrollProgress = container.scrollTop / maxScrollTop;
-      const fadeProgress = Math.min(
-        1,
-        Math.max(0, (scrollProgress - 0.65) / 0.25),
-      );
-
-      setBottomMaskFade(fadeProgress);
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(`section-${sectionIds[i]}`);
-        if (el && scrollPos >= el.offsetTop) {
-          setActiveStep(i);
-          break;
-        }
-      }
-    };
-
-    container.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleStepClick = (index: number) => {
-    const sectionIds = [
-      "hero",
-      "chapter-1",
-      "chapter-2",
-      "chapter-3",
-      "chapter-4",
-      "chapter-5",
-      "final",
-    ];
-    const el = document.getElementById(`section-${sectionIds[index]}`);
-    const container = document.getElementById("landing-scroll-container");
-    if (el && container) {
-      container.scrollTo({
-        top: el.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const steps = [
-    {
-      id: "hero",
-      label: t.hero.title.replace(/\n/g, " "),
-      subLabel: t.nav.home,
-    },
-    {
-      id: "chapter-1",
-      label: t.chapters.chapter1.title.replace(/\n/g, " "),
-      subLabel: t.chapters.chapter1.eyebrow,
-    },
-    {
-      id: "chapter-2",
-      label: t.chapters.chapter2.title.replace(/\n/g, " "),
-      subLabel: t.chapters.chapter2.eyebrow,
-    },
-    {
-      id: "chapter-3",
-      label: t.chapters.chapter3.title.replace(/\n/g, " "),
-      subLabel: t.chapters.chapter3.eyebrow,
-    },
-    {
-      id: "chapter-4",
-      label: t.chapters.chapter4.title.replace(/\n/g, " "),
-      subLabel: t.chapters.chapter4.eyebrow,
-    },
-    {
-      id: "chapter-5",
-      label: t.chapters.chapter5.title.replace(/\n/g, " "),
-      subLabel: t.chapters.chapter5.eyebrow,
-    },
-    { id: "final", label: t.final.title, subLabel: t.final.eyebrow },
-  ];
-
-  const renderTitle = (text: string) => {
-    return text.split("\n").map((line, i) => (
-      <React.Fragment key={i}>
-        {line}
-        {i < text.split("\n").length - 1 && <br />}
-      </React.Fragment>
-    ));
-  };
+  const { activeStep, bottomMaskFade, handleStepClick } =
+    useLandingScrollNavigation();
+  const steps = getLandingSteps(t);
 
   return (
     <div

@@ -1,7 +1,6 @@
 import { useRef, useState, useLayoutEffect } from "react";
-import { useTranslation } from "../i18n";
+import { getCalculatorCopy, useTranslation } from "../i18n";
 import { LanguageSelector } from "./LanguageSelector";
-import { calculatorTranslations } from "../i18n/calculatorTranslations";
 
 interface HeaderProps {
   activeLink: "home" | "3d" | "make";
@@ -17,8 +16,7 @@ export function Header({
   onLoadAnimation = false,
 }: HeaderProps) {
   const { t, lang } = useTranslation();
-  const calculatorCopy =
-    calculatorTranslations[lang] ?? calculatorTranslations.en;
+  const calculatorCopy = getCalculatorCopy(lang);
   const headerRef = useRef<HTMLElement>(null);
   const [scale, setScale] = useState(1);
 

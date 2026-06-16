@@ -1,0 +1,190 @@
+import type { LocaleCopy } from "../types";
+
+export const frCopy: LocaleCopy = {
+  translation: {
+    nav: {
+      home: "Accueil",
+      scene3d: "Scène 3D",
+    },
+    metadata: {
+      title: "Matcha - Ichigo Ichie",
+      description: "Un bol de matcha, un instant suspendu. Suivez le rythme de votre respiration et du défilement pour vivre un rituel de thé méditatif dans un voyage interactif en 3D.",
+    },
+    header: {
+      title: "Matcha",
+    },
+    hero: {
+      eyebrow: "Un rituel de concentration",
+      title: "Éveillez\nvos sens",
+      description:
+        "Dans un monde qui exige de la rapidité, le matcha nous invite à ralentir. Il ne peut être pressé, sous peine d'en gâcher la saveur. Faites défiler vers le bas pour découvrir son histoire.",
+      scroll: "Faire défiler vers le bas",
+    },
+    chapters: {
+      chapter1: {
+        eyebrow: "Chapitre 01",
+        title: "De la Chine au Japon,\nle voyage d'un thé",
+        p1: "L'histoire du matcha commence sous la dynastie Tang. En Chine, les feuilles de thé étaient pressées en briques, moulues en poudre puis fouettées avec de l'eau. En 1191, le moine japonais Eisai rapporta cette méthode et des graines de thé chez lui pour les planter près de Kyoto.",
+        p2: "Durant l'époque de Muromachi, la cérémonie du thé commença à se structurer. Plus tard, Sen no Rikyu fit quelque chose d'extraordinaire : il transforma le thé, d'un étalage de richesse aristocratique en une pratique spirituelle accessible à tous, où il n'y a aucun rang.",
+        p3: "Cette philosophie prit le nom de \"Wabi-sabi\" : trouver la beauté dans l'imperfection et l'impermanence. Un bol asymétrique ou une cuillère en bambou usée sont des détails où réside l'âme.",
+      },
+      chapter2: {
+        eyebrow: "Chapitre 02",
+        title: "Ce vert si éclatant,\ncomment l'obtient-on ?",
+        p1: "Beaucoup se demandent pourquoi le matcha est si vert. Derrière cela se cache une technique agricole intéressante : trois ou quatre semaines avant la récolte, les cultivateurs couvrent les théiers pour les protéger du soleil.",
+        p2: "Ce n'est pas pour tourmenter les plantes, mais pour les forcer à produire de la chlorophylle, accumulant de la L-théanine, responsable de sa douceur. Plus l'ombre est complète, plus le vert est profond et l'arôme riche.",
+        p3: "Les étapes post-récolte sont minutieuses. Les feuilles sont étuvées immédiatement pour stopper l'oxydation. Une fois séchées, on retire les nervures et les tiges. Ce qui reste s'appelle \"Tencha\", moulu dans des moulins en pierre à un rythme de moins de 50 grammes par heure.",
+      },
+      chapter3: {
+        eyebrow: "Chapitre 03",
+        title: "Les vieux compagnons\nà vos côtés",
+        p1: "Dans la cérémonie du thé, les ustensiles sont plus que des outils : ce sont comme de vieux amis avec du caractère. Le Chawan (bol) est le plus fascinant : asymétrique et au glaçage irrégulier, car l'imperfection est l'essence de la beauté.",
+        p2: "Le Chasen est un fouet en bambou sculpté à la main dans une seule pièce. Ses fines tiges émulsionnent la poudre et l'eau chaude en secondes pour créer une mousse veloutée. Quand il est usé, on le remercie lors d'un rituel avant de le brûler.",
+        p3: "Le Chashaku est une cuillère fine en bambou. Bien qu'elle serve uniquement à doser la poudre, chacune est taillée à la main par des maîtres du thé et transmise de génération en génération.",
+      },
+      chapter4: {
+        eyebrow: "Chapitre 04",
+        title: "Wa, Kei, Sei, Jaku,\nune vie en quatre mots",
+        p1: "Sen no Rikyu condensa l'esprit du thé en quatre concepts : Wa (Harmonie) avec l'environnement ; Kei (Respect) envers toutes choses ; Sei (Pureté) de l'esprit ; et Jaku (Tranquillité) dans le silence.",
+        p2: 'Un concept captivant est "Ichigo Ichie" : "un moment, une rencontre". Il signifie que chaque rencontre doit être traitée comme si c\'était la dernière. Ce bol de thé, ce moment exact, cette lumière et cette température ne se reproduiront jamais.',
+        p3: "Cette idée résonne dans nos vies modernes. Parmi tant de notifications, la cérémonie du thé nous rappelle de poser notre téléphone et de vivre l'instant présent.",
+      },
+      chapter5: {
+        eyebrow: "Chapitre 05",
+        title: "Préparer son matcha,\nplus simple qu'il n'y paraît",
+        p1: "On pense souvent que la cérémonie du thé est complexe et requiert des ustensiles coûteux. C'est faux. Pour commencer, vous avez seulement besoin d'un Chawan, d'un Chasen, d'un Chashaku et de matcha en poudre de bonne qualité.",
+        p2: "Contrôlez l'eau entre 70 et 80 °C ; l'eau bouillante le rendrait amer. Mélangez d'abord un peu d'eau avec le matcha pour former une pâte, puis ajoutez le reste. Fouettez rapidement en \"W\" ou \"M\", pas en cercles, jusqu'à obtenir une mousse fine.",
+        p3: "La première fois ne sera pas parfaite, mais c'est une question de pratique. La cérémonie du thé n'exige pas la perfection dès le premier essai, mais valorise l'apprentissage tout au long du chemin.",
+      },
+    },
+    final: {
+      eyebrow: "Présent",
+      title: "Êtes-vous prêt ?",
+      p1: "Après avoir lu cela, vous avez sûrement une perspective différente du matcha. Ce n'est pas seulement une boisson, mais un art de vivre centenaire.",
+      p2: "À présent, nous vous proposons une expérience interactive en 3D. En faisant défiler vers le bas, vous observerez les étapes de la préparation à votre propre rythme.",
+      button: "Entrer dans la scène 3D",
+    },
+    loader: {
+      preparing: "Préparation",
+    },
+    overlay: {
+      ritual: "Rituel",
+      finalRecipe: "Recette",
+      matcha: "Matcha",
+      warmWater: "Eau chaude",
+      waterTemp: "Température",
+      back: "Retour à l'accueil",
+    },
+    steps: {
+      intro: {
+        title: "Ichigo Ichie",
+        body: "Laissez de côté les distractions et observez la naissance d'un bol de thé.",
+      },
+      powder: {
+        eyebrow: "Étape 01",
+        title: "Ajouter la poudre",
+        body: "La fine poudre verte repose dans le tamis au-dessus du bol, attendant en silence de commencer.",
+      },
+      sift: {
+        eyebrow: "Étape 02",
+        title: "Tamiser",
+        body: "Avant de verser l'eau, tamisez le matcha pour assurer une mousse lisse et sans grumeaux.",
+      },
+      water: {
+        eyebrow: "Étape 03",
+        title: "Verser l'eau",
+        body: "Versez de l'eau chaude à 75 °C lentement pour éveiller l'arôme sans brûler la poudre.",
+      },
+      whisk: {
+        eyebrow: "Étape 04",
+        title: "Fouetter",
+        body: "Fouettez rapidement en dessinant un \"W\" avec le Chasen jusqu'à ce qu'une fine mousse apparaisse.",
+      },
+      finish: {
+        title: "Votre moment",
+        body: "C'est votre rituel du matcha. Ralentissez et profitez de ce moment de paix et de douceur.",
+      },
+    },
+  },
+  tools: {
+    title: "Utensiles 3D interactifs",
+    desc: "Cliquez sur les ustensiles ci-dessous pour ouvrir le visualiseur 3D. Faites pivoter et zoomez pour explorer le savoir-faire de près.",
+    clickToView: "Cliquez pour voir le modèle 3D",
+    close3D: "Fermer la vue 3D",
+    loading: "Chargement...",
+    interactionHint: "Glissez pour faire pivoter, défilez pour zoomer",
+    tools: [
+      {
+        id: "chawan",
+        name: "Chawan (Bol)",
+        desc: "Un bol en céramique robuste. Sa forme asymétrique et sa glaçure rustique incarnent la beauté du wabi-sabi.",
+        modelSrc: "/models/tea-bowl.glb",
+        scale: 1,
+      },
+      {
+        id: "chasen",
+        name: "Chasen (Fouet)",
+        desc: "Sculpté dans un seul morceau de bambou en brindilles fines, il est essentiel pour fouetter le matcha en une mousse riche.",
+        modelSrc: "/models/chasen.glb",
+        scale: 1.2,
+      },
+      {
+        id: "chashaku",
+        name: "Chashaku (Spatule)",
+        desc: "Une fine spatule en bambou courbée pour mesurer la poudre. Sculptée à la main à la perfection, représentant la concentration et l'intention.",
+        modelSrc: "/models/chashaku.glb",
+        scale: 1.5,
+      },
+    ],
+  },
+  shade: {
+    shadeTitle: "Simulation de culture ombragée",
+    shadeDesc:
+      "Faites glisser le curseur pour observer les subtiles modifications chimiques de la feuille de thé pendant l'ombrage.",
+    shadeSunlight: "Lumière",
+    shadeFull: "Ombragé",
+    chlorophyll: "Chlorophylle",
+    theanine: "L-Théanine",
+    catechin: "Catéchines",
+    shadeStateSun:
+      "Sous la lumière directe du soleil, la feuille synthétise des catéchines pour se protéger des UV, ce qui donne un goût plus astringent.",
+    shadeStateMed:
+      "À mesure que l'ombrage augmente, la plante ralentit la production de catéchines et commence à accumuler de la L-théanine douce.",
+    shadeStateFull:
+      "Dans l'obscurité profonde, la plante se gorge de chlorophylle et la L-théanine culmine, créant la couleur émeraude signature du matcha et un umami doux.",
+  },
+  calculator: {
+      nav: "Préparer",
+      eyebrow: "Recette personnalisée",
+      title: "Préparez votre matcha",
+      description:
+        "Ajustez la portion, l’intensité et la température de l’eau. Votre recette se met à jour instantanément.",
+      teaType: "Type de thé",
+      types: {
+        koicha: "Koicha",
+        usucha: "Usucha",
+        latte: "Latte",
+      },
+      servingAndStrength: "Portion & intensité",
+      ratioSettings: "Réglages des proportions",
+      serving: "Portion",
+      concentration: "Concentration",
+      teaMilkRatio: "Ratio thé et lait",
+      temperatureSettings: "Température de l’eau",
+      targetTemperature: "Température cible",
+      coldTemperature: "Température de l’eau froide",
+      hotTemperature: "Température de l’eau chaude",
+      recipe: "Recette",
+      matchaPowder: "Poudre de matcha",
+      water: "Eau",
+      milk: "Lait",
+      waterMix: "Mélange de l’eau",
+      hotWater: "Eau chaude",
+      coldWater: "Eau froide",
+      light: "Léger",
+      strong: "Fort",
+      moreMilk: "Plus de lait",
+      moreTea: "Plus de thé",
+      reset: "Réinitialiser",
+    },
+};

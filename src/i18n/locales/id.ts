@@ -1,0 +1,191 @@
+import type { LocaleCopy } from "../types";
+
+export const idCopy: LocaleCopy = {
+  translation: {
+    nav: {
+      home: "Beranda",
+      scene3d: "Adegan 3D",
+    },
+    metadata: {
+      title: "Matcha - Ichigo Ichie",
+      description:
+        "Semangkuk matcha, momen dalam waktu. Ikuti ritme napas dan guliran Anda untuk merasakan ritual pembuatan teh yang meditatif dalam perjalanan interaktif 3D yang imersif.",
+    },
+    header: {
+      title: "Matcha",
+    },
+    hero: {
+      eyebrow: "Ritual Fokus",
+      title: "Bangkitkan\nIndramu",
+      description:
+        "Di era yang menuntut kecepatan, matcha meminta kita untuk melambat. Tidak bisa terburu-buru; tergesa-gesa hanya akan merusak rasa. Gulir ke bawah dan ketahui kisah teh ini.",
+      scroll: "Gulir ke bawah",
+    },
+    chapters: {
+      chapter1: {
+        eyebrow: "Bab 01",
+        title: "Dari Tiongkok ke Jepang,\nPerjalanan Secangkir Teh",
+        p1: "Kisah matcha dimulai pada Dinasti Tang. Saat itu di Tiongkok, daun teh ditekan menjadi balok, digiling menjadi bubuk dan dicampur dengan air. Pada tahun 1191, biksu Jepang Eisai membawa metode ini dan biji teh pulang untuk ditanam di dekat Kyoto.",
+        p2: "Selama periode Muromachi, upacara teh mulai terbentuk. Kemudian Sen no Rikyu mengubah minum teh dari pajangan kekayaan bangsawan menjadi latihan spiritual yang dapat diakses oleh semua orang.",
+        p3: 'Filosofi ini kemudian dikenal sebagai "Wabi-sabi" – menemukan keindahan dalam ketidaksempurnaan dan ketidakkekalan. Mangkuk asimetris atau sendok bambu usang adalah detail tempat jiwa berada.',
+      },
+      chapter2: {
+        eyebrow: "Bab 02",
+        title: "Warna Hijau Cerah Itu,\nBagaimana Terbentuknya?",
+        p1: "Banyak orang heran mengapa matcha begitu hijau cerah. Di baliknya ada teknik pertanian yang menarik: tiga hingga empat minggu sebelum panen, petani menutupi tanaman teh dengan jaring untuk melindunginya dari matahari.",
+        p2: "Ini bukan untuk menyiksa tanaman, tetapi untuk memaksa mereka memproduksi klorofil, mengumpulkan L-theanine yang bertanggung jawab atas rasa manis dan menenangkan. Semakin rindang naungannya, semakin pekat warnanya dan kaya aromanya.",
+        p3: 'Langkah pascapanen bahkan lebih teliti. Daun segera dikukus untuk menghentikan oksidasi. Setelah kering, urat dan batang dibuang. Sisanya disebut "Tencha", yang digiling di pabrik batu kurang dari 50 gram per jam.',
+      },
+      chapter3: {
+        eyebrow: "Bab 03",
+        title: "Teman Lama\ndi Sisi Anda",
+        p1: "Dalam upacara teh, alat bukan sekadar alat; masing-masing memiliki karakter tersendiri. Chawan (mangkuk) adalah yang paling menawan: asimetris dan dengan glasir tidak rata, karena ketidaksempurnaan adalah inti dari keindahan.",
+        p2: "Chasen adalah pengocok bambu yang diukir dengan tangan dari satu bagian bambu. Seratnya yang halus mengemulsi bubuk matcha dan air hangat dalam beberapa detik menjadi busa beludru. Saat aus, ia dibakar dalam sebuah ritual terima kasih.",
+        p3: "Chashaku adalah sendok bambu tipis yang sederhana. Meskipun hanya untuk menakar bubuk, masing-masing diukir dengan tangan oleh master teh dan diwariskan dari generasi ke generasi.",
+      },
+      chapter4: {
+        eyebrow: "Bab 04",
+        title: "Wa, Kei, Sei, Jaku,\nHidup dalam Empat Kata",
+        p1: "Sen no Rikyu merangkum semangat teh dalam empat konsep: Wa (Keselarasan) dengan lingkungan; Kei (Rasa Hormat) terhadap segalanya; Sei (Kemurnian) dalam pikiran; dan Jaku (Ketenangan) dalam keheningan.",
+        p2: 'Konsep menarik lainnya adalah "Ichigo Ichie" – secara harfiah "satu kali, satu pertemuan". Artinya, setiap pertemuan harus diperlakukan seolah-olah itu adalah yang terakhir. Secangkir teh itu, momen itu, cahaya dan suhu tidak akan pernah terulang.',
+        p3: "Ide ini beresonansi dalam kehidupan modern. Di tengah notifikasi yang tak henti-hentinya, upacara teh mengingatkan kita: letakkan ponsel dan tetaplah berada di momen itu.",
+      },
+      chapter5: {
+        eyebrow: "Bab 05",
+        title: "Menyiapkan Matcha,\nLebih Mudah dari yang Anda Pikirkan",
+        p1: "Banyak orang berpikir bahwa upacara teh itu rumit dan membutuhkan peralatan mahal. Tidak juga. Untuk memulai Anda hanya membutuhkan Chawan, Chasen, Chashaku, dan bubuk matcha berkualitas baik di rumah.",
+        p2: 'Jaga suhu air antara 70 hingga 80 °C; air mendidih membuat teh pahit. Pertama campur bubuk dengan sedikit air sampai menjadi pasta, lalu tambahkan sisa air. Kocok cepat dengan Chasen membentuk "W" atau "M", bukan melingkar.',
+        p3: "Uji coba pertama mungkin tidak sempurna, tetapi ini masalah latihan. Upacara teh tidak menuntut kesempurnaan pada percobaan pertama, melainkan menghargai prosesnya.",
+      },
+    },
+    final: {
+      eyebrow: "Sekarang",
+      title: "Apakah Anda Siap?",
+      p1: "Setelah membaca ini, pandangan Anda tentang matcha pasti telah berubah. Ini bukan sekadar minuman, melainkan seni hidup yang berusia ratusan tahun.",
+      p2: "Berikutnya adalah pengalaman 3D interaktif. Saat Anda menggulir ke bawah, langkah-langkah persiapan akan divisualisasikan sesuai kecepatan Anda.",
+      button: "Masuk ke Adegan 3D",
+    },
+    loader: {
+      preparing: "Menyiapkan",
+    },
+    overlay: {
+      ritual: "Ritual",
+      finalRecipe: "Resep",
+      matcha: "Matcha",
+      warmWater: "Air Hangat",
+      waterTemp: "Suhu Air",
+      back: "Kembali ke Beranda",
+    },
+    steps: {
+      intro: {
+        title: "Ichigo Ichie",
+        body: "Tinggalkan kekhawatiran dan saksikan kelahiran secangkir teh dalam keheningan.",
+      },
+      powder: {
+        eyebrow: "Langkah 01",
+        title: "Menambahkan Bubuk",
+        body: "Bubuk hijau halus terletak di saringan di atas mangkuk, menunggu dalam diam dimulainya ritual.",
+      },
+      sift: {
+        eyebrow: "Langkah 02",
+        title: "Menyaring",
+        body: "Sebelum menambahkan air, saring matcha terlebih dahulu. Ini memastikan busa lembut bebas gumpalan.",
+      },
+      water: {
+        eyebrow: "Langkah 03",
+        title: "Menuangkan Air",
+        body: "Tuangkan air hangat bersuhu 75 °C perlahan untuk membangkitkan aroma tanpa menghanguskan bubuk.",
+      },
+      whisk: {
+        eyebrow: "Langkah 04",
+        title: "Mengocok",
+        body: 'Kocok cepat membentuk pola "W" dengan Chasen sampai terbentuk lapisan busa halus di permukaan.',
+      },
+      finish: {
+        title: "Momen Anda",
+        body: "Ini adalah ritual matcha Anda. Melambatlah dan nikmati momen kedamaian dan kemanisan ini.",
+      },
+    },
+  },
+  tools: {
+    title: "Alat 3D Interaktif",
+    desc: "Klik alat di bawah ini untuk membuka penampil 3D. Putar dan perbesar untuk menjelajahi keahlian pembuatannya dari dekat.",
+    clickToView: "Klik untuk melihat model 3D",
+    close3D: "Tutup Tampilan 3D",
+    loading: "Memuat...",
+    interactionHint: "Seret untuk memutar, gulir untuk memperbesar",
+    tools: [
+      {
+        id: "chawan",
+        name: "Chawan (Mangkok)",
+        desc: "Mangkok keramik yang kokoh. Bentuknya yang asimetris dan glasir rustic mewujudkan keindahan wabi-sabi.",
+        modelSrc: "/models/tea-bowl.glb",
+        scale: 1,
+      },
+      {
+        id: "chasen",
+        name: "Chasen (Pengocok)",
+        desc: "Diukir dari sebatang bambu menjadi bilah-bilah halus, sangat penting untuk mengocok matcha hingga menghasilkan busa yang kental.",
+        modelSrc: "/models/chasen.glb",
+        scale: 1.2,
+      },
+      {
+        id: "chashaku",
+        name: "Chashaku (Sendok)",
+        desc: "Sendok bambu melengkung yang ramping untuk menakar bubuk. Diukir dengan tangan secara sempurna, melambangkan fokus dan niat.",
+        modelSrc: "/models/chashaku.glb",
+        scale: 1.5,
+      },
+    ],
+  },
+  shade: {
+    shadeTitle: "Simulasi Budidaya Naungan",
+    shadeDesc:
+      "Geser slider untuk mengamati perubahan kimia halus di dalam daun teh selama proses menaungi.",
+    shadeSunlight: "Sinar Matahari",
+    shadeFull: "Ternaungi",
+    chlorophyll: "Klorofil",
+    theanine: "L-Teanin",
+    catechin: "Katekin",
+    shadeStateSun:
+      "Di bawah sinar matahari langsung, daun mensintesis katekin untuk perlindungan UV, menghasilkan rasa yang lebih sepat.",
+    shadeStateMed:
+      "Seiring meningkatnya naungan, tanaman memperlambat produksi katekin dan mulai mengumpulkan L-teanin yang manis.",
+    shadeStateFull:
+      "Dalam kegelapan pekat, tanaman memproduksi klorofil secara melimpah dan L-teanin mencapai puncaknya, menghasilkan warna hijau zamrud khas matcha dan rasa umami yang manis.",
+  },
+  calculator: {
+      nav: "Buat Matcha",
+      eyebrow: "Resep pribadi",
+      title: "Buat matcha Anda",
+      description:
+        "Sesuaikan porsi, kepekatan, dan suhu air. Resep Anda langsung diperbarui.",
+      teaType: "Jenis teh",
+      types: {
+        koicha: "Koicha",
+        usucha: "Usucha",
+        latte: "Latte",
+      },
+      servingAndStrength: "Porsi & Kepekatan",
+      ratioSettings: "Pengaturan rasio",
+      serving: "Porsi",
+      concentration: "Konsentrasi",
+      teaMilkRatio: "Rasio teh dan susu",
+      temperatureSettings: "Suhu air",
+      targetTemperature: "Suhu target",
+      coldTemperature: "Suhu air dingin",
+      hotTemperature: "Suhu air panas",
+      recipe: "Resep",
+      matchaPowder: "Bubuk matcha",
+      water: "Air",
+      milk: "Susu",
+      waterMix: "Pencampuran air",
+      hotWater: "Air panas",
+      coldWater: "Air dingin",
+      light: "Ringan",
+      strong: "Pekat",
+      moreMilk: "Lebih banyak susu",
+      moreTea: "Lebih banyak teh",
+      reset: "Reset",
+    },
+};

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { SupportedLanguage } from "../../i18n/language";
-import { shadeTranslations } from "../../i18n/shadeTranslations";
+import { getShadeCopy, type SupportedLanguage } from "../../i18n";
 
 interface ShadeSimulatorProps {
   lang: SupportedLanguage;
@@ -8,7 +7,7 @@ interface ShadeSimulatorProps {
 
 export function ShadeSimulator({ lang }: ShadeSimulatorProps) {
   const [shadeValue, setShadeValue] = useState(0);
-  const t = shadeTranslations[lang] || shadeTranslations.en;
+  const t = getShadeCopy(lang);
 
   const chlorophyllPercent = Math.round(30 + shadeValue * 0.7);
   const theaninePercent = Math.round(20 + shadeValue * 0.8);

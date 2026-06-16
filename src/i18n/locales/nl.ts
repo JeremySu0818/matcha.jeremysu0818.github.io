@@ -1,0 +1,191 @@
+import type { LocaleCopy } from "../types";
+
+export const nlCopy: LocaleCopy = {
+  translation: {
+    nav: {
+      home: "Home",
+      scene3d: "3D-scène",
+    },
+    metadata: {
+      title: "Matcha - Ichigo Ichie",
+      description:
+        "Een kom matcha, een moment in de tijd. Volg het ritme van je ademhaling en het scrollen om een meditatief theeritueel te ervaren in een immersieve interactieve 3D-reis.",
+    },
+    header: {
+      title: "Matcha",
+    },
+    hero: {
+      eyebrow: "Een Ritueel van Focus",
+      title: "Ontwaak\nje zintuigen",
+      description:
+        "In een tijdperk dat snelheid eist, vraagt matcha je om te vertragen. Je kunt het niet haasten; haast zou de smaak bederven. Scroll naar beneden en ontdek het verhaal van deze thee.",
+      scroll: "Scroll naar beneden",
+    },
+    chapters: {
+      chapter1: {
+        eyebrow: "Hoofdstuk 01",
+        title: "Van China naar Japan,\nde reis van een thee",
+        p1: "Het verhaal van matcha begint in de Tang-dynastie. Destijds perste men in China theeblaadjes tot koeken, maalden ze tot poeder en mengden ze met water. In 1191 keerde de Japanse monnik Eisai terug uit China met deze methode en theezaden, en plantte ze nabij Kyoto.",
+        p2: "Tijdens de Muromachi-periode nam de theeceremonie vorm aan. Later veranderde Sen no Rikyu het theedrinken van een vertoon van aristocratische rijkdom in een spirituele beoefening die voor iedereen toegankelijk was, zonder onderscheid van rang.",
+        p3: 'Deze filosofie werd bekend als "Wabi-sabi" – schoonheid vinden in imperfectie en vergankelijkheid. Een asymmetrische theekom of een versleten bamboelepel zijn details waarin de ziel leeft.',
+      },
+      chapter2: {
+        eyebrow: "Hoofdstuk 02",
+        title: "Dat levendige groen,\nhoe ontstaat het?",
+        p1: "Velen vragen zich af waarom matcha zo levendig groen is. Dahinter zit een interessante landbouwtechniek: drie tot vier weken voor de oogst bedekken boeren de theestruiken om ze tegen de zon te beschermen.",
+        p2: "Dit is niet om de planten te kwellen, maar om ze te dwingen chlorofyl aan te maken, terwijl ze L-theanine opbouwen – verantwoordelijk voor de zoete, rustgevende smaak. Hoe completer de schaduw, hoe dieper het groen en hoe rijker het aroma.",
+        p3: 'De stappen na de oogst zijn uiterst nauwkeurig. De blaadjes worden direct gestoomd om de oxidatie te stoppen. Na het drogen worden stelen en nerven verwijderd. Wat overblijft heet "Tencha", dat in steenmolens wordt gemalen.',
+      },
+      chapter3: {
+        eyebrow: "Hoofdstuk 03",
+        title: "De oude vrienden\naan je zijde",
+        p1: "Bij de theeceremonie zijn de gereedschappen meer dan hulpmiddelen; ze zijn als oude vrienden met karakter. De Chawan (theekom) is de meest fascinerende: asymmetrisch en onregelmatig geglazuurd, want imperfectie is de essentie van schoonheid.",
+        p2: "De Chasen is een bamboe klopper, met de hand gesneden uit één stuk bambu. Zijn fijne haren emulgeren het matchapoeder en het hete water in seconden tot een romig schuim. Een versleten chasen wordt verbrand in een ritueel om hem te danken.",
+        p3: "De Chashaku is een eenvoudige, dunne bamboelepel. Hoewel hij alleen dient voor het portioneren van het poeder, wordt elke lepel met de hand gesneden door theemeesters.",
+      },
+      chapter4: {
+        eyebrow: "Hoofdstuk 04",
+        title: "Wa, Kei, Sei, Jaku,\neen leven in vier woorden",
+        p1: "Sen no Rikyu vatte de geest van thee samen in vier principes: Wa (Harmonie) met de omgeving; Kei (Respect) voor alle dingen; Sei (Zuiverheid) van geest; en Jaku (Stilte) in de rust.",
+        p2: 'Een boeiend concept is "Ichigo Ichie" – letterlijk "één tijd, één ontmoeting". Het betekent dat elke ontmoeting behandeld moet worden alsof het de laatste is. Die kom thee, dit moment, dit licht en deze temperatuur zullen zich nooit herhalen.',
+        p3: "Dit idee resoneert in het moderne leven. Te midden van eindeloze meldingen herinnert de theeceremonie ons eraan: leg de telefoon weg en wees in het moment.",
+      },
+      chapter5: {
+        eyebrow: "Hoofdstuk 05",
+        title: "Matcha bereiden,\nniet zo moeilijk als je denkt",
+        p1: "Velen denken dat de ceremonie ingewikkeld is en dure accessoires vereist. Dat is niet zo. Om te beginnen heb je alleen een Chawan, een Chasen, een Chashaku en matchapoeder van goede kwaliteit nodig.",
+        p2: "Gebruik water met een temperatuur van 70 tot 80 °C; kokend water maakt de thee bitter. Verras het poeder eerst met wat water tot een pasta, giet dan de rest erbij. Klop de thee snel met de chasen in zigzagbewegingen.",
+        p3: "De eerste poging zal misschien niet perfect zijn, maar het is een kwestie van oefenen. De theeceremonie zoekt niet de perfectie bij de eerste keer, maar het pad daarnaartoe.",
+      },
+    },
+    final: {
+      eyebrow: "Nu",
+      title: "Ben je klaar?",
+      p1: "Nu heb je vast een andere kijk op matcha gekregen. Het is niet zomaar een drankje, maar een eeuwenoude levenskunst.",
+      p2: "Als volgende wacht een interactieve 3D-ervaring. Bij het naar beneden scrollen zie je de stappen van de bereiding op je eigen tempo.",
+      button: "Start 3D-scène",
+    },
+    loader: {
+      preparing: "Voorbereiden",
+    },
+    overlay: {
+      ritual: "Ritueel",
+      finalRecipe: "Recept",
+      matcha: "Matcha",
+      warmWater: "Warm water",
+      waterTemp: "Temperatuur",
+      back: "Terug naar start",
+    },
+    steps: {
+      intro: {
+        title: "Ichigo Ichie",
+        body: "Laat de waan van de dag achter je en ervaar het ontstaan van een kom thee.",
+      },
+      powder: {
+        eyebrow: "Stap 01",
+        title: "Poeder toevoegen",
+        body: "Fijn, groen poeder ligt in de zeef boven de kom en wacht tot het begint.",
+      },
+      sift: {
+        eyebrow: "Stap 02",
+        title: "Zeven",
+        body: "Voor het opgieten wordt het poeder gezeefd. Dit zorgt later voor een fijn, romig schuim.",
+      },
+      water: {
+        eyebrow: "Stap 03",
+        title: "Water gieten",
+        body: "Giet langzaam warm water van 75 °C erbij om het aroma te wekken zonder het poeder te verbranden.",
+      },
+      whisk: {
+        eyebrow: "Stap 04",
+        title: "Kloppen",
+        body: "Klop de thee snel met de chasen in zigzagbewegingen tot er een fluweelzacht schuim ontstaat.",
+      },
+      finish: {
+        title: "Jouw moment",
+        body: "Dit is jouw matcha-ritueel. Vertraag en geniet van dit moment van rust en zoetheid.",
+      },
+    },
+  },
+  tools: {
+    title: "Interactieve 3D-hulpmiddelen",
+    desc: "Klik op de hulpmiddelen hieronder om de 3D-viewer te openen. Draai en zoom om het vakmanschap van dichtbij te bekijken.",
+    clickToView: "Klik om het 3D-model te bekijken",
+    close3D: "Sluit 3D-weergave",
+    loading: "Laden...",
+    interactionHint: "Sweep om te draaien, scroll om te zoomen",
+    tools: [
+      {
+        id: "chawan",
+        name: "Chawan (Kom)",
+        desc: "Een stevige keramische kom. Zijn asymmetrische vorm en rustieke glazuur belichamen de schoonheid van wabi-sabi.",
+        modelSrc: "/models/tea-bowl.glb",
+        scale: 1,
+      },
+      {
+        id: "chasen",
+        name: "Chasen (Klopper)",
+        desc: "Gesneden uit één stuk bamboe in fijne borstelharen, is het essentieel voor het opkloppen van matcha tot een rijke schuimkraag.",
+        modelSrc: "/models/chasen.glb",
+        scale: 1.2,
+      },
+      {
+        id: "chashaku",
+        name: "Chashaku (Lepel)",
+        desc: "Een slanke, gebogen bamboe lepel om poeder af te meten. Met de hand tot perfectie gesneden, wat staat voor focus en intentie.",
+        modelSrc: "/models/chashaku.glb",
+        scale: 1.5,
+      },
+    ],
+  },
+  shade: {
+    shadeTitle: "Schaduwteelt Simulatie",
+    shadeDesc:
+      "Sleep de schuifregelaar om de subtiele chemische veranderingen in het theeblad tijdens het schaduwproces te observeren.",
+    shadeSunlight: "Zonlicht",
+    shadeFull: "Schaduw",
+    chlorophyll: "Bladgroen",
+    theanine: "L-theanine",
+    catechin: "Catechines",
+    shadeStateSun:
+      "Onder direct zonlicht synthetiseert het blad catechines for UV-bescherming, wat resulteert in een wrange smaak.",
+    shadeStateMed:
+      "Naarmate de schaduw toeneemt, vertraagt de plant de catechineproductie en begint deze zoete L-theanine op te hopen.",
+    shadeStateFull:
+      "In diepe duisternis produceert de plant veel bladgroen en bereikt L-theanine zijn piek, wat zorgt voor de diepe smaragdgroene kleur en zoete umami van matcha.",
+  },
+  calculator: {
+      nav: "Bereiden",
+      eyebrow: "Persoonlijk recept",
+      title: "Maak je matcha",
+      description:
+        "Pas de portie, sterkte en watertemperatuur aan. Je recept wordt direct bijgewerkt.",
+      teaType: "Theesoort",
+      types: {
+        koicha: "Koicha",
+        usucha: "Usucha",
+        latte: "Latte",
+      },
+      servingAndStrength: "Portie & sterkte",
+      ratioSettings: "Verhoudingsinstellingen",
+      serving: "Portie",
+      concentration: "Concentratie",
+      teaMilkRatio: "Verhouding thee en melk",
+      temperatureSettings: "Watertemperatuur",
+      targetTemperature: "Doeltemperatuur",
+      coldTemperature: "Koud watertemperatuur",
+      hotTemperature: "Warm watertemperatuur",
+      recipe: "Recept",
+      matchaPowder: "Matchapoeder",
+      water: "Water",
+      milk: "Melk",
+      waterMix: "Water mengen",
+      hotWater: "Heet water",
+      coldWater: "Koud water",
+      light: "Milt",
+      strong: "Sterk",
+      moreMilk: "Meer melk",
+      moreTea: "Meer thee",
+      reset: "Resetten",
+    },
+};

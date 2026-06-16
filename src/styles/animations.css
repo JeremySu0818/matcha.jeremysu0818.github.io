@@ -1,0 +1,82 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-up-on-load {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.is-loaded .animate-fade-in-up-on-load {
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-75 {
+  animation-delay: 75ms;
+}
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-150 {
+  animation-delay: 150ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+.delay-900 {
+  animation-delay: 900ms;
+}
+.delay-1000 {
+  animation-delay: 1000ms;
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import type { CSSProperties, ReactNode } from "react";
-import type { CalculatorCopy } from "../../i18n/calculatorTranslations";
+import type { CSSProperties } from "react";
+import type { CalculatorCopy } from "../../i18n";
+import { GlassSlot, SectionTitle } from "./CalculatorGlass";
 import { CalculatorSlider } from "./CalculatorSlider";
 import {
   calculateRecipe,
@@ -8,63 +9,10 @@ import {
   TEA_TYPES,
   type TeaType,
 } from "./calculator";
+import { getDefaultValues } from "./calculatorDefaults";
 
 interface TeaCalculatorProps {
   copy: CalculatorCopy;
-}
-
-const getDefaultValues = () =>
-  Object.fromEntries(
-    TEA_TYPES.map((type) => {
-      const config = TEA_CONFIGS[type];
-      return [
-        type,
-        {
-          serving: config.servingDefault,
-          concentration: config.concentrationDefault,
-          temperature: config.temperatureDefault,
-          milkRatio: config.milkRatioDefault ?? 3.75,
-          coldTemperature: 0,
-          hotTemperature: 100,
-        },
-      ];
-    }),
-  ) as Record<
-    TeaType,
-    {
-      serving: number;
-      concentration: number;
-      temperature: number;
-      milkRatio: number;
-      coldTemperature: number;
-      hotTemperature: number;
-    }
-  >;
-
-function SectionTitle({ children }: { children: ReactNode }) {
-  return <h2 className="calculator-card-title">{children}</h2>;
-}
-
-function GlassSlot({
-  children,
-  className = "",
-  shape = "card",
-}: {
-  children: ReactNode;
-  className?: string;
-  shape?: "tab" | "reset" | "card";
-}) {
-  return (
-    <div
-      className={`calculator-glass-slot calculator-glass-slot-${shape} ${className}`}
-    >
-      <div
-        className={`calculator-live-glass calculator-live-glass-${shape}`}
-        aria-hidden="true"
-      />
-      <div className="calculator-visible-reveal">{children}</div>
-    </div>
-  );
 }
 
 const GLASS_REVEAL_TRANSITION = "top 1s cubic-bezier(0.16, 1, 0.3, 1)";

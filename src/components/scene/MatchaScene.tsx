@@ -8,7 +8,6 @@ import {
   Group,
   MeshPhysicalMaterial,
   PerspectiveCamera,
-  Vector3,
 } from "three";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { asset } from "../../utils/assets";
@@ -19,90 +18,20 @@ import { Model } from "./Model";
 import { PowderParticles } from "./PowderParticles";
 import { WaterFill } from "./WaterFill";
 import { WaterStream } from "./WaterStream";
+import {
+  cameraTargets,
+  chasenIdle,
+  chasenUse,
+  kettleIdle,
+  kettleUse,
+  sampleChasenW,
+  sieveIdle,
+  sieveUse,
+  supportSurfaceY,
+  teaTrayPosition,
+} from "./sceneMotion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const supportSurfaceY = -1.36;
-const teaTrayPosition: Tuple3 = [0.5, 0.02, 0];
-const teaTrayTopY = supportSurfaceY + teaTrayPosition[1] + 0.1;
-
-const sieveIdle = {
-  position: [
-    teaTrayPosition[0],
-    teaTrayTopY + 0.3895,
-    teaTrayPosition[2] - 2.5,
-  ] as Tuple3,
-  rotationY: 0.18 + (80 * Math.PI) / 180 + Math.PI / 2,
-};
-
-const sieveUse = {
-  position: [-0.05, 1.82, 0.12] as Tuple3,
-  rotationY: 0.43 + (80 * Math.PI) / 180,
-};
-
-const kettleIdle = {
-  position: [
-    teaTrayPosition[0],
-    teaTrayTopY + 0.02,
-    teaTrayPosition[2] + 3,
-  ] as Tuple3,
-  rotation: [0, -1.285, 0] as Tuple3,
-};
-
-const kettleUse = {
-  position: [0.029, 1.107, 1.663] as Tuple3,
-  rotation: [0.3, -1.285, 0.72] as Tuple3,
-};
-
-const chasenIdle = {
-  position: [-1, teaTrayTopY + 0.2515, teaTrayPosition[2] + 3] as Tuple3,
-  rotation: [0.25, 0, 0] as Tuple3,
-};
-
-const chasenUse = {
-  position: [0, 0.02, -0.07] as Tuple3,
-  rotation: [-0.08, 0, 0] as Tuple3,
-};
-
-const chasenWPoints = [
-  [-1, 1],
-  [-0.5, -1],
-  [0, 1],
-  [0.5, -1],
-  [1, 1],
-] as const;
-
-function sampleChasenW(elapsedTime: number): [number, number] {
-  const segmentCount = (chasenWPoints.length - 1) * 2;
-  const phase = (elapsedTime * 10.8) % segmentCount;
-  const segment = Math.floor(phase);
-  const forward = segment < chasenWPoints.length - 1;
-  const fromIndex = forward ? segment : segmentCount - segment;
-  const toIndex = forward ? fromIndex + 1 : fromIndex - 1;
-  const local = smoothstep(phase - segment);
-  const from = chasenWPoints[fromIndex];
-  const to = chasenWPoints[toIndex];
-
-  const pathX = mix(from[0], to[0], local);
-  const pathZ = mix(from[1], to[1], local);
-
-  return [-pathZ * 0.1596, pathX * 0.2926];
-}
-
-const baseCameraTargets = [
-  new Vector3(0, 6.6, 3.15),
-  new Vector3(0.16, 5.8, 2.72),
-  new Vector3(-0.42, 5.45, 2.52),
-  new Vector3(0.38, 5.28, 2.35),
-  new Vector3(-0.18, 4.92, 2.04),
-  new Vector3(0, 5.55, 2.55),
-];
-
-const cameraTargets = baseCameraTargets.map((v) => {
-  const vZoomed = v.clone().multiplyScalar(2.3);
-  vZoomed.y *= 0.32;
-  return new Vector3(-vZoomed.z, vZoomed.y, vZoomed.x);
-});
 
 export function MatchaScene() {
   const mobile = useMediaQuery("(max-width: 720px)");

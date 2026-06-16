@@ -1,11 +1,24 @@
 import { useState, useEffect } from "react";
-import { translations } from "./translations";
 import { getBrowserLanguage } from "./language";
 import type { SupportedLanguage } from "./language";
-import type { TranslationSchema } from "./translations";
+import { getTranslationCopy } from "./selectors";
 
 export { getBrowserLanguage };
-export type { TranslationSchema, SupportedLanguage };
+export {
+  getCalculatorCopy,
+  getLocaleCopy,
+  getShadeCopy,
+  getToolsCopy,
+  getTranslationCopy,
+} from "./selectors";
+export type {
+  CalculatorCopy,
+  LocaleCopy,
+  ShadeCopy,
+  ToolsCopy,
+  TranslationSchema,
+} from "./types";
+export type { SupportedLanguage };
 
 export function useTranslation() {
   const [lang, setLang] = useState<SupportedLanguage>(() => {
@@ -18,7 +31,7 @@ export function useTranslation() {
   }, []);
 
   useEffect(() => {
-    const t = translations[lang] || translations["en"];
+    const t = getTranslationCopy(lang);
     document.title = t.metadata.title;
 
     const descriptionMeta = document.querySelector('meta[name="description"]');
@@ -29,7 +42,7 @@ export function useTranslation() {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const t = translations[lang] || translations["en"];
+  const t = getTranslationCopy(lang);
 
   return { t, lang };
 }

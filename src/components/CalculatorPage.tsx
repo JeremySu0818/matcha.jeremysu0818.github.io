@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Header } from "./Header";
 import { TeaCalculator } from "../features/calculator/TeaCalculator";
-import { useTranslation } from "../i18n";
-import { calculatorTranslations } from "../i18n/calculatorTranslations";
+import { getCalculatorCopy, useTranslation } from "../i18n";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
@@ -11,7 +10,7 @@ import {
 
 export function CalculatorPage() {
   const { lang } = useTranslation();
-  const copy = calculatorTranslations[lang] ?? calculatorTranslations.en;
+  const copy = getCalculatorCopy(lang);
 
   useEffect(() => {
     const container = document.getElementById("calculator-scroll-container");
