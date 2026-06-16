@@ -294,19 +294,19 @@ export function MatchaScene() {
     }
 
     if (keyLightRef.current) {
-      keyLightRef.current.intensity = mix(2.4, 3.6, gsapState.current.glow);
+      keyLightRef.current.intensity = mix(1.6, 2.4, gsapState.current.glow);
       keyLightRef.current.position.x = mix(0, 0, gsapState.current.glow);
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.6} color="#f8f4ec" />
+      <ambientLight intensity={0.4} color="#f8f4ec" />
       <directionalLight
         ref={keyLightRef}
         castShadow
         position={[0, 7, 0]}
-        intensity={2.4}
+        intensity={1.6}
         color="#fff8ee"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -319,20 +319,20 @@ export function MatchaScene() {
         shadow-camera-near={0.5}
         shadow-camera-far={20}
       />
-      <directionalLight position={[3, 5, -3]} intensity={0.5} color="#e8dcc8" />
+      <directionalLight position={[3, 5, -3]} intensity={0.3} color="#e8dcc8" />
       <directionalLight
         position={[-1, 2, 6]}
-        intensity={0.35}
+        intensity={0.2}
         color="#dce8d0"
       />
       <pointLight
         position={[0, 3.5, 1.5]}
-        intensity={0.25}
+        intensity={0.15}
         color="#d8e7b6"
         distance={10}
         decay={2}
       />
-      <Environment preset="apartment" environmentIntensity={0.65} />
+      <Environment preset="apartment" environmentIntensity={0.4} />
 
       <Model
         src={asset("models/room.glb")}
