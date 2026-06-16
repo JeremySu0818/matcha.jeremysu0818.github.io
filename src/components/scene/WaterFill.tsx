@@ -225,16 +225,16 @@ export function WaterFill({ bowlSrc }: WaterFillProps) {
     mat.uniforms.uTime.value = clock.elapsedTime;
     mat.uniforms.uFillRatio.value = totalFill;
 
-    const greenTint = smoothstep(range(progress, 0.55, 0.8));
+    const greenTint = smoothstep(range(progress, 0.51, 0.72));
     mat.uniforms.uColorDeep.value.set(
-      mix(0.72, 0.55, greenTint),
-      mix(0.83, 0.72, greenTint),
-      mix(0.78, 0.42, greenTint),
+      mix(0.72, 0.38, greenTint),
+      mix(0.83, 0.65, greenTint),
+      mix(0.78, 0.26, greenTint),
     );
     mat.uniforms.uColorEdge.value.set(
-      mix(0.84, 0.68, greenTint),
-      mix(0.91, 0.8, greenTint),
-      mix(0.86, 0.52, greenTint),
+      mix(0.84, 0.50, greenTint),
+      mix(0.91, 0.75, greenTint),
+      mix(0.86, 0.36, greenTint),
     );
   });
 

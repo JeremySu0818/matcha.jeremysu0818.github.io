@@ -60,7 +60,7 @@ const chasenIdle = {
 };
 
 const chasenUse = {
-  position: [0, 0.1, -0.07] as Tuple3,
+  position: [0, 0.02, -0.07] as Tuple3,
   rotation: [-0.08, 0, 0] as Tuple3,
 };
 
@@ -74,7 +74,7 @@ const chasenWPoints = [
 
 function sampleChasenW(elapsedTime: number): [number, number] {
   const segmentCount = (chasenWPoints.length - 1) * 2;
-  const phase = (elapsedTime * 9) % segmentCount;
+  const phase = (elapsedTime * 10.8) % segmentCount;
   const segment = Math.floor(phase);
   const forward = segment < chasenWPoints.length - 1;
   const fromIndex = forward ? segment : segmentCount - segment;
@@ -86,7 +86,7 @@ function sampleChasenW(elapsedTime: number): [number, number] {
   const pathX = mix(from[0], to[0], local);
   const pathZ = mix(from[1], to[1], local);
 
-  return [-pathZ * 0.24, pathX * 0.44];
+  return [-pathZ * 0.1596, pathX * 0.2926];
 }
 
 const baseCameraTargets = [
