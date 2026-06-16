@@ -113,7 +113,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - 一期一會",
-      description: "一場以滾動驅動的 3D 抹茶沖泡儀式。",
+      description: "一碗抹茶，一期一會。跟隨呼吸與滾動的節奏，在沉浸式 3D 互動中，體驗從落粉、過篩、注水到擊拂的靜心儀式。",
     },
     header: {
       title: "Matcha",
@@ -218,7 +218,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - 一期一会",
-      description: "一场以滚动驱动的 3D 抹茶冲泡仪式。",
+      description: "一碗抹茶，一期一会。跟随呼吸与滚动的节奏，在沉浸式 3D 互动中，体验从落粉、过筛、注水到击拂的静心仪式。",
     },
     header: {
       title: "Matcha",
@@ -323,7 +323,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Ichigo Ichie",
-      description: "A scroll-driven 3D ritual for making a bowl of matcha.",
+      description: "A bowl of matcha, a moment in time. Follow the rhythm of your breath and scrolls to experience a meditative matcha-making ritual in an immersive 3D interactive journey.",
     },
     header: {
       title: "Matcha",
@@ -428,7 +428,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - 一期一会",
-      description: "スクロールで体験する抹茶を点てる3Dの儀式。",
+      description: "一碗の抹茶、一期一会。呼吸とスクロールのリズムに合わせ、没入感のある3Dインタラクションの中で、落粉、過篩、注水から点茶にいたる静心儀式をご体験ください。",
     },
     header: {
       title: "Matcha",
@@ -533,7 +533,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - 일기일회",
-      description: "스크롤로 체험하는 3D 말차 우리기 의식.",
+      description: "말차 한 잔, 일기일회. 호흡과 스크롤의 리듬에 맞춰 몰입형 3D 인터랙션을 통해 가루 넣기, 체 치기, 물 붓기에서 거품 내기까지 마음이 평온해지는 다도 의식을 체험해 보세요.",
     },
     header: {
       title: "Matcha",
@@ -639,7 +639,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Ein scrollgesteuertes 3D-Ritual zur Zubereitung einer Schale Matcha.",
+        "Eine Schale Matcha, ein flüchtiger Moment. Folgen Sie dem Rhythmus Ihres Atems und des Scrollens, um ein meditatives Matcha-Ritual in einer immersiven interaktiven 3D-Reise zu erleben.",
     },
     header: {
       title: "Matcha",
@@ -745,7 +745,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Un ritual en 3D para preparar un tazón de matcha guiado por el movimiento.",
+        "Un tazón de matcha, un momento en el tiempo. Sigue el ritmo de tu respiración y del desplazamiento para experimentar un ritual de té meditativo en un viaje interactivo en 3D.",
     },
     header: {
       title: "Matcha",
@@ -850,7 +850,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Ichigo Ichie",
-      description: "Un rituel 3D interactif pour préparer un bol de matcha.",
+      description: "Un bol de matcha, un instant suspendu. Suivez le rythme de votre respiration et du défilement pour vivre un rituel de thé méditatif dans un voyage interactif en 3D.",
     },
     header: {
       title: "Matcha",
@@ -956,7 +956,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Un rituale 3D guidato dallo scorrimento per preparare una tazza di matcha.",
+        "Una tazza di matcha, un momento nel tempo. Segui il ritmo del tuo respiro e dello scorrimento per vivere un meditativo rituale del tè in un viaggio interattivo 3D.",
     },
     header: {
       title: "Matcha",
@@ -1062,7 +1062,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Um ritual em 3D guiado por rolagem para preparar uma tigela de matcha.",
+        "Uma tigela de matcha, um momento no tempo. Siga o ritmo da sua respiração e da rolagem para vivenciar um ritual de chá meditativo em uma jornada interativa 3D.",
     },
     header: {
       title: "Matcha",
@@ -1168,7 +1168,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Интерактивный 3D-ритуал приготовления чая матча при прокрутке.",
+        "Чаша матча, мгновение во времени. Следуйте за ритмом своего дыхания и прокрутки, чтобы пройти медитативный ритуал приготовления чая в интерактивном 3D-путешествии.",
     },
     header: {
       title: "Matcha",
@@ -1273,7 +1273,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Ichigo Ichie",
-      description: "Kaydırma odaklı, 3D matcha hazırlama ritüeli.",
+      description: "Bir kase matcha, zaman içinde bir an. Sürükleyici bir 3D etkileşimli yolculukta meditatif bir çay hazırlama ritüelini deneyimlemek için nefesinizin ve kaydırmanın ritmini takip edin.",
     },
     header: {
       title: "Matcha",
@@ -1378,7 +1378,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Nhất Kỳ Nhất Hội",
-      description: "Nghi thức pha trà matcha 3D tương tác theo cuộn màn hình.",
+      description: "Một chén matcha, một khoảnh khắc ngưng đọng. Hãy làm theo nhịp thở và cuộn màn hình để trải nghiệm nghi thức trà tịnh tâm trong hành trình tương tác 3D sống động.",
     },
     header: {
       title: "Matcha",
@@ -1483,7 +1483,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "ماتشا - إيشيجو إيشيي",
-      description: "طقس ثلاثي الأبعاد تفاعلي لتحضير وعاء من شاي الماتشا.",
+      description: "وعاء من الماتشا، لحظة في الزمن. اتبع رغد أنفاسك وتمريرك لتختبر طقوس تحضير الماتشا التأملية في رحلة تفاعلية ثلاثية الأبعاد غامرة.",
     },
     header: {
       title: "Matcha",
@@ -1588,7 +1588,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Ichigo Ichie",
-      description: "Rolováním ovládaný 3D rituál přípravy misky čaje matcha.",
+      description: "Miska matcha, okamžik v čase. Sledujte rytmus svého dechu a rolování a zažijte meditativní rituál přípravy čaje v pohlcující 3D interaktivní cestě.",
     },
     header: {
       title: "Matcha",
@@ -1694,7 +1694,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "माचा - इचिगो इची",
       description:
-        "माचा चाय का एक प्याला तैयार करने की स्क्रॉल-आधारित 3D विधि।",
+        "माचा का एक प्याला, समय का एक क्षण। एक गहन 3D संवादात्मक यात्रा में ध्यानपूर्ण माचा बनाने की विधि का अनुभव करने के लिए अपनी सांस और स्क्रॉल की लय का पालन करें।",
     },
     header: {
       title: "Matcha",
@@ -1799,7 +1799,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     },
     metadata: {
       title: "Matcha - Ichigo Ichie",
-      description: "Görgetéssel vezérelt 3D matcha tea készítési rituálé.",
+      description: "Egy tál matcha, egy pillanat az időben. Kövesse lélegzetének és görgetésének ritmusát, hogy megtapasztalja a meditatív teázási rituálét egy magával ragadó 3D-s interaktív utazásban.",
     },
     header: {
       title: "Matcha",
@@ -1905,7 +1905,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Ritual pembuatan secangkir matcha 3D interaktif berbasis guliran.",
+        "Semangkuk matcha, momen dalam waktu. Ikuti ritme napas dan guliran Anda untuk merasakan ritual pembuatan teh yang meditatif dalam perjalanan interaktif 3D yang imersif.",
     },
     header: {
       title: "Matcha",
@@ -2011,7 +2011,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Een scroll-gestuurd 3D ritueel voor het bereiden van een kom matcha.",
+        "Een kom matcha, een moment in de tijd. Volg het ritme van je ademhaling en het scrollen om een meditatief theeritueel te ervaren in een immersieve interactieve 3D-reis.",
     },
     header: {
       title: "Matcha",
@@ -2117,7 +2117,7 @@ export const translations: Record<SupportedLanguage, TranslationSchema> = {
     metadata: {
       title: "Matcha - Ichigo Ichie",
       description:
-        "Sterowany przewijaniem interaktywny rytuał przygotowania czarki herbaty matcha 3D.",
+        "Czarka matchy, chwila w czasie. Podążaj za rytmem swojego oddechu i przewijania, aby doświadczyć medytacyjnego rytuału parzenia herbaty w immersyjnej, interaktywnej podróży 3D.",
     },
     header: {
       title: "Matcha",

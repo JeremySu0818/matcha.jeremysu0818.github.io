@@ -15,8 +15,10 @@ export function useTranslation() {
   useEffect(() => {
     const detectedLang = getBrowserLanguage();
     setLang(detectedLang);
+  }, []);
 
-    const t = translations[detectedLang] || translations["en"];
+  useEffect(() => {
+    const t = translations[lang] || translations["en"];
     document.title = t.metadata.title;
 
     const descriptionMeta = document.querySelector('meta[name="description"]');
@@ -24,8 +26,8 @@ export function useTranslation() {
       descriptionMeta.setAttribute("content", t.metadata.description);
     }
 
-    document.documentElement.lang = detectedLang;
-  }, []);
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const t = translations[lang] || translations["en"];
 
