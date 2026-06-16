@@ -10,7 +10,7 @@ import {
 } from "../utils/scrollRegistry";
 
 export function CalculatorPage() {
-  const { t, lang } = useTranslation();
+  const { lang } = useTranslation();
   const copy = calculatorTranslations[lang] ?? calculatorTranslations.en;
 
   useEffect(() => {

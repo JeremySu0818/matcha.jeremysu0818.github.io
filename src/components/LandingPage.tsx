@@ -19,6 +19,7 @@ import { ToolsShowcase } from "./interactive/ToolsShowcase";
 export function LandingPage({ onEnter }: LandingPageProps) {
   const { t, lang } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
+  const [bottomMaskFade, setBottomMaskFade] = useState(0);
 
   useEffect(() => {
     const container = document.getElementById("landing-scroll-container");
@@ -62,6 +63,17 @@ export function LandingPage({ onEnter }: LandingPageProps) {
         "final",
       ];
       const scrollPos = container.scrollTop + container.clientHeight / 2;
+      const maxScrollTop = Math.max(
+        1,
+        container.scrollHeight - container.clientHeight,
+      );
+      const scrollProgress = container.scrollTop / maxScrollTop;
+      const fadeProgress = Math.min(
+        1,
+        Math.max(0, (scrollProgress - 0.65) / 0.25),
+      );
+
+      setBottomMaskFade(fadeProgress);
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(`section-${sectionIds[i]}`);
@@ -146,7 +158,13 @@ export function LandingPage({ onEnter }: LandingPageProps) {
       id="landing-scroll-container"
       className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
     >
-      <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />
+      <div
+        className="fixed bottom-0 left-0 right-0 h-36 origin-bottom bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30"
+        style={{
+          opacity: 1 - bottomMaskFade,
+          transform: `translateY(${bottomMaskFade * 2.5}rem) scaleY(${1 - bottomMaskFade * 0.2})`,
+        }}
+      />
 
       <div className="relative z-10 w-full">
         <Header
