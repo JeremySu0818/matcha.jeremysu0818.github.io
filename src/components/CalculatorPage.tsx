@@ -38,8 +38,6 @@ export function CalculatorPage() {
       id="calculator-scroll-container"
       className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
     >
-      <div className="fixed bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30 animate-fade-in delay-500" />
-
       <div className="relative z-10 w-full">
         <Header
           activeLink="make"

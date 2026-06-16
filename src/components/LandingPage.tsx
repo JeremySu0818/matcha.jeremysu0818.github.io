@@ -14,6 +14,7 @@ interface LandingPageProps {
 
 import { ScrollReveal } from "./ScrollReveal";
 import { ShadeSimulator } from "./interactive/ShadeSimulator";
+import { ToolsShowcase } from "./interactive/ToolsShowcase";
 
 export function LandingPage({ onEnter }: LandingPageProps) {
   const { t, lang } = useTranslation();
@@ -257,6 +258,8 @@ export function LandingPage({ onEnter }: LandingPageProps) {
             <p className="body-text text-lg leading-relaxed text-white">
               {t.chapters.chapter3.p3}
             </p>
+
+            <ToolsShowcase lang={lang} />
           </div>
         </section>
 
