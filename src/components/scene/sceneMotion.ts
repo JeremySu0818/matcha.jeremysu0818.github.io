@@ -1,6 +1,6 @@
-import { Vector3 } from "three";
-import { mix, smoothstep } from "../../utils/easing";
-import type { Tuple3 } from "../../utils/threeTransforms";
+import { Vector3 } from 'three';
+import { mix, smoothstep } from '../../utils/easing';
+import type { Tuple3 } from '../../utils/threeTransforms';
 
 export const supportSurfaceY = -1.36;
 export const teaTrayPosition: Tuple3 = [0.0, 0.02, 0];
@@ -8,7 +8,7 @@ export const teaTrayTopY = supportSurfaceY + teaTrayPosition[1] + 0.1;
 
 export const sieveIdle = {
   position: [
-    teaTrayPosition[0] + 0.49,
+    teaTrayPosition[0] + 0.3,
     teaTrayTopY + 0.3895,
     teaTrayPosition[2] - 2.5,
   ] as Tuple3,
