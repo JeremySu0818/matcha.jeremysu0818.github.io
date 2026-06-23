@@ -75,6 +75,7 @@ export const hiCopy: LocaleCopy = {
       warmWater: "गुनगुना पानी",
       waterTemp: "पानी का तापमान",
       back: "मुख्य पृष्ठ पर वापस जाएं",
+      replay: "एक बार फिर",
     },
     sceneMode: {
       label: "दृश्य मोड",

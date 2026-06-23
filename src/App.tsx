@@ -23,6 +23,8 @@ import { useLoadingGate } from "./hooks/useLoadingGate";
 import { registerScrollPositionGetter } from "./utils/scrollRegistry";
 import { ManualTutorialOverlay } from "./components/ManualTutorialOverlay";
 
+const MAX_MANUAL_COMPLETE_SCROLL_FRAMES = 30;
+
 function App() {
   const route = useHashRoute();
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ function App() {
   const [sceneMode, setSceneMode] = useState<SceneMode>(() => readSceneMode());
   const [manualDone, setManualDone] = useState(false);
   const [manualStage, setManualStage] = useState<ManualStage>("sieve-drag");
+  const [manualResetToken, setManualResetToken] = useState(0);
   const isMobile = useViewportMobile(768);
   const steps3d = getSceneSteps(t);
   const { loaded, markReady } = useLoadingGate(route === "#3d" ? route : null);
@@ -66,6 +69,17 @@ function App() {
     }
   };
 
+  const handleManualReplay = () => {
+    setManualDone(false);
+    setManualStage("sieve-drag");
+    setActive3dStep(2);
+    setManualResetToken((value) => value + 1);
+
+    if (sceneScrollEl) {
+      sceneScrollEl.scrollTo({ top: 0, behavior: "auto" });
+    }
+  };
+
   useEffect(() => {
     if (route === "#3d") {
       setActive3dStep(sceneMode === "manual" ? 2 : 0);
@@ -82,23 +96,43 @@ function App() {
   useEffect(() => {
     if (!manualDone || !sceneScrollEl) return;
 
-    const frame = requestAnimationFrame(() => {
+    let frameId = 0;
+    let frameCount = 0;
+
+    const syncToFinalStep = () => {
       const maxScrollTop = Math.max(
         0,
         sceneScrollEl.scrollHeight - sceneScrollEl.clientHeight,
       );
+
+      if (maxScrollTop <= 0 && frameCount < MAX_MANUAL_COMPLETE_SCROLL_FRAMES) {
+        frameCount += 1;
+        frameId = requestAnimationFrame(syncToFinalStep);
+        return;
+      }
+
       sceneScrollEl.scrollTop = maxScrollTop;
       sceneScrollEl.dispatchEvent(new Event("scroll"));
       setActive3dStep(steps3d.length - 1);
-    });
+    };
 
-    return () => cancelAnimationFrame(frame);
+    frameId = requestAnimationFrame(syncToFinalStep);
+
+    return () => cancelAnimationFrame(frameId);
   }, [manualDone, sceneScrollEl, steps3d.length]);
 
   const isHome = route === "" || route === "#";
   const isMake = route === "#make";
   const currentBg = ROUTE_BACKGROUNDS[route] || "";
   const showNarrativeOverlay = sceneMode === "scroll" || manualDone;
+  const finalActionLabel =
+    sceneMode === "manual" && manualDone ? t.overlay.replay : t.overlay.back;
+  const handleFinalAction =
+    sceneMode === "manual" && manualDone
+      ? handleManualReplay
+      : () => {
+          window.location.hash = "";
+        };
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
@@ -185,6 +219,7 @@ function App() {
                     />
                     <MatchaScene
                       mode={sceneMode}
+                      resetToken={manualResetToken}
                       onManualStepChange={setActive3dStep}
                       onManualStageChange={setManualStage}
                       onManualComplete={() => setManualDone(true)}
@@ -192,9 +227,8 @@ function App() {
                     <Scroll html>
                       <NarrativeOverlay
                         hidden={!showNarrativeOverlay}
-                        onBack={() => {
-                          window.location.hash = "";
-                        }}
+                        actionLabel={finalActionLabel}
+                        onAction={handleFinalAction}
                       />
                     </Scroll>
                   </ScrollControls>

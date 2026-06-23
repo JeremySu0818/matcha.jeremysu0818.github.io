@@ -40,12 +40,14 @@ function getPanelMargin(isFinal: boolean, index: number) {
 
 interface NarrativeOverlayProps {
   hidden?: boolean;
-  onBack: () => void;
+  onAction: () => void;
+  actionLabel: string;
 }
 
 export function NarrativeOverlay({
   hidden = false,
-  onBack,
+  onAction,
+  actionLabel,
 }: NarrativeOverlayProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const scroll = useScroll();
@@ -219,11 +221,11 @@ export function NarrativeOverlay({
                         </p>
                         <div className="flex justify-center w-full">
                           <button
-                            onClick={onBack}
+                            onClick={onAction}
                             className="group relative flex items-center overflow-hidden rounded-full border border-white/50 bg-white/20 px-10 py-5 transition-all duration-500 hover:bg-white/30 hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] focus:outline-none"
                           >
                             <span className="font-mono text-sm font-bold uppercase tracking-[0.25em] text-white">
-                              {t.overlay.back}
+                              {actionLabel}
                             </span>
                             <span className="ml-6 flex h-8 w-8 items-center justify-center rounded-full bg-white text-matcha-ink transition-transform duration-500 group-hover:scale-110">
                               →

@@ -75,6 +75,7 @@ export const idCopy: LocaleCopy = {
       warmWater: "Air Hangat",
       waterTemp: "Suhu Air",
       back: "Kembali ke Beranda",
+      replay: "Ulangi lagi",
     },
     sceneMode: {
       label: "Mode adegan",

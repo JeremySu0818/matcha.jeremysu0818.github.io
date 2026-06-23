@@ -75,6 +75,7 @@ export const ptBrCopy: LocaleCopy = {
       warmWater: "Água morna",
       waterTemp: "Temperatura",
       back: "Voltar ao início",
+      replay: "Fazer de novo",
     },
     sceneMode: {
       label: "Modo da cena",

@@ -67,6 +67,7 @@ type DragState = {
 
 interface MatchaSceneProps {
   mode?: SceneMode;
+  resetToken?: number;
   onManualStepChange?: (step: number) => void;
   onManualStageChange?: (stage: ManualStage) => void;
   onManualComplete?: () => void;
@@ -96,6 +97,7 @@ function stageToStep(stage: ManualStage) {
 
 export function MatchaScene({
   mode = "scroll",
+  resetToken = 0,
   onManualStepChange,
   onManualStageChange,
   onManualComplete,
@@ -495,7 +497,7 @@ export function MatchaScene({
     kettleRef.current?.position.set(...kettleIdle.position);
     chasenRef.current?.position.set(...chasenIdle.position);
     updateManualStage("sieve-drag");
-  }, [mode, updateManualStage]);
+  }, [mode, resetToken, updateManualStage]);
 
   useFrame(({ clock }) => {
     const manualAnimation = manualAnimationRef.current;

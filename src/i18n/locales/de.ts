@@ -75,6 +75,7 @@ export const deCopy: LocaleCopy = {
       warmWater: "Wasser",
       waterTemp: "Temperatur",
       back: "Zur Startseite",
+      replay: "Noch einmal",
     },
     sceneMode: {
       label: "Szenenmodus",

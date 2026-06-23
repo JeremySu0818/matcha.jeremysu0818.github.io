@@ -75,6 +75,7 @@ export const ruCopy: LocaleCopy = {
       warmWater: "Вода",
       waterTemp: "Температура",
       back: "На главную",
+      replay: "Ещё раз",
     },
     sceneMode: {
       label: "Режим сцены",

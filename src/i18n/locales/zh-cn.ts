@@ -74,6 +74,7 @@ export const zhCnCopy: LocaleCopy = {
       warmWater: "温水",
       waterTemp: "水温",
       back: "返回首页",
+      replay: "再来一次",
     },
     sceneMode: {
       label: "场景模式",

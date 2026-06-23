@@ -74,6 +74,7 @@ export const jaCopy: LocaleCopy = {
       warmWater: "お湯",
       waterTemp: "湯温",
       back: "ホームに戻る",
+      replay: "もう一度",
     },
     sceneMode: {
       label: "シーンモード",

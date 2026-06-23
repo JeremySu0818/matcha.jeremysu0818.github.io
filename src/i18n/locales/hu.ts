@@ -74,6 +74,7 @@ export const huCopy: LocaleCopy = {
       warmWater: "Meleg víz",
       waterTemp: "Vízhőmérséklet",
       back: "Vissza a főoldalra",
+      replay: "Még egyszer",
     },
     sceneMode: {
       label: "Jelenetmód",

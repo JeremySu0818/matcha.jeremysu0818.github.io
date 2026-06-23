@@ -75,6 +75,7 @@ export const nlCopy: LocaleCopy = {
       warmWater: "Warm water",
       waterTemp: "Temperatuur",
       back: "Terug naar start",
+      replay: "Nog een keer",
     },
     sceneMode: {
       label: "Scènemodus",

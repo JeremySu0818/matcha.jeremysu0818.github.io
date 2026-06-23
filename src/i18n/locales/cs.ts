@@ -74,6 +74,7 @@ export const csCopy: LocaleCopy = {
       warmWater: "Teplá voda",
       waterTemp: "Teplota vody",
       back: "Zpět na úvod",
+      replay: "Ještě jednou",
     },
     sceneMode: {
       label: "Režim scény",

@@ -75,6 +75,7 @@ export const plCopy: LocaleCopy = {
       warmWater: "Ciepła woda",
       waterTemp: "Temperatura wody",
       back: "Powrót do startu",
+      replay: "Jeszcze raz",
     },
     sceneMode: {
       label: "Tryb sceny",

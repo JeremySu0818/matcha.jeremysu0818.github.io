@@ -40,6 +40,7 @@ export interface TranslationSchema {
     warmWater: string;
     waterTemp: string;
     back: string;
+    replay: string;
   };
   sceneMode: {
     label: string;
