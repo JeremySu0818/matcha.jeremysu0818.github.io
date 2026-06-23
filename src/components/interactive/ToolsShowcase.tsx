@@ -2,7 +2,10 @@ import React, { useState, useEffect, Suspense } from "react";
 import { createPortal } from "react-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage, Center } from "@react-three/drei";
+import { SceneReadyTrigger } from "../../app/SceneScrollController";
+import { LoaderOverlay } from "../LoaderOverlay";
 import { Model } from "../scene/Model";
+import { useLoadingGate } from "../../hooks/useLoadingGate";
 import { getToolsCopy, type SupportedLanguage } from "../../i18n";
 import { ToolIcon } from "./ToolIcon";
 import { TOOL_RENDER_CONFIGS, VIEWER_BACKGROUND } from "./toolRenderConfig";
@@ -11,6 +14,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
   const t = getToolsCopy(lang);
   const [activeToolId, setActiveToolId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const { loaded, markReady } = useLoadingGate(activeToolId);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -49,6 +53,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
         </button>
 
         <div className="absolute left-0 top-0 h-[106%] w-[106%] cursor-grab active:cursor-grabbing touch-none">
+          <LoaderOverlay loaded={loaded} text={t.loading} contained variant="dark" />
           <Canvas
             key={activeTool.id}
             className="h-full w-full"
@@ -77,6 +82,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
                 maxDistance={50}
                 target={[0, 0, 0]}
               />
+              <SceneReadyTrigger onReady={markReady} />
             </Suspense>
           </Canvas>
         </div>

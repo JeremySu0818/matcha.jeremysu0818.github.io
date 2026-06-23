@@ -17,18 +17,18 @@ import { CalculatorPage } from "./components/CalculatorPage";
 import { Header } from "./components/Header";
 import { NavigationDots } from "./components/NavigationDots";
 import { InteractiveMatchaPowder } from "./components/effects/InteractiveMatchaPowder";
+import { LoaderOverlay } from "./components/LoaderOverlay";
+import { useLoadingGate } from "./hooks/useLoadingGate";
 import { registerScrollPositionGetter } from "./utils/scrollRegistry";
 
 function App() {
-  const [loaded, setLoaded] = useState(false);
   const route = useHashRoute();
-  const [sceneReady, setSceneReady] = useState(false);
-  const [minTimePassed, setMinTimePassed] = useState(false);
   const { t } = useTranslation();
   const [active3dStep, setActive3dStep] = useState(0);
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
   const isMobile = useViewportMobile(768);
   const steps3d = getSceneSteps(t);
+  const { loaded, markReady } = useLoadingGate(route === "#3d" ? route : null);
 
   const handle3dStepClick = (index: number) => {
     if (!sceneScrollEl) return;
@@ -50,13 +50,7 @@ function App() {
 
   useEffect(() => {
     if (route === "#3d") {
-      setSceneReady(false);
-      setMinTimePassed(false);
       setActive3dStep(0);
-      const timer = setTimeout(() => {
-        setMinTimePassed(true);
-      }, 800);
-      return () => clearTimeout(timer);
     }
   }, [route]);
 
@@ -64,14 +58,6 @@ function App() {
     if (!sceneScrollEl) return undefined;
     return registerScrollPositionGetter("#3d", () => sceneScrollEl.scrollTop);
   }, [sceneScrollEl]);
-
-  useEffect(() => {
-    if (sceneReady && minTimePassed) {
-      setLoaded(true);
-    } else {
-      setLoaded(false);
-    }
-  }, [sceneReady, minTimePassed]);
 
   const isHome = route === "" || route === "#";
   const isMake = route === "#make";
@@ -111,10 +97,7 @@ function App() {
           <main
             className={`relative h-screen w-screen overflow-hidden text-white ${loaded ? "is-loaded" : ""}`}
           >
-            <div className={`loader-overlay ${loaded ? "loaded" : ""}`}>
-              <div className="loader-ring" />
-              <span className="loader-text">{t.loader.preparing}</span>
-            </div>
+            <LoaderOverlay loaded={loaded} text={t.loader.preparing} />
 
             <Header
               activeLink="3d"
@@ -157,7 +140,7 @@ function App() {
                       />
                     </Scroll>
                   </ScrollControls>
-                  <SceneReadyTrigger onReady={() => setSceneReady(true)} />
+                  <SceneReadyTrigger onReady={markReady} />
                 </Suspense>
               </Canvas>
             </div>

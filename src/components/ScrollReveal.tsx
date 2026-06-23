@@ -4,7 +4,6 @@ export interface ScrollRevealProps {
   children: React.ReactNode;
   className?: string;
   delay?: string;
-  /** When true, only animates position without opacity — keeps backdrop-filter visible throughout. */
   glass?: boolean;
 }
 

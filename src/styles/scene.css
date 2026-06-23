@@ -112,6 +112,15 @@
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.loader-overlay-contained {
+  position: absolute;
+  z-index: 25;
+}
+
+.loader-overlay-dark {
+  background: #1a241d;
+}
+
 .loader-overlay.loaded {
   opacity: 0;
   pointer-events: none;
@@ -126,6 +135,11 @@
   animation: loader-spin 1.2s linear infinite;
 }
 
+.loader-overlay-dark .loader-ring {
+  border-color: rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.85);
+}
+
 .loader-text {
   margin-top: 1.25rem;
   font-family: var(--font-mono);
@@ -133,6 +147,10 @@
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: rgba(55, 85, 63, 0.4);
+}
+
+.loader-overlay-dark .loader-text {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 @keyframes loader-spin {
