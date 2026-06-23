@@ -110,6 +110,17 @@ export const trCopy: LocaleCopy = {
         body: "Bu sizin matcha ritüeliniz. Yavaşlayın ve bu sessizlik ve tatlılık anının tadını çıkarın.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Eleği kasenin üzerine sürükleyin",
+      sieveReady: "Matchayı elemek için sağ tıklayın (veya basılı tutun)",
+      sieveReturn: "Geri koymak için eleği sürükleyin",
+      kettleDrag: "Çaydanlığı kasenin üzerine sürükleyin",
+      kettleReady: "Su dökmek için sağ tıklayın (veya basılı tutun)",
+      kettleReturn: "Geri koymak için çaydanlığı sürükleyin",
+      chasenDrag: "Chaseni kasenin üzerine sürükleyin",
+      whisking: "Hızlıca ileri geri sürükleyerek matchayı çırpın",
+      done: "Ritüel Tamamlandı",
+    },
   },
   tools: {
     title: "Etkileşimli 3D Araçlar",

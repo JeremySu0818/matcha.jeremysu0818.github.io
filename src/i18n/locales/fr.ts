@@ -110,6 +110,17 @@ export const frCopy: LocaleCopy = {
         body: "C'est votre rituel du matcha. Ralentissez et profitez de ce moment de paix et de douceur.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Faites glisser le tamis au-dessus du bol",
+      sieveReady: "Faites un clic droit (ou appuyez longuement) pour tamiser le matcha",
+      sieveReturn: "Faites glisser le tamis pour le remettre en place",
+      kettleDrag: "Faites glisser la bouilloire au-dessus du bol",
+      kettleReady: "Faites un clic droit (ou appuyez longuement) pour verser l'eau",
+      kettleReturn: "Faites glisser la bouilloire pour la remettre en place",
+      chasenDrag: "Faites glisser le chasen au-dessus du bol",
+      whisking: "Fouettez le matcha en glissant rapidement d'avant en arrière",
+      done: "Rituel terminé",
+    },
   },
   tools: {
     title: "Utensiles 3D interactifs",

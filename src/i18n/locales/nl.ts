@@ -111,6 +111,17 @@ export const nlCopy: LocaleCopy = {
         body: "Dit is jouw matcha-ritueel. Vertraag en geniet van dit moment van rust en zoetheid.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Sleep zeef boven de kom",
+      sieveReady: "Klik met de rechtermuisknop (of houd ingedrukt) om matcha te zeven",
+      sieveReturn: "Sleep zeef terug om hem terug te zetten",
+      kettleDrag: "Sleep waterkoker boven de kom",
+      kettleReady: "Klik met de rechtermuisknop (of houd ingedrukt) om water te gieten",
+      kettleReturn: "Sleep waterkoker terug om hem terug te zetten",
+      chasenDrag: "Sleep chasen boven de kom",
+      whisking: "Klop matcha door snel heen en weer te slepen",
+      done: "Ritueel voltooid",
+    },
   },
   tools: {
     title: "Interactieve 3D-hulpmiddelen",

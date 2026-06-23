@@ -110,6 +110,17 @@ export const csCopy: LocaleCopy = {
         body: "Toto je váš rituál matcha. Zpomalte a vychutnejte si tento moment klidu a sladkosti.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Přetáhněte sítko nad misku",
+      sieveReady: "Klikněte pravým tlačítkem (nebo dlouze stiskněte) pro prosátí matcha",
+      sieveReturn: "Přetáhněte sítko zpět",
+      kettleDrag: "Přetáhněte konvici nad misku",
+      kettleReady: "Klikněte pravým tlačítkem (nebo dlouze stiskněte) pro nalití vody",
+      kettleReturn: "Přetáhněte konvici zpět",
+      chasenDrag: "Přetáhněte metličku (chasen) nad misku",
+      whisking: "Rychlým tahem tam a zpět vyšlehejte matcha",
+      done: "Rituál dokončen",
+    },
   },
   tools: {
     title: "Interaktivní 3D nástroje",

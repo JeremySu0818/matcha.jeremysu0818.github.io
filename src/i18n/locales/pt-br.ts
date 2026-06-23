@@ -111,6 +111,17 @@ export const ptBrCopy: LocaleCopy = {
         body: "Este é o seu ritual do matcha. Vá mais devagar e aproveite este momento de paz e doçura.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Arraste a peneira sobre a tigela",
+      sieveReady: "Clique com o botão direito (ou pressione e segure) para peneirar o matcha",
+      sieveReturn: "Arraste a peneira para devolvê-la",
+      kettleDrag: "Arraste a chaleira sobre a tigela",
+      kettleReady: "Clique com o botão direito (ou pressione e segure) para despejar a água",
+      kettleReturn: "Arraste a chaleira para devolvê-la",
+      chasenDrag: "Arraste o chasen sobre a tigela",
+      whisking: "Bata o matcha arrastrando rapidamente para frente e para trás",
+      done: "Ritual concluído",
+    },
   },
   tools: {
     title: "Utensílios 3D Interativos",

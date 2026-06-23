@@ -110,6 +110,17 @@ export const huCopy: LocaleCopy = {
         body: "Ez a te matcha rituáléd. Lassíts le és élvezd a csend és az édesség ezen pillanatát.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Húzd a szitát a tál fölé",
+      sieveReady: "Kattints jobb gombbal (vagy tartsd lenyomva) a matcha szitálásához",
+      sieveReturn: "Húzd vissza a szitát a helyére",
+      kettleDrag: "Húzd a vízforralót a tál fölé",
+      kettleReady: "Kattints jobb gombbal (vagy tartsd lenyomva) a víz kiöntéséhez",
+      kettleReturn: "Húzd vissza a vízforralót a helyére",
+      chasenDrag: "Húzd a chasent a tál fölé",
+      whisking: "Habosítsd fel a matchát gyors ide-oda húzással",
+      done: "Rituálé befejezve",
+    },
   },
   tools: {
     title: "Interaktív 3D eszközök",

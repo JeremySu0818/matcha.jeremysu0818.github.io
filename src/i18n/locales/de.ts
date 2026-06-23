@@ -111,6 +111,17 @@ export const deCopy: LocaleCopy = {
         body: "Dies ist Ihr Matcha-Ritual. Finden Sie Ruhe und genießen Sie diesen Moment der Stille und Süße.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Ziehe das Sieb über die Schale",
+      sieveReady: "Rechtsklick (oder lange drücken), um Matcha zu sieben",
+      sieveReturn: "Ziehe das Sieb zurück",
+      kettleDrag: "Ziehe den Wasserkessel über die Schale",
+      kettleReady: "Rechtsklick (oder lange drücken), um Wasser einzugießen",
+      kettleReturn: "Ziehe den Wasserkessel zurück",
+      chasenDrag: "Ziehe den Chasen über die Schale",
+      whisking: "Schlage den Matcha durch schnelles Hin- und Herziehen schaumig",
+      done: "Ritual beendet",
+    },
   },
   tools: {
     title: "Interaktive 3D-Werkzeuge",

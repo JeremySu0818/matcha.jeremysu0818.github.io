@@ -10,7 +10,7 @@ import { readSceneMode, saveSceneMode, type SceneMode } from "./app/sceneMode";
 import { getSceneSteps } from "./app/sceneSteps";
 import { useHashRoute } from "./app/useHashRoute";
 import { useViewportMobile } from "./app/useViewportMobile";
-import { MatchaScene } from "./components/scene/MatchaScene";
+import { MatchaScene, type ManualStage } from "./components/scene/MatchaScene";
 import { NarrativeOverlay } from "./components/sections/NarrativeOverlay";
 import { LandingPage } from "./components/LandingPage";
 import { useTranslation } from "./i18n";
@@ -21,6 +21,7 @@ import { InteractiveMatchaPowder } from "./components/effects/InteractiveMatchaP
 import { LoaderOverlay } from "./components/LoaderOverlay";
 import { useLoadingGate } from "./hooks/useLoadingGate";
 import { registerScrollPositionGetter } from "./utils/scrollRegistry";
+import { ManualTutorialOverlay } from "./components/ManualTutorialOverlay";
 
 function App() {
   const route = useHashRoute();
@@ -29,6 +30,7 @@ function App() {
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
   const [sceneMode, setSceneMode] = useState<SceneMode>(() => readSceneMode());
   const [manualDone, setManualDone] = useState(false);
+  const [manualStage, setManualStage] = useState<ManualStage>("sieve-drag");
   const isMobile = useViewportMobile(768);
   const steps3d = getSceneSteps(t);
   const { loaded, markReady } = useLoadingGate(route === "#3d" ? route : null);
@@ -56,6 +58,7 @@ function App() {
     setSceneMode(nextMode);
     saveSceneMode(nextMode);
     setManualDone(false);
+    setManualStage("sieve-drag");
     setActive3dStep(nextMode === "manual" ? 2 : 0);
 
     if (sceneScrollEl) {
@@ -67,6 +70,7 @@ function App() {
     if (route === "#3d") {
       setActive3dStep(sceneMode === "manual" ? 2 : 0);
       setManualDone(false);
+      setManualStage("sieve-drag");
     }
   }, [route, sceneMode]);
 
@@ -182,6 +186,7 @@ function App() {
                     <MatchaScene
                       mode={sceneMode}
                       onManualStepChange={setActive3dStep}
+                      onManualStageChange={setManualStage}
                       onManualComplete={() => setManualDone(true)}
                     />
                     <Scroll html>
@@ -216,6 +221,11 @@ function App() {
                 darkTheme={false}
               />
             )}
+
+            <ManualTutorialOverlay
+              stage={manualStage}
+              visible={sceneMode === "manual" && !manualDone && loaded}
+            />
           </main>
         )}
       </div>

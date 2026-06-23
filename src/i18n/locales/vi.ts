@@ -110,6 +110,17 @@ export const viCopy: LocaleCopy = {
         body: "Đây là nghi thức matcha dành riêng cho bạn. Hãy chậm lại và tận hưởng sự an yên này.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Kéo rây lên trên bát",
+      sieveReady: "Nhấp chuột phải (hoặc nhấn giữ) để rây matcha",
+      sieveReturn: "Kéo rây để đưa về vị trí cũ",
+      kettleDrag: "Kéo ấm trà lên trên bát",
+      kettleReady: "Nhấp chuột phải (hoặc nhấn giữ) để rót nước",
+      kettleReturn: "Kéo ấm trà để đưa về vị trí cũ",
+      chasenDrag: "Kéo chasen lên trên bát",
+      whisking: "Đánh matcha bằng cách kéo nhanh qua lại",
+      done: "Nghi lễ hoàn tất",
+    },
   },
   tools: {
     title: "Dụng cụ 3D Tương tác",

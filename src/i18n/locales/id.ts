@@ -111,6 +111,17 @@ export const idCopy: LocaleCopy = {
         body: "Ini adalah ritual matcha Anda. Melambatlah dan nikmati momen kedamaian dan kemanisan ini.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Geser saringan di atas mangkuk",
+      sieveReady: "Klik kanan (atau tekan lama) untuk menyaring matcha",
+      sieveReturn: "Geser saringan untuk mengembalikannya",
+      kettleDrag: "Geser ketel di atas mangkuk",
+      kettleReady: "Klik kanan (atau tekan lama) untuk menuangkan air",
+      kettleReturn: "Geser ketel untuk mengembalikannya",
+      chasenDrag: "Geser chasen di atas mangkuk",
+      whisking: "Kocok matcha dengan menggeser cepat maju mundur",
+      done: "Ritual Selesai",
+    },
   },
   tools: {
     title: "Alat 3D Interaktif",

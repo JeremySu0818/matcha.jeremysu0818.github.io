@@ -110,6 +110,17 @@ export const koCopy: LocaleCopy = {
         body: "이것이 바로 당신만을 위한 말차 의식입니다. 걸음을 멈추고 고요함과 달콤함을 즐겨보세요.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "체(sieve)를 다완 위로 드래그하세요",
+      sieveReady: "우클릭(또는 길게 누르기)하여 말차를 치세요",
+      sieveReturn: "체를 드래그하여 제자리에 놓으세요",
+      kettleDrag: "주전자를 다완 위로 드래그하세요",
+      kettleReady: "우클릭(또는 길게 누르기)하여 물을 부으세요",
+      kettleReturn: "주전자를 드래그하여 제자리에 놓으세요",
+      chasenDrag: "차선(chasen)을 다완 위로 드래그하세요",
+      whisking: "빠르게 앞뒤로 드래그하여 말차를 거품 내세요",
+      done: "다도 의식 완료",
+    },
   },
   tools: {
     title: "대화형 3D 다구 전시",

@@ -111,6 +111,17 @@ export const itCopy: LocaleCopy = {
         body: "Questo è il tuo rituale del matcha. Rallenta e goditi questo momento di pace e dolcezza.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Trascina il setaccio sopra la ciotola",
+      sieveReady: "Fai clic con il pulsante destro del mouse (o tieni premuto) per setacciare il matcha",
+      sieveReturn: "Trascina il setaccio per rimetterlo a posto",
+      kettleDrag: "Trascina il bollitore sopra la ciotola",
+      kettleReady: "Fai clic con il pulsante destro del mouse (o tieni premuto) per versare l'acqua",
+      kettleReturn: "Trascina il bollitore per rimetterlo a posto",
+      chasenDrag: "Trascina il chasen sopra la ciotola",
+      whisking: "Frusta il matcha trascinando rapidamente avanti e indietro",
+      done: "Rituale completato",
+    },
   },
   tools: {
     title: "Utensili 3D interattivi",

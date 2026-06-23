@@ -54,6 +54,17 @@ export interface TranslationSchema {
     whisk: EyebrowStepCopy;
     finish: StepCopy;
   };
+  manualTutorial: {
+    sieveDrag: string;
+    sieveReady: string;
+    sieveReturn: string;
+    kettleDrag: string;
+    kettleReady: string;
+    kettleReturn: string;
+    chasenDrag: string;
+    whisking: string;
+    done: string;
+  };
 }
 
 export interface ToolsCopy {

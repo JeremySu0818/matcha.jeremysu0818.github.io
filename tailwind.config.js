@@ -36,6 +36,15 @@ export default {
         elevated:
           "0 32px 64px rgba(31, 49, 40, 0.14), 0 8px 16px rgba(31, 49, 40, 0.06)",
       },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
+      },
+      animation: {
+        float: "float 4s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

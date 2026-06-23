@@ -37,7 +37,7 @@ import {
 gsap.registerPlugin(ScrollTrigger);
 
 type ManualTool = "sieve" | "kettle" | "chasen";
-type ManualStage =
+export type ManualStage =
   | "sieve-drag"
   | "sieve-ready"
   | "sieve-shaking"
@@ -68,6 +68,7 @@ type DragState = {
 interface MatchaSceneProps {
   mode?: SceneMode;
   onManualStepChange?: (step: number) => void;
+  onManualStageChange?: (stage: ManualStage) => void;
   onManualComplete?: () => void;
 }
 
@@ -78,8 +79,8 @@ function cloneTuple(tuple: Tuple3): Tuple3 {
   return [tuple[0], tuple[1], tuple[2]];
 }
 
-function isNearBowl(position: Tuple3) {
-  return Math.hypot(position[0] - 0.11, position[2]) <= BOWL_DROP_RADIUS;
+function isNearBowl(position: Tuple3, radius = BOWL_DROP_RADIUS) {
+  return Math.hypot(position[0] - 0.11, position[2]) <= radius;
 }
 
 function clampDrag(value: number) {
@@ -96,6 +97,7 @@ function stageToStep(stage: ManualStage) {
 export function MatchaScene({
   mode = "scroll",
   onManualStepChange,
+  onManualStageChange,
   onManualComplete,
 }: MatchaSceneProps) {
   const mobile = useMediaQuery("(max-width: 720px)");
@@ -179,8 +181,37 @@ export function MatchaScene({
       manualStageRef.current = stage;
       setManualStage(stage);
       onManualStepChange?.(stageToStep(stage));
+      onManualStageChange?.(stage);
     },
-    [onManualStepChange],
+    [onManualStepChange, onManualStageChange],
+  );
+
+  const getTargetY = useCallback(
+    (tool: ManualTool, stage: ManualStage) => {
+      if (tool === "sieve") {
+        const isUse =
+          stage === "sieve-ready" ||
+          stage === "sieve-shaking" ||
+          stage === "sieve-return";
+        const isDragging = dragRef.current?.tool === "sieve";
+        return isUse || isDragging ? sieveUse.position[1] : sieveIdle.position[1];
+      }
+      if (tool === "kettle") {
+        const isUse =
+          stage === "kettle-ready" ||
+          stage === "pouring" ||
+          stage === "kettle-return";
+        const isDragging = dragRef.current?.tool === "kettle";
+        return isUse || isDragging ? kettleUse.position[1] : kettleIdle.position[1];
+      }
+      // tool === "chasen"
+      const isWhisking = stage === "whisking" || stage === "done";
+      const isDragging = dragRef.current?.tool === "chasen";
+      if (isWhisking) return chasenUse.position[1];
+      if (isDragging) return 1.5;
+      return chasenIdle.position[1];
+    },
+    [],
   );
 
   const startManualAnimation = useCallback(
@@ -262,7 +293,15 @@ export function MatchaScene({
       const current = manualPositionsRef.current[tool];
       const plane = dragPlaneRef.current;
       const point = dragPointRef.current;
-      plane.set(new Vector3(0, 1, 0), -current[1]);
+
+      const targetY =
+        tool === "sieve"
+          ? sieveUse.position[1]
+          : tool === "kettle"
+            ? kettleUse.position[1]
+            : 1.5;
+
+      plane.set(new Vector3(0, 1, 0), -targetY);
 
       if (!event.ray.intersectPlane(plane, point)) {
         return;
@@ -271,8 +310,8 @@ export function MatchaScene({
       dragRef.current = {
         tool,
         pointerId: event.pointerId,
-        y: current[1],
-        offset: point.clone().sub(new Vector3(...current)),
+        y: targetY,
+        offset: point.clone().sub(new Vector3(current[0], targetY, current[2])),
       };
     },
     [canDragTool, mode],
@@ -294,7 +333,7 @@ export function MatchaScene({
 
       const nextPosition: Tuple3 = [
         clampDrag(point.x - drag.offset.x),
-        drag.y,
+        manualPositionsRef.current[tool][1],
         clampDrag(point.z - drag.offset.z),
       ];
       applyManualPosition(tool, nextPosition);
@@ -332,7 +371,7 @@ export function MatchaScene({
       }
 
       if (tool === "kettle" && stage === "kettle-drag") {
-        if (isNearBowl(position)) {
+        if (isNearBowl(position, 1.8)) {
           snapToolUse("kettle");
           manualProgressRef.current = 0.48;
           updateManualStage("kettle-ready");
@@ -479,6 +518,17 @@ export function MatchaScene({
       mode === "manual" ? manualProgressRef.current : scroll.offset;
 
     if (mode === "manual") {
+      const stage = manualStageRef.current;
+      for (const tool of ["sieve", "kettle", "chasen"] as ManualTool[]) {
+        const targetY = getTargetY(tool, stage);
+        const currentPos = manualPositionsRef.current[tool];
+        const currentY = currentPos[1];
+        const nextY = mix(currentY, targetY, 0.15);
+        manualPositionsRef.current[tool] = [currentPos[0], nextY, currentPos[2]] as unknown as Tuple3;
+      }
+    }
+
+    if (mode === "manual") {
       const topCamera = new Vector3(0.11, mobile ? 9.2 : 8.2, 0.02);
       camera.up.set(1, 0, 0);
       camera.position.lerp(topCamera, 0.12);
@@ -573,7 +623,7 @@ export function MatchaScene({
         const isUsePosition =
           stage === "kettle-ready" ||
           stage === "pouring" ||
-          isNearBowl(manualPositionsRef.current.kettle);
+          isNearBowl(manualPositionsRef.current.kettle, 1.8);
         kettleRef.current.position.set(...manualPositionsRef.current.kettle);
         kettleRef.current.rotation.set(
           ...(isUsePosition ? kettleUse.rotation : kettleIdle.rotation),

@@ -110,6 +110,17 @@ export const jaCopy: LocaleCopy = {
         body: "これがあなただけの抹茶の儀式です。歩みを緩め、この静けさと甘みを楽しんでください。",
       },
     },
+    manualTutorial: {
+      sieveDrag: "ふるいを茶碗の上にドラッグ",
+      sieveReady: "右クリック (または長押し) で抹茶をふるう",
+      sieveReturn: "ふるいをドラッグして戻す",
+      kettleDrag: "急須を茶碗の上にドラッグ",
+      kettleReady: "右クリック (または長押し) でお湯を注ぐ",
+      kettleReturn: "急須をドラッグして戻す",
+      chasenDrag: "茶筅を茶碗の上にドラッグ",
+      whisking: "前後に素早くドラッグして抹茶を点てる",
+      done: "お手前頂戴いたします",
+    },
   },
   tools: {
     title: "茶道具 3D 展示",

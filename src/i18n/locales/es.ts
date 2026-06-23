@@ -111,6 +111,17 @@ export const esCopy: LocaleCopy = {
         body: "Este es tu ritual del matcha. Ve más despacio y disfruta de este momento de paz y dulzura.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Arrastra el colador sobre el bol",
+      sieveReady: "Haz clic derecho (o mantén pulsado) para tamizar el matcha",
+      sieveReturn: "Arrastra el colador para devolverlo",
+      kettleDrag: "Arrastra el hervidor sobre el bol",
+      kettleReady: "Haz clic derecho (o mantén pulsado) para verter agua",
+      kettleReturn: "Arrastra el hervidor para devolverlo",
+      chasenDrag: "Arrastra el chasen sobre el bol",
+      whisking: "Bate el matcha arrastrando rápidamente de un lado a otro",
+      done: "Ritual completado",
+    },
   },
   tools: {
     title: "Herramientas 3D interactivas",

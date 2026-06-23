@@ -110,6 +110,17 @@ export const zhTwCopy: LocaleCopy = {
         body: "這就是屬於你的抹茶儀式。放慢腳步，好好享受這一刻的寧靜與甘甜。",
       },
     },
+    manualTutorial: {
+      sieveDrag: "拖曳篩網至茶碗上方",
+      sieveReady: "點擊右鍵 (或長按) 過篩抹茶",
+      sieveReturn: "拖曳篩網放回原位",
+      kettleDrag: "拖曳茶壺至茶碗上方",
+      kettleReady: "點擊右鍵 (或長按) 注水",
+      kettleReturn: "拖曳茶壺放回原位",
+      chasenDrag: "拖曳茶筅至茶碗上方",
+      whisking: "快速來回拖曳以擊拂抹茶",
+      done: "儀式完成",
+    },
   },
   tools: {
     title: "茶道具 3D 互動展示",

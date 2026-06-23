@@ -110,6 +110,17 @@ export const enCopy: LocaleCopy = {
         body: "This is your matcha ritual. Slow down, and fully enjoy this moment of peace and sweetness.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Drag the sieve over the bowl",
+      sieveReady: "Right-click (or long press) to sift matcha",
+      sieveReturn: "Drag the sieve to return",
+      kettleDrag: "Drag the kettle over the bowl",
+      kettleReady: "Right-click (or long press) to pour water",
+      kettleReturn: "Drag the kettle to return",
+      chasenDrag: "Drag the chasen over the bowl",
+      whisking: "Whisk matcha by dragging rapidly back and forth",
+      done: "Ritual Complete",
+    },
   },
   tools: {
     title: "Interactive 3D Tools",

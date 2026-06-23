@@ -111,6 +111,17 @@ export const plCopy: LocaleCopy = {
         body: "To jest Twój rytuał matchy. Zwolnij i ciesz się tym momentem spokoju i słodyczy.",
       },
     },
+    manualTutorial: {
+      sieveDrag: "Przeciągnij sitko nad miskę",
+      sieveReady: "Kliknij prawym przyciskiem myszy (lub naciśnij i przytrzymaj), aby przesiać matchę",
+      sieveReturn: "Przeciągnij sitko, aby je odłożyć",
+      kettleDrag: "Przeciągnij czajnik nad miskę",
+      kettleReady: "Kliknij prawym przyciskiem myszy (lub naciśnij i przytrzymaj), aby nalać wodę",
+      kettleReturn: "Przeciągnij czajnik, aby go odłożyć",
+      chasenDrag: "Przeciągnij chasen nad miskę",
+      whisking: "Ubijaj matchę, przeciągając szybko w tę i z powrotem",
+      done: "Rytuał zakończony",
+    },
   },
   tools: {
     title: "Interaktywne narzędzia 3D",
