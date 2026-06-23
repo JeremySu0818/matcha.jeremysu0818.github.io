@@ -21,7 +21,8 @@ const STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "kettle-return": { top: "30%", left: "70%" },
   "chasen-drag": { top: "25%", left: "75%" },
   "whisking": { top: "60%", left: "70%" },
-  "done": { top: "50%", left: "50%", transform: "translate(-50%, -50%)" },
+  "chasen-return": { top: "25%", left: "75%" },
+  "done": { top: "25%", left: "75%" },
 };
 
 export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayProps) {
@@ -47,6 +48,8 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
         return t.manualTutorial.chasenDrag;
       case "whisking":
         return t.manualTutorial.whisking;
+      case "chasen-return":
+        return t.manualTutorial.chasenReturn;
       case "done":
         return t.manualTutorial.done;
       default:

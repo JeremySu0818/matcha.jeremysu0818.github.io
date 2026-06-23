@@ -64,6 +64,7 @@ export interface TranslationSchema {
     kettleReturn: string;
     chasenDrag: string;
     whisking: string;
+    chasenReturn: string;
     done: string;
   };
 }

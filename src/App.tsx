@@ -22,8 +22,7 @@ import { LoaderOverlay } from "./components/LoaderOverlay";
 import { useLoadingGate } from "./hooks/useLoadingGate";
 import { registerScrollPositionGetter } from "./utils/scrollRegistry";
 import { ManualTutorialOverlay } from "./components/ManualTutorialOverlay";
-
-const MAX_MANUAL_COMPLETE_SCROLL_FRAMES = 30;
+import { ManualCompletionOverlay } from "./components/ManualCompletionOverlay";
 
 function App() {
   const route = useHashRoute();
@@ -93,38 +92,11 @@ function App() {
     return registerScrollPositionGetter("#3d", () => sceneScrollEl.scrollTop);
   }, [sceneScrollEl]);
 
-  useEffect(() => {
-    if (!manualDone || !sceneScrollEl) return;
-
-    let frameId = 0;
-    let frameCount = 0;
-
-    const syncToFinalStep = () => {
-      const maxScrollTop = Math.max(
-        0,
-        sceneScrollEl.scrollHeight - sceneScrollEl.clientHeight,
-      );
-
-      if (maxScrollTop <= 0 && frameCount < MAX_MANUAL_COMPLETE_SCROLL_FRAMES) {
-        frameCount += 1;
-        frameId = requestAnimationFrame(syncToFinalStep);
-        return;
-      }
-
-      sceneScrollEl.scrollTop = maxScrollTop;
-      sceneScrollEl.dispatchEvent(new Event("scroll"));
-      setActive3dStep(steps3d.length - 1);
-    };
-
-    frameId = requestAnimationFrame(syncToFinalStep);
-
-    return () => cancelAnimationFrame(frameId);
-  }, [manualDone, sceneScrollEl, steps3d.length]);
-
   const isHome = route === "" || route === "#";
   const isMake = route === "#make";
   const currentBg = ROUTE_BACKGROUNDS[route] || "";
-  const showNarrativeOverlay = sceneMode === "scroll" || manualDone;
+  const showNarrativeOverlay = sceneMode === "scroll";
+  const showManualCompletionOverlay = sceneMode === "manual" && manualDone;
   const finalActionLabel =
     sceneMode === "manual" && manualDone ? t.overlay.replay : t.overlay.back;
   const handleFinalAction =
@@ -209,13 +181,13 @@ function App() {
                     pages={6}
                     damping={0.18}
                     distance={1}
-                    enabled={sceneMode === "scroll" || manualDone}
+                    enabled={sceneMode === "scroll"}
                   >
                     <SceneScrollController
                       onScrollElementChange={setSceneScrollEl}
                       onStepChange={setActive3dStep}
                       stepCount={steps3d.length}
-                      enabled={sceneMode === "scroll" || manualDone}
+                      enabled={sceneMode === "scroll"}
                     />
                     <MatchaScene
                       mode={sceneMode}
@@ -235,6 +207,12 @@ function App() {
                   <SceneReadyTrigger onReady={markReady} />
                 </Suspense>
               </Canvas>
+
+              <ManualCompletionOverlay
+                visible={showManualCompletionOverlay}
+                actionLabel={finalActionLabel}
+                onAction={handleFinalAction}
+              />
             </div>
 
             <div className="nav-bar text-white pointer-events-none">
@@ -258,7 +236,12 @@ function App() {
 
             <ManualTutorialOverlay
               stage={manualStage}
-              visible={sceneMode === "manual" && !manualDone && loaded}
+              visible={
+                sceneMode === "manual" &&
+                !manualDone &&
+                manualStage !== "done" &&
+                loaded
+              }
             />
           </main>
         )}

@@ -48,6 +48,7 @@ export type ManualStage =
   | "kettle-return"
   | "chasen-drag"
   | "whisking"
+  | "chasen-return"
   | "done";
 
 type ManualAnimation = {
@@ -75,6 +76,8 @@ interface MatchaSceneProps {
 
 const MANUAL_START_PROGRESS = 0.16;
 const BOWL_DROP_RADIUS = 0.72;
+const WHISK_TRAVEL_PER_COUNT = 26;
+const WHISK_TARGET_COUNT = 42;
 
 function cloneTuple(tuple: Tuple3): Tuple3 {
   return [tuple[0], tuple[1], tuple[2]];
@@ -82,6 +85,10 @@ function cloneTuple(tuple: Tuple3): Tuple3 {
 
 function isNearBowl(position: Tuple3, radius = BOWL_DROP_RADIUS) {
   return Math.hypot(position[0] - 0.11, position[2]) <= radius;
+}
+
+function isNearPosition(position: Tuple3, target: Tuple3, radius = 0.8) {
+  return Math.hypot(position[0] - target[0], position[2] - target[2]) <= radius;
 }
 
 function clampDrag(value: number) {
@@ -243,7 +250,11 @@ export function MatchaScene({
     if (tool === "kettle") {
       return stage === "kettle-drag" || stage === "kettle-return";
     }
-    return stage === "chasen-drag" || stage === "whisking";
+    return (
+      stage === "chasen-drag" ||
+      stage === "whisking" ||
+      stage === "chasen-return"
+    );
   }, []);
 
   const completeManualRitual = useCallback(() => {
@@ -253,6 +264,11 @@ export function MatchaScene({
     updateManualStage("done");
     onManualComplete?.();
   }, [onManualComplete, updateManualStage]);
+
+  const beginChasenReturn = useCallback(() => {
+    manualProgressRef.current = 0.98;
+    updateManualStage("chasen-return");
+  }, [updateManualStage]);
 
   const registerWhiskMotion = useCallback(
     (event: ThreeEvent<PointerEvent>, position: Tuple3) => {
@@ -270,19 +286,22 @@ export function MatchaScene({
       const whiskState = whiskStateRef.current;
       whiskState.travel += movement;
 
-      while (whiskState.travel >= 22 && whiskState.count < 30) {
-        whiskState.travel -= 22;
+      while (
+        whiskState.travel >= WHISK_TRAVEL_PER_COUNT &&
+        whiskState.count < WHISK_TARGET_COUNT
+      ) {
+        whiskState.travel -= WHISK_TRAVEL_PER_COUNT;
         whiskState.count += 1;
       }
 
-      const whiskRatio = Math.min(1, whiskState.count / 30);
+      const whiskRatio = Math.min(1, whiskState.count / WHISK_TARGET_COUNT);
       manualProgressRef.current = mix(0.76, 0.98, smoothstep(whiskRatio));
 
-      if (whiskState.count >= 30) {
-        completeManualRitual();
+      if (whiskState.count >= WHISK_TARGET_COUNT) {
+        beginChasenReturn();
       }
     },
-    [completeManualRitual],
+    [beginChasenReturn],
   );
 
   const handleManualPointerDown = useCallback(
@@ -390,7 +409,11 @@ export function MatchaScene({
 
       if (tool === "chasen" && stage === "chasen-drag") {
         if (isNearBowl(position)) {
-          snapToolUse("chasen");
+          applyManualPosition("chasen", [
+            position[0],
+            chasenUse.position[1],
+            position[2],
+          ]);
           whiskStateRef.current = { count: 0, travel: 0 };
           manualProgressRef.current = 0.76;
           updateManualStage("whisking");
@@ -398,8 +421,21 @@ export function MatchaScene({
           snapToolIdle("chasen");
         }
       }
+
+      if (tool === "chasen" && stage === "chasen-return") {
+        if (isNearPosition(position, chasenIdle.position)) {
+          snapToolIdle("chasen");
+          completeManualRitual();
+        } else {
+          applyManualPosition("chasen", [
+            position[0],
+            chasenIdle.position[1],
+            position[2],
+          ]);
+        }
+      }
     },
-    [mode, snapToolIdle, snapToolUse, updateManualStage],
+    [applyManualPosition, completeManualRitual, mode, snapToolIdle, snapToolUse, updateManualStage],
   );
 
   const handleManualContextMenu = useCallback(
@@ -647,22 +683,23 @@ export function MatchaScene({
       if (mode === "manual") {
         const stage = manualStageRef.current;
         if (stage === "whisking" || stage === "done") {
-          const whiskStrength =
-            stage === "done"
-              ? 0
-              : smoothstep(Math.min(1, whiskStateRef.current.count / 30));
-          const [wPathX, wPathZ] = sampleChasenW(clock.elapsedTime);
-          const wMotionX = wPathX * Math.max(0.4, whiskStrength);
-          const wMotionZ = wPathZ * Math.max(0.4, whiskStrength);
+          const whiskRatio = smoothstep(
+            Math.min(1, whiskStateRef.current.count / WHISK_TARGET_COUNT),
+          );
+          const manualPosition = manualPositionsRef.current.chasen;
+          const tiltZ = Math.max(
+            -0.22,
+            Math.min(0.22, (manualPosition[0] - chasenUse.position[0]) * 0.45),
+          );
           chasenRef.current.position.set(
-            chasenUse.position[0] + wMotionX,
+            manualPosition[0],
             chasenUse.position[1],
-            chasenUse.position[2] + wMotionZ,
+            manualPosition[2],
           );
           chasenRef.current.rotation.set(
             chasenUse.rotation[0],
             0,
-            wMotionX * 0.35,
+            tiltZ * Math.max(0.35, whiskRatio),
           );
         } else {
           const isUsePosition = isNearBowl(manualPositionsRef.current.chasen);
