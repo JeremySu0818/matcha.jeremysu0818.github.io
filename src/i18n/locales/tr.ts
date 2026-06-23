@@ -75,6 +75,7 @@ export const trCopy: LocaleCopy = {
       waterTemp: "Su Sıcaklığı",
       back: "Ana Sayfaya Dön",
       replay: "Bir kez daha",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "Sahne modu",

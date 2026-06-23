@@ -75,6 +75,7 @@ export const koCopy: LocaleCopy = {
       waterTemp: "물 온도",
       back: "홈으로 돌아가기",
       replay: "다시 한 번",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "장면 모드",

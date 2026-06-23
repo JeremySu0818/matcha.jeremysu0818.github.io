@@ -41,6 +41,7 @@ export interface TranslationSchema {
     waterTemp: string;
     back: string;
     replay: string;
+    start: string;
   };
   sceneMode: {
     label: string;

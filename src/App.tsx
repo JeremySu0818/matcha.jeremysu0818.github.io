@@ -23,6 +23,7 @@ import { useLoadingGate } from "./hooks/useLoadingGate";
 import { registerScrollPositionGetter } from "./utils/scrollRegistry";
 import { ManualTutorialOverlay } from "./components/ManualTutorialOverlay";
 import { ManualCompletionOverlay } from "./components/ManualCompletionOverlay";
+import { ManualIntroOverlay } from "./components/ManualIntroOverlay";
 
 function App() {
   const route = useHashRoute();
@@ -30,6 +31,7 @@ function App() {
   const [active3dStep, setActive3dStep] = useState(0);
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
   const [sceneMode, setSceneMode] = useState<SceneMode>(() => readSceneMode());
+  const [manualStarted, setManualStarted] = useState(false);
   const [manualDone, setManualDone] = useState(false);
   const [manualStage, setManualStage] = useState<ManualStage>("sieve-drag");
   const [manualResetToken, setManualResetToken] = useState(0);
@@ -60,6 +62,7 @@ function App() {
     setSceneMode(nextMode);
     saveSceneMode(nextMode);
     setManualDone(false);
+    setManualStarted(false);
     setManualStage("sieve-drag");
     setActive3dStep(nextMode === "manual" ? 2 : 0);
 
@@ -70,6 +73,7 @@ function App() {
 
   const handleManualReplay = () => {
     setManualDone(false);
+    setManualStarted(false);
     setManualStage("sieve-drag");
     setActive3dStep(2);
     setManualResetToken((value) => value + 1);
@@ -83,6 +87,7 @@ function App() {
     if (route === "#3d") {
       setActive3dStep(sceneMode === "manual" ? 2 : 0);
       setManualDone(false);
+      setManualStarted(false);
       setManualStage("sieve-drag");
     }
   }, [route, sceneMode]);
@@ -215,15 +220,7 @@ function App() {
               />
             </div>
 
-            <div className="nav-bar text-white pointer-events-none">
-              <span className="nav-step !text-white/60">
-                {active3dStep === 0
-                  ? ""
-                  : active3dStep >= steps3d.length - 1
-                    ? t.overlay.ritual
-                    : `${String(active3dStep).padStart(2, "0")} / 04`}
-              </span>
-            </div>
+
 
             {showNarrativeOverlay && (
               <NavigationDots
@@ -234,10 +231,16 @@ function App() {
               />
             )}
 
+            <ManualIntroOverlay
+              visible={sceneMode === "manual" && !manualStarted && loaded}
+              onAction={() => setManualStarted(true)}
+            />
+
             <ManualTutorialOverlay
               stage={manualStage}
               visible={
                 sceneMode === "manual" &&
+                manualStarted &&
                 !manualDone &&
                 manualStage !== "done" &&
                 loaded

@@ -214,7 +214,6 @@ export function MatchaScene({
         const isDragging = dragRef.current?.tool === "kettle";
         return isUse || isDragging ? kettleUse.position[1] : kettleIdle.position[1];
       }
-      // tool === "chasen"
       const isWhisking = stage === "whisking" || stage === "done";
       const isDragging = dragRef.current?.tool === "chasen";
       if (isWhisking) return chasenUse.position[1];

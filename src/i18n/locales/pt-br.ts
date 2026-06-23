@@ -76,6 +76,7 @@ export const ptBrCopy: LocaleCopy = {
       waterTemp: "Temperatura",
       back: "Voltar ao início",
       replay: "Fazer de novo",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "Modo da cena",

@@ -6,10 +6,6 @@ interface ManualTutorialOverlayProps {
   visible: boolean;
 }
 
-// ----------------------------------------------------
-// 在這裡設定每個階段卡片的座標 (Set your coordinates here for each stage)
-// 你可以隨意修改 top, left 以及 transform 的值來配合 3D 物件的位置
-// ----------------------------------------------------
 const STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "sieve-drag": { top: "30%", left: "15%" },
   "sieve-ready": { top: "60%", left: "20%" },

@@ -75,6 +75,7 @@ export const viCopy: LocaleCopy = {
       waterTemp: "Nhiệt độ nước",
       back: "Về trang chủ",
       replay: "Làm lại lần nữa",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "Chế độ cảnh",

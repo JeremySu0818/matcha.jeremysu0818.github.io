@@ -76,6 +76,7 @@ export const itCopy: LocaleCopy = {
       waterTemp: "Temperatura",
       back: "Torna all'inizio",
       replay: "Ancora una volta",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "Modalità scena",

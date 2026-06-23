@@ -75,6 +75,7 @@ export const enCopy: LocaleCopy = {
       waterTemp: "Water Temp",
       back: "Back to Home",
       replay: "Brew Again",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "Scene Mode",

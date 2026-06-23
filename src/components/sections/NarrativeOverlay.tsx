@@ -56,6 +56,7 @@ export function NarrativeOverlay({
   const localizedSteps = [
     {
       id: "intro",
+      eyebrow: t.hero?.eyebrow,
       title: t.steps.intro.title,
       body: t.steps.intro.body,
       align: "center" as const,

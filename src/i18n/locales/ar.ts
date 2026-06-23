@@ -75,6 +75,7 @@ export const arCopy: LocaleCopy = {
       waterTemp: "حرارة الماء",
       back: "رجوع للرئيسية",
       replay: "مرة أخرى",
+      start: "Start Ritual",
     },
     sceneMode: {
       label: "وضع المشهد",
