@@ -7,6 +7,7 @@ import { range, smoothstep } from "../../utils/easing";
 type WaterStreamProps = {
   mobile: boolean;
   kettleRef: RefObject<Group | null>;
+  progressRef?: RefObject<number>;
 };
 
 const tubularSegments = 128;
@@ -50,7 +51,11 @@ function createWaterGeometry(curve: CatmullRomCurve3) {
   return geometry;
 }
 
-export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
+export function WaterStream({
+  mobile,
+  kettleRef,
+  progressRef,
+}: WaterStreamProps) {
   const streamRef = useRef<Group>(null);
   const meshRef = useRef<Mesh>(null);
   const materialRef = useRef<any>(null);
@@ -59,10 +64,10 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
   const curve = useMemo(
     () =>
       new CatmullRomCurve3([
-        new Vector3(-0.45, 1.64, 0.11),
-        new Vector3(-0.3, 1.1, 0.07),
-        new Vector3(-0.15, 0.47, 0.036),
-        new Vector3(0.0, -0.15, 0.0),
+        new Vector3(0.04, 1.64, 0.11),
+        new Vector3(0.19, 1.1, 0.07),
+        new Vector3(0.34, 0.47, 0.036),
+        new Vector3(0.49, -0.15, 0.0),
       ]),
     [],
   );
@@ -70,7 +75,7 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
   const tube = useMemo(() => createWaterGeometry(curve), [curve]);
 
   useFrame(({ clock }) => {
-    const progress = scroll.offset;
+    const progress = progressRef?.current ?? scroll.offset;
     const pour =
       smoothstep(range(progress, 0.49, 0.52)) *
       (1 - smoothstep(range(progress, 0.62, 0.64)));
@@ -88,12 +93,12 @@ export function WaterStream({ mobile, kettleRef }: WaterStreamProps) {
       if (spout) {
         spout.localToWorld(p0.set(-12.5852, 11.6278, 0.0));
       } else {
-        p0.set(-0.45, 1.64, 0.11);
+        p0.set(0.04, 1.64, 0.11);
       }
 
       const pourProgress = range(progress, 0.49, 0.64);
       const bowlPoint = new Vector3(
-        -pourProgress * 0.3,
+        -pourProgress * 0.3 + 0.49,
         -0.15,
         -pourProgress * 0.1,
       );

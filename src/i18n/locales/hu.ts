@@ -75,6 +75,11 @@ export const huCopy: LocaleCopy = {
       waterTemp: "Vízhőmérséklet",
       back: "Vissza a főoldalra",
     },
+    sceneMode: {
+      label: "Jelenetmód",
+      scroll: "Görgetés",
+      manual: "Kézi",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

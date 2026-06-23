@@ -76,6 +76,11 @@ export const plCopy: LocaleCopy = {
       waterTemp: "Temperatura wody",
       back: "Powrót do startu",
     },
+    sceneMode: {
+      label: "Tryb sceny",
+      scroll: "Przewijanie",
+      manual: "Ręcznie",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

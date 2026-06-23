@@ -76,6 +76,11 @@ export const ptBrCopy: LocaleCopy = {
       waterTemp: "Temperatura",
       back: "Voltar ao início",
     },
+    sceneMode: {
+      label: "Modo da cena",
+      scroll: "Rolagem",
+      manual: "Manual",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

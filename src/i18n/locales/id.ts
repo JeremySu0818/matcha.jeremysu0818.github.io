@@ -76,6 +76,11 @@ export const idCopy: LocaleCopy = {
       waterTemp: "Suhu Air",
       back: "Kembali ke Beranda",
     },
+    sceneMode: {
+      label: "Mode adegan",
+      scroll: "Gulir",
+      manual: "Manual",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

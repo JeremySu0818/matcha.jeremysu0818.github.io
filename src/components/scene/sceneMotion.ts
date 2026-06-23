@@ -8,7 +8,7 @@ export const teaTrayTopY = supportSurfaceY + teaTrayPosition[1] + 0.1;
 
 export const sieveIdle = {
   position: [
-    teaTrayPosition[0],
+    teaTrayPosition[0] + 0.49,
     teaTrayTopY + 0.3895,
     teaTrayPosition[2] - 2.5,
   ] as Tuple3,
@@ -16,31 +16,31 @@ export const sieveIdle = {
 };
 
 export const sieveUse = {
-  position: [-0.05, 1.82, 0.12] as Tuple3,
-  rotationY: 0.43 + (80 * Math.PI) / 180,
+  position: [0.41, 1.82, 0.01] as Tuple3,
+  rotationY: Math.PI / 2,
 };
 
 export const kettleIdle = {
   position: [
-    teaTrayPosition[0],
+    teaTrayPosition[0] + 0.49,
     teaTrayTopY + 0.02,
     teaTrayPosition[2] + 3,
   ] as Tuple3,
-  rotation: [0, -1.285, 0] as Tuple3,
+  rotation: [0, -Math.PI / 2, 0] as Tuple3,
 };
 
 export const kettleUse = {
-  position: [0.029, 1.107, 1.663] as Tuple3,
-  rotation: [0.3, -1.285, 0.72] as Tuple3,
+  position: [0.519, 1.107, 1.663] as Tuple3,
+  rotation: [0.3, -Math.PI / 2, 0.72] as Tuple3,
 };
 
 export const chasenIdle = {
-  position: [-1, teaTrayTopY + 0.2515, teaTrayPosition[2] + 3] as Tuple3,
+  position: [-0.51, teaTrayTopY + 0.2515, teaTrayPosition[2] + 3] as Tuple3,
   rotation: [0.25, 0, 0] as Tuple3,
 };
 
 export const chasenUse = {
-  position: [0, 0.02, -0.07] as Tuple3,
+  position: [0.49, 0.02, -0.07] as Tuple3,
   rotation: [-0.08, 0, 0] as Tuple3,
 };
 

@@ -75,6 +75,11 @@ export const trCopy: LocaleCopy = {
       waterTemp: "Su Sıcaklığı",
       back: "Ana Sayfaya Dön",
     },
+    sceneMode: {
+      label: "Sahne modu",
+      scroll: "Kaydırma",
+      manual: "Manuel",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

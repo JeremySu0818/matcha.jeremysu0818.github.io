@@ -76,6 +76,11 @@ export const hiCopy: LocaleCopy = {
       waterTemp: "पानी का तापमान",
       back: "मुख्य पृष्ठ पर वापस जाएं",
     },
+    sceneMode: {
+      label: "दृश्य मोड",
+      scroll: "स्क्रोल",
+      manual: "मैन्युअल",
+    },
     steps: {
       intro: {
         title: "इचिगो इची",

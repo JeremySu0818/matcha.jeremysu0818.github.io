@@ -76,6 +76,11 @@ export const itCopy: LocaleCopy = {
       waterTemp: "Temperatura",
       back: "Torna all'inizio",
     },
+    sceneMode: {
+      label: "Modalità scena",
+      scroll: "Scorrimento",
+      manual: "Manuale",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

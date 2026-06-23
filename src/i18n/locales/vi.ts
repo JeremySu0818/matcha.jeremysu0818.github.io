@@ -75,6 +75,11 @@ export const viCopy: LocaleCopy = {
       waterTemp: "Nhiệt độ nước",
       back: "Về trang chủ",
     },
+    sceneMode: {
+      label: "Chế độ cảnh",
+      scroll: "Cuộn",
+      manual: "Thủ công",
+    },
     steps: {
       intro: {
         title: "Nhất Kỳ Nhất Hội",

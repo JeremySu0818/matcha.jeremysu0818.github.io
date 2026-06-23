@@ -76,6 +76,11 @@ export const ruCopy: LocaleCopy = {
       waterTemp: "Температура",
       back: "На главную",
     },
+    sceneMode: {
+      label: "Режим сцены",
+      scroll: "Прокрутка",
+      manual: "Ручной",
+    },
     steps: {
       intro: {
         title: "Итиго итиэ",

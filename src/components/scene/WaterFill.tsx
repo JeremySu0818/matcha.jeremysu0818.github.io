@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import { useGLTF, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -17,6 +17,7 @@ import { mix, range, smoothstep } from "../../utils/easing";
 
 type WaterFillProps = {
   bowlSrc: string;
+  progressRef?: RefObject<number>;
 };
 
 const vertexShader = `
@@ -161,7 +162,7 @@ const BOWL_MODEL_Y = -0.2;
 const Y_BOTTOM = -0.62;
 const Y_TOP = -0.12;
 
-export function WaterFill({ bowlSrc }: WaterFillProps) {
+export function WaterFill({ bowlSrc, progressRef }: WaterFillProps) {
   const meshRef = useRef<Mesh<BufferGeometry, ShaderMaterial>>(null);
   const scroll = useScroll();
   const bowl = useGLTF(bowlSrc);
@@ -192,7 +193,7 @@ export function WaterFill({ bowlSrc }: WaterFillProps) {
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
 
-    const progress = scroll.offset;
+    const progress = progressRef?.current ?? scroll.offset;
 
     const totalFill = smoothstep(range(progress, 0.5, 0.62));
 

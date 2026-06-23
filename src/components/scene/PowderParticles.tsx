@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -13,6 +13,7 @@ import { range, smoothstep } from "../../utils/easing";
 type PowderParticlesProps = {
   count: number;
   mobile: boolean;
+  progressRef?: RefObject<number>;
 };
 
 const vertexShader = `
@@ -45,7 +46,11 @@ function seeded(index: number) {
   return x - Math.floor(x);
 }
 
-export function PowderParticles({ count, mobile }: PowderParticlesProps) {
+export function PowderParticles({
+  count,
+  mobile,
+  progressRef,
+}: PowderParticlesProps) {
   const pointsRef = useRef<Points<BufferGeometry, ShaderMaterial>>(null);
   const scroll = useScroll();
 
@@ -87,7 +92,7 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
       return;
     }
 
-    const progress = scroll.offset;
+    const progress = progressRef?.current ?? scroll.offset;
     const geom = pointsRef.current.geometry;
     const posAttr = geom.getAttribute("position") as BufferAttribute;
     const posArray = posAttr.array as Float32Array;
@@ -137,21 +142,21 @@ export function PowderParticles({ count, mobile }: PowderParticlesProps) {
         const currentOffsetY =
           (clumpOffsetY + dragFactor * fallProgress) * (1.0 - fallProgress);
 
-        x = -0.05 + currentOffsetX;
-        z = 0.12 + currentOffsetZ;
+        x = -0.08 + currentOffsetX;
+        z = 0.01 + currentOffsetZ;
         y = clumpY + currentOffsetY;
       } else if (progress < delay) {
-        const sieveZ = 0.12 + leave * 1.6;
-        x = -0.05 + siftOffsetX;
+        const sieveZ = 0.01 + leave * 1.6;
+        x = -0.08 + siftOffsetX;
         z = sieveZ + siftOffsetZ;
         y = 1.78;
       } else {
         const grainFall = range(progress, delay, delay + 0.15);
 
         const leaveDelay = smoothstep(range(delay, 0.45, 0.53));
-        const sieveZDelay = 0.12 + leaveDelay * 1.6;
+        const sieveZDelay = 0.01 + leaveDelay * 1.6;
 
-        const startX = -0.05 + siftOffsetX;
+        const startX = -0.08 + siftOffsetX;
         const startY = 1.77;
         const startZ = sieveZDelay + siftOffsetZ;
 

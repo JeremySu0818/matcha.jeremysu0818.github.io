@@ -1,12 +1,16 @@
 import { useRef, useState, useLayoutEffect } from "react";
+import type { SceneMode } from "../app/sceneMode";
 import { getCalculatorCopy, useTranslation } from "../i18n";
 import { LanguageSelector } from "./LanguageSelector";
+import { SceneModeSelector } from "./SceneModeSelector";
 
 interface HeaderProps {
   activeLink: "home" | "3d" | "make";
   darkTheme?: boolean;
   pointerEventsNone?: boolean;
   onLoadAnimation?: boolean;
+  sceneMode?: SceneMode;
+  onSceneModeChange?: (mode: SceneMode) => void;
 }
 
 export function Header({
@@ -14,6 +18,8 @@ export function Header({
   darkTheme = false,
   pointerEventsNone = false,
   onLoadAnimation = false,
+  sceneMode,
+  onSceneModeChange,
 }: HeaderProps) {
   const { t, lang } = useTranslation();
   const calculatorCopy = getCalculatorCopy(lang);
@@ -170,7 +176,14 @@ export function Header({
           </a>
         </nav>
       </div>
-      <div className={delay300}>
+      <div className={`${delay300} flex items-center gap-4 md:gap-6`}>
+        {sceneMode && onSceneModeChange && (
+          <SceneModeSelector
+            mode={sceneMode}
+            darkTheme={darkTheme}
+            onModeChange={onSceneModeChange}
+          />
+        )}
         <LanguageSelector darkTheme={darkTheme} />
       </div>
     </header>

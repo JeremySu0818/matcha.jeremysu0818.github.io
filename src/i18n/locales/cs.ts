@@ -75,6 +75,11 @@ export const csCopy: LocaleCopy = {
       waterTemp: "Teplota vody",
       back: "Zpět na úvod",
     },
+    sceneMode: {
+      label: "Režim scény",
+      scroll: "Posouvání",
+      manual: "Ručně",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

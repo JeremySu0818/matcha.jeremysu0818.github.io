@@ -23,17 +23,21 @@ interface SceneScrollControllerProps {
   onScrollElementChange: (el: HTMLElement | null) => void;
   onStepChange: (step: number) => void;
   stepCount: number;
+  enabled?: boolean;
 }
 
 export function SceneScrollController({
   onScrollElementChange,
   onStepChange,
   stepCount,
+  enabled = true,
 }: SceneScrollControllerProps) {
   const scroll = useScroll() as RestorableScrollState;
   const activeStepRef = useRef(0);
 
   const syncStepFromScrollElement = () => {
+    if (!enabled) return;
+
     const maxScrollTop = Math.max(
       1,
       scroll.el.scrollHeight - scroll.el.clientHeight,
@@ -68,11 +72,11 @@ export function SceneScrollController({
       scroll.el.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [scroll.el, onStepChange, stepCount]);
+  }, [scroll.el, onStepChange, stepCount, enabled]);
 
   useEffect(() => {
     const savedPosition = readSavedScrollPosition("#3d");
-    if (savedPosition === null) return;
+    if (!enabled || savedPosition === null) return;
 
     let frameId = 0;
     let frameCount = 0;
@@ -101,9 +105,10 @@ export function SceneScrollController({
     frameId = requestAnimationFrame(restoreScrollPosition);
 
     return () => cancelAnimationFrame(frameId);
-  }, [scroll.el]);
+  }, [scroll.el, enabled]);
 
   useFrame(() => {
+    if (!enabled) return;
     syncStepFromScrollElement();
   });
 

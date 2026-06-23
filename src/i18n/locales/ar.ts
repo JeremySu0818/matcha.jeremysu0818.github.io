@@ -75,6 +75,11 @@ export const arCopy: LocaleCopy = {
       waterTemp: "حرارة الماء",
       back: "رجوع للرئيسية",
     },
+    sceneMode: {
+      label: "وضع المشهد",
+      scroll: "التمرير",
+      manual: "يدوي",
+    },
     steps: {
       intro: {
         title: "إيشيجو إيشيي",

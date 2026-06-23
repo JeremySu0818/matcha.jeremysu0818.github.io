@@ -75,6 +75,11 @@ export const koCopy: LocaleCopy = {
       waterTemp: "물 온도",
       back: "홈으로 돌아가기",
     },
+    sceneMode: {
+      label: "장면 모드",
+      scroll: "스크롤",
+      manual: "수동",
+    },
     steps: {
       intro: {
         title: "일기일회",

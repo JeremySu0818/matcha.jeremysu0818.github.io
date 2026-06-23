@@ -6,6 +6,7 @@ import {
   SceneScrollController,
 } from "./app/SceneScrollController";
 import { ROUTE_BACKGROUNDS, UNIQUE_BACKGROUNDS } from "./app/routes";
+import { readSceneMode, saveSceneMode, type SceneMode } from "./app/sceneMode";
 import { getSceneSteps } from "./app/sceneSteps";
 import { useHashRoute } from "./app/useHashRoute";
 import { useViewportMobile } from "./app/useViewportMobile";
@@ -26,11 +27,14 @@ function App() {
   const { t } = useTranslation();
   const [active3dStep, setActive3dStep] = useState(0);
   const [sceneScrollEl, setSceneScrollEl] = useState<HTMLElement | null>(null);
+  const [sceneMode, setSceneMode] = useState<SceneMode>(() => readSceneMode());
+  const [manualDone, setManualDone] = useState(false);
   const isMobile = useViewportMobile(768);
   const steps3d = getSceneSteps(t);
   const { loaded, markReady } = useLoadingGate(route === "#3d" ? route : null);
 
   const handle3dStepClick = (index: number) => {
+    if (sceneMode === "manual" && !manualDone) return;
     if (!sceneScrollEl) return;
     const maxScrollTop = Math.max(
       0,
@@ -48,16 +52,44 @@ function App() {
     });
   };
 
+  const handleSceneModeChange = (nextMode: SceneMode) => {
+    setSceneMode(nextMode);
+    saveSceneMode(nextMode);
+    setManualDone(false);
+    setActive3dStep(nextMode === "manual" ? 2 : 0);
+
+    if (sceneScrollEl) {
+      sceneScrollEl.scrollTo({ top: 0, behavior: "auto" });
+    }
+  };
+
   useEffect(() => {
     if (route === "#3d") {
-      setActive3dStep(0);
+      setActive3dStep(sceneMode === "manual" ? 2 : 0);
+      setManualDone(false);
     }
-  }, [route]);
+  }, [route, sceneMode]);
 
   useEffect(() => {
     if (!sceneScrollEl) return undefined;
     return registerScrollPositionGetter("#3d", () => sceneScrollEl.scrollTop);
   }, [sceneScrollEl]);
+
+  useEffect(() => {
+    if (!manualDone || !sceneScrollEl) return;
+
+    const frame = requestAnimationFrame(() => {
+      const maxScrollTop = Math.max(
+        0,
+        sceneScrollEl.scrollHeight - sceneScrollEl.clientHeight,
+      );
+      sceneScrollEl.scrollTop = maxScrollTop;
+      sceneScrollEl.dispatchEvent(new Event("scroll"));
+      setActive3dStep(steps3d.length - 1);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [manualDone, sceneScrollEl, steps3d.length]);
 
   const isHome = route === "" || route === "#";
   const isMake = route === "#make";
@@ -96,6 +128,13 @@ function App() {
         {!isHome && !isMake && (
           <main
             className={`relative h-screen w-screen overflow-hidden text-white ${loaded ? "is-loaded" : ""}`}
+            onContextMenu={
+              sceneMode === "manual"
+                ? (event) => {
+                    event.preventDefault();
+                  }
+                : undefined
+            }
           >
             <LoaderOverlay loaded={loaded} text={t.loader.preparing} />
 
@@ -104,6 +143,8 @@ function App() {
               darkTheme={false}
               pointerEventsNone={true}
               onLoadAnimation={false}
+              sceneMode={sceneMode}
+              onSceneModeChange={handleSceneModeChange}
             />
 
             <div className="relative z-10 h-full w-full">
@@ -125,20 +166,32 @@ function App() {
                 }}
               >
                 <Suspense fallback={null}>
-                  <ScrollControls pages={6} damping={0.18} distance={1}>
+                  <ScrollControls
+                    pages={6}
+                    damping={0.18}
+                    distance={1}
+                    enabled={sceneMode === "scroll" || manualDone}
+                  >
                     <SceneScrollController
                       onScrollElementChange={setSceneScrollEl}
                       onStepChange={setActive3dStep}
                       stepCount={steps3d.length}
+                      enabled={sceneMode === "scroll" || manualDone}
                     />
-                    <MatchaScene />
-                    <Scroll html>
-                      <NarrativeOverlay
-                        onBack={() => {
-                          window.location.hash = "";
-                        }}
-                      />
-                    </Scroll>
+                    <MatchaScene
+                      mode={sceneMode}
+                      onManualStepChange={setActive3dStep}
+                      onManualComplete={() => setManualDone(true)}
+                    />
+                    {(sceneMode === "scroll" || manualDone) && (
+                      <Scroll html>
+                        <NarrativeOverlay
+                          onBack={() => {
+                            window.location.hash = "";
+                          }}
+                        />
+                      </Scroll>
+                    )}
                   </ScrollControls>
                   <SceneReadyTrigger onReady={markReady} />
                 </Suspense>
@@ -155,12 +208,14 @@ function App() {
               </span>
             </div>
 
-            <NavigationDots
-              steps={steps3d}
-              activeStep={active3dStep}
-              onStepClick={handle3dStepClick}
-              darkTheme={false}
-            />
+            {!(sceneMode === "manual" && !manualDone) && (
+              <NavigationDots
+                steps={steps3d}
+                activeStep={active3dStep}
+                onStepClick={handle3dStepClick}
+                darkTheme={false}
+              />
+            )}
           </main>
         )}
       </div>

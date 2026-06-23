@@ -75,6 +75,11 @@ export const zhCnCopy: LocaleCopy = {
       waterTemp: "水温",
       back: "返回首页",
     },
+    sceneMode: {
+      label: "场景模式",
+      scroll: "滚动",
+      manual: "手动",
+    },
     steps: {
       intro: {
         title: "一期一会",

@@ -41,6 +41,11 @@ export interface TranslationSchema {
     waterTemp: string;
     back: string;
   };
+  sceneMode: {
+    label: string;
+    scroll: string;
+    manual: string;
+  };
   steps: {
     intro: StepCopy;
     powder: EyebrowStepCopy;

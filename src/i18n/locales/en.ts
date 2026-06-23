@@ -75,6 +75,11 @@ export const enCopy: LocaleCopy = {
       waterTemp: "Water Temp",
       back: "Back to Home",
     },
+    sceneMode: {
+      label: "Scene Mode",
+      scroll: "Scroll",
+      manual: "Manual",
+    },
     steps: {
       intro: {
         title: "Ichigo Ichie",

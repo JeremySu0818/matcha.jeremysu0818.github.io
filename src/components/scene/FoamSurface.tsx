@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, type RefObject } from "react";
 import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -18,6 +18,7 @@ import { mix, range, smoothstep } from "../../utils/easing";
 type FoamSurfaceProps = {
   textureSrc: string;
   bowlSrc: string;
+  progressRef?: RefObject<number>;
 };
 
 const vertexShader = `
@@ -168,7 +169,11 @@ function createInnerWallSectionGeometry(bowlScene: Group) {
   return new ShapeGeometry(shape);
 }
 
-export function FoamSurface({ textureSrc, bowlSrc }: FoamSurfaceProps) {
+export function FoamSurface({
+  textureSrc,
+  bowlSrc,
+  progressRef,
+}: FoamSurfaceProps) {
   const meshRef =
     useRef<Mesh<ShapeGeometry | CircleGeometry, ShaderMaterial>>(null);
   const scroll = useScroll();
@@ -195,7 +200,7 @@ export function FoamSurface({ textureSrc, bowlSrc }: FoamSurfaceProps) {
       return;
     }
 
-    const progress = scroll.offset;
+    const progress = progressRef?.current ?? scroll.offset;
     const whisk = smoothstep(range(progress, 0.76, 0.9));
     const final = smoothstep(range(progress, 0.88, 0.98));
     const fadeIn = Math.max(whisk, final);

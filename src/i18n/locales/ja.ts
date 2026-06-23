@@ -75,6 +75,11 @@ export const jaCopy: LocaleCopy = {
       waterTemp: "湯温",
       back: "ホームに戻る",
     },
+    sceneMode: {
+      label: "シーンモード",
+      scroll: "スクロール",
+      manual: "手動",
+    },
     steps: {
       intro: {
         title: "一期一会",
