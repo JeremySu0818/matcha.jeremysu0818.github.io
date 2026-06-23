@@ -67,7 +67,7 @@ export function WaterStream({
         new Vector3(-0.46, 1.64, 0.11),
         new Vector3(-0.31, 1.1, 0.07),
         new Vector3(-0.16, 0.47, 0.036),
-        new Vector3(-0.01, -0.15, 0.0),
+        new Vector3(0.11, -0.15, 0.0),
       ]),
     [],
   );
@@ -98,7 +98,7 @@ export function WaterStream({
 
       const pourProgress = range(progress, 0.49, 0.64);
       const bowlPoint = new Vector3(
-        -pourProgress * 0.3 - 0.01,
+        -pourProgress * 0.3 + 0.11,
         -0.15,
         -pourProgress * 0.1,
       );

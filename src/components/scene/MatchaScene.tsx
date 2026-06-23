@@ -79,7 +79,7 @@ function cloneTuple(tuple: Tuple3): Tuple3 {
 }
 
 function isNearBowl(position: Tuple3) {
-  return Math.hypot(position[0] - (-0.01), position[2]) <= BOWL_DROP_RADIUS;
+  return Math.hypot(position[0] - 0.11, position[2]) <= BOWL_DROP_RADIUS;
 }
 
 function clampDrag(value: number) {
@@ -479,10 +479,10 @@ export function MatchaScene({
       mode === "manual" ? manualProgressRef.current : scroll.offset;
 
     if (mode === "manual") {
-      const topCamera = new Vector3(-0.01, mobile ? 9.2 : 8.2, 0.02);
+      const topCamera = new Vector3(0.11, mobile ? 9.2 : 8.2, 0.02);
       camera.up.set(1, 0, 0);
       camera.position.lerp(topCamera, 0.12);
-      (camera as PerspectiveCamera).lookAt(-0.01, -0.5, 0);
+      (camera as PerspectiveCamera).lookAt(0.11, -0.5, 0);
     } else {
       camera.up.set(0, 1, 0);
       const stepFloat = progress * 5;
@@ -516,7 +516,7 @@ export function MatchaScene({
           ? Math.sin(clock.elapsedTime * 0.7) * 0.006
           : gsapState.current.lift + Math.sin(clock.elapsedTime * 0.7) * 0.014;
       const finale = smoothstep(range(progress, 0.82, 1));
-      bowlRef.current.position.x = mix(-0.01, -0.01, finale);
+      bowlRef.current.position.x = mix(0.11, 0.11, finale);
       bowlRef.current.scale.setScalar(mix(1, 1.08, finale));
     }
 
@@ -759,7 +759,7 @@ export function MatchaScene({
       </group>
 
       <Float speed={0.75} rotationIntensity={0.08} floatIntensity={0.08}>
-        <group ref={bowlRef} position={[-0.01, 0, 0]}>
+        <group ref={bowlRef} position={[0.11, 0, 0]}>
           <Model
             src={asset("models/tea-bowl.glb")}
             scale={0.4}
@@ -783,7 +783,7 @@ export function MatchaScene({
         </group>
       </Float>
 
-      <group position={[-0.01, 0, 0]}>
+      <group position={[0.11, 0, 0]}>
         <PowderParticles
           count={20000}
           mobile={mobile}

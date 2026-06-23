@@ -16,7 +16,7 @@ export const sieveIdle = {
 };
 
 export const sieveUse = {
-  position: [-0.09, 1.82, 0.01] as Tuple3,
+  position: [0.03, 1.82, 0.01] as Tuple3,
   rotationY: Math.PI / 2,
 };
 
@@ -30,7 +30,7 @@ export const kettleIdle = {
 };
 
 export const kettleUse = {
-  position: [0.019, 1.107, 1.663] as Tuple3,
+  position: [0.139, 1.107, 1.663] as Tuple3,
   rotation: [0.3, -Math.PI / 2, 0.72] as Tuple3,
 };
 
@@ -40,7 +40,7 @@ export const chasenIdle = {
 };
 
 export const chasenUse = {
-  position: [-0.01, 0.02, -0.07] as Tuple3,
+  position: [0.11, 0.02, -0.07] as Tuple3,
   rotation: [-0.08, 0, 0] as Tuple3,
 };
 
