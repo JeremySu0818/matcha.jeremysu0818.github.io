@@ -127,10 +127,26 @@ export function MatchaScene({
   const dragRef = useRef<DragState | null>(null);
   const dragPlaneRef = useRef(new Plane(new Vector3(0, 1, 0), 0));
   const dragPointRef = useRef(new Vector3());
+
+  const dynamicIdlePositions = useMemo<Record<ManualTool, Tuple3>>(() => {
+    if (mobile) {
+      return {
+        sieve: [sieveIdle.position[0], sieveIdle.position[1], -1.5],
+        kettle: [kettleIdle.position[0], kettleIdle.position[1], 1.6],
+        chasen: [chasenIdle.position[0], chasenIdle.position[1], 1.6],
+      };
+    }
+    return {
+      sieve: sieveIdle.position,
+      kettle: kettleIdle.position,
+      chasen: chasenIdle.position,
+    };
+  }, [mobile]);
+
   const manualPositionsRef = useRef<Record<ManualTool, Tuple3>>({
-    sieve: cloneTuple(sieveIdle.position),
-    kettle: cloneTuple(kettleIdle.position),
-    chasen: cloneTuple(chasenIdle.position),
+    sieve: cloneTuple(dynamicIdlePositions.sieve),
+    kettle: cloneTuple(dynamicIdlePositions.kettle),
+    chasen: cloneTuple(dynamicIdlePositions.chasen),
   });
   const whiskStateRef = useRef({
     count: 0,
@@ -162,15 +178,10 @@ export function MatchaScene({
 
   const snapToolIdle = useCallback(
     (tool: ManualTool) => {
-      const position =
-        tool === "sieve"
-          ? sieveIdle.position
-          : tool === "kettle"
-            ? kettleIdle.position
-            : chasenIdle.position;
+      const position = dynamicIdlePositions[tool];
       applyManualPosition(tool, cloneTuple(position));
     },
-    [applyManualPosition],
+    [applyManualPosition, dynamicIdlePositions],
   );
 
   const snapToolUse = useCallback(
@@ -204,7 +215,7 @@ export function MatchaScene({
           stage === "sieve-shaking" ||
           stage === "sieve-return";
         const isDragging = dragRef.current?.tool === "sieve";
-        return isUse || isDragging ? sieveUse.position[1] : sieveIdle.position[1];
+        return isUse || isDragging ? sieveUse.position[1] : dynamicIdlePositions.sieve[1];
       }
       if (tool === "kettle") {
         const isUse =
@@ -212,15 +223,15 @@ export function MatchaScene({
           stage === "pouring" ||
           stage === "kettle-return";
         const isDragging = dragRef.current?.tool === "kettle";
-        return isUse || isDragging ? kettleUse.position[1] : kettleIdle.position[1];
+        return isUse || isDragging ? kettleUse.position[1] : dynamicIdlePositions.kettle[1];
       }
       const isWhisking = stage === "whisking" || stage === "done";
       const isDragging = dragRef.current?.tool === "chasen";
       if (isWhisking) return chasenUse.position[1];
       if (isDragging) return 1.5;
-      return chasenIdle.position[1];
+      return dynamicIdlePositions.chasen[1];
     },
-    [],
+    [dynamicIdlePositions],
   );
 
   const startManualAnimation = useCallback(
@@ -423,19 +434,19 @@ export function MatchaScene({
       }
 
       if (tool === "chasen" && stage === "chasen-return") {
-        if (isNearPosition(position, chasenIdle.position)) {
+        if (isNearPosition(position, dynamicIdlePositions.chasen)) {
           snapToolIdle("chasen");
           completeManualRitual();
         } else {
           applyManualPosition("chasen", [
             position[0],
-            chasenIdle.position[1],
+            dynamicIdlePositions.chasen[1],
             position[2],
           ]);
         }
       }
     },
-    [applyManualPosition, completeManualRitual, mode, snapToolIdle, snapToolUse, updateManualStage],
+    [applyManualPosition, completeManualRitual, mode, snapToolIdle, snapToolUse, updateManualStage, dynamicIdlePositions],
   );
 
   const handleManualContextMenu = useCallback(
@@ -525,15 +536,15 @@ export function MatchaScene({
     manualAnimationRef.current = null;
     whiskStateRef.current = { count: 0, travel: 0 };
     manualPositionsRef.current = {
-      sieve: cloneTuple(sieveIdle.position),
-      kettle: cloneTuple(kettleIdle.position),
-      chasen: cloneTuple(chasenIdle.position),
+      sieve: cloneTuple(dynamicIdlePositions.sieve),
+      kettle: cloneTuple(dynamicIdlePositions.kettle),
+      chasen: cloneTuple(dynamicIdlePositions.chasen),
     };
-    sieveRef.current?.position.set(...sieveIdle.position);
-    kettleRef.current?.position.set(...kettleIdle.position);
-    chasenRef.current?.position.set(...chasenIdle.position);
+    sieveRef.current?.position.set(...dynamicIdlePositions.sieve);
+    kettleRef.current?.position.set(...dynamicIdlePositions.kettle);
+    chasenRef.current?.position.set(...dynamicIdlePositions.chasen);
     updateManualStage("sieve-drag");
-  }, [mode, resetToken, updateManualStage]);
+  }, [mode, resetToken, updateManualStage, dynamicIdlePositions]);
 
   useFrame(({ clock }) => {
     const manualAnimation = manualAnimationRef.current;
@@ -581,7 +592,7 @@ export function MatchaScene({
         isFirstFrameRef.current = false;
       }
 
-      const topCamera = new Vector3(0.11, mobile ? 9.2 : 8.2, 0.02);
+      const topCamera = new Vector3(0.11, mobile ? 9.8 : 8.2, 0.02);
       camera.up.set(1, 0, 0);
       camera.position.lerp(topCamera, 0.12);
       (camera as PerspectiveCamera).lookAt(0.11, -0.5, 0);
@@ -668,7 +679,7 @@ export function MatchaScene({
           (1 - smoothstep(range(progress, 0.35, 0.38)));
         const rollX = Math.sin(clock.elapsedTime * 14) * 0.0175 * shakeActive;
         sieveRef.current.position.set(
-          ...mixTuple3(sieveIdle.position, sieveUse.position, active),
+          ...mixTuple3(dynamicIdlePositions.sieve, sieveUse.position, active),
         );
         sieveRef.current.rotation.order = "YXZ";
         sieveRef.current.rotation.set(
@@ -706,7 +717,7 @@ export function MatchaScene({
         const leave = smoothstep(range(progress, 0.65, 0.73));
         const active = enter * (1 - leave);
         kettleRef.current.position.set(
-          ...mixTuple3(kettleIdle.position, kettleUse.position, active),
+          ...mixTuple3(dynamicIdlePositions.kettle, kettleUse.position, active),
         );
         kettleRef.current.rotation.set(
           ...mixTuple3(kettleIdle.rotation, kettleUse.rotation, active),
@@ -799,7 +810,7 @@ export function MatchaScene({
 
         let chasenPos: Tuple3;
         const Y_high = 1.5;
-        const p1 = chasenIdle.position;
+        const p1 = dynamicIdlePositions.chasen;
         const p2: Tuple3 = [p1[0], Y_high, p1[2]];
         const p3: Tuple3 = [
           chasenUse.position[0],
@@ -927,7 +938,7 @@ export function MatchaScene({
 
       <group
         ref={sieveRef}
-        position={sieveIdle.position as [number, number, number]}
+        position={dynamicIdlePositions.sieve as [number, number, number]}
         {...manualHandlers("sieve")}
       >
         {mode === "manual" && (
@@ -945,7 +956,7 @@ export function MatchaScene({
 
       <group
         ref={kettleRef}
-        position={kettleIdle.position as [number, number, number]}
+        position={dynamicIdlePositions.kettle as [number, number, number]}
         {...manualHandlers("kettle")}
       >
         {mode === "manual" && (
@@ -965,7 +976,7 @@ export function MatchaScene({
 
       <group
         ref={chasenRef}
-        position={chasenIdle.position as [number, number, number]}
+        position={dynamicIdlePositions.chasen as [number, number, number]}
         {...manualHandlers("chasen")}
       >
         {mode === "manual" && (
