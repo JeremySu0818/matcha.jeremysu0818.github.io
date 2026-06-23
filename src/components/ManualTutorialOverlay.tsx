@@ -63,7 +63,7 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
   return (
     <div
       style={positionStyle}
-      className={`absolute w-[150px] aspect-[3/4] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
+      className={`absolute w-[200px] aspect-[4/3] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
         visible && text ? "opacity-100" : "opacity-0"
       }`}
     >

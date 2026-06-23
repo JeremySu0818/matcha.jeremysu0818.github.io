@@ -123,6 +123,7 @@ export function MatchaScene({
   const [, setManualStage] = useState<ManualStage>("sieve-drag");
   const manualCompleteRef = useRef(false);
   const manualAnimationRef = useRef<ManualAnimation | null>(null);
+  const isFirstFrameRef = useRef(true);
   const dragRef = useRef<DragState | null>(null);
   const dragPlaneRef = useRef(new Plane(new Vector3(0, 1, 0), 0));
   const dragPointRef = useRef(new Vector3());
@@ -567,11 +568,26 @@ export function MatchaScene({
     }
 
     if (mode === "manual") {
+      if (isFirstFrameRef.current) {
+        const camFrom = cameraTargets[0];
+        const targetCamera = camFrom.clone();
+        if (mobile) {
+          targetCamera.z += 0.8;
+          targetCamera.y += 0.35;
+          targetCamera.x = targetCamera.x * 1.2;
+          targetCamera.y = 1.25 + (targetCamera.y - 1.25) * 1.2;
+          targetCamera.z = targetCamera.z * 1.2;
+        }
+        camera.position.copy(targetCamera);
+        isFirstFrameRef.current = false;
+      }
+
       const topCamera = new Vector3(0.11, mobile ? 9.2 : 8.2, 0.02);
       camera.up.set(1, 0, 0);
       camera.position.lerp(topCamera, 0.12);
       (camera as PerspectiveCamera).lookAt(0.11, -0.5, 0);
     } else {
+      isFirstFrameRef.current = false;
       camera.up.set(0, 1, 0);
       const stepFloat = progress * 5;
       const low = Math.floor(stepFloat);
@@ -615,6 +631,11 @@ export function MatchaScene({
         const shakeActive = stage === "sieve-shaking" ? 1 : 0;
         const rollX = Math.sin(clock.elapsedTime * 18) * 0.04 * shakeActive;
         const shakeX = Math.sin(clock.elapsedTime * 24) * 0.035 * shakeActive;
+        
+        const isIdle = stage === "sieve-drag" || stage === "sieve-return";
+        const idleFloatY = isIdle ? Math.sin(clock.elapsedTime * 1.5) * 0.015 : 0;
+        const idleRotZ = isIdle ? Math.sin(clock.elapsedTime * 1.2) * 0.02 : 0;
+
         const isUsePosition =
           stage === "sieve-ready" ||
           stage === "sieve-shaking" ||
@@ -627,13 +648,17 @@ export function MatchaScene({
             sieveUse.position[2],
           );
         } else {
-          sieveRef.current.position.set(...manualPosition);
+          sieveRef.current.position.set(
+            manualPosition[0],
+            manualPosition[1] + idleFloatY,
+            manualPosition[2]
+          );
         }
         sieveRef.current.rotation.order = "YXZ";
         sieveRef.current.rotation.set(
           rollX,
           isUsePosition ? sieveUse.rotationY : sieveIdle.rotationY,
-          0,
+          idleRotZ,
         );
       } else {
         const enter = smoothstep(range(progress, 0.08, 0.19));
@@ -662,9 +687,20 @@ export function MatchaScene({
           stage === "kettle-ready" ||
           stage === "pouring" ||
           isNearBowl(manualPositionsRef.current.kettle, 1.8);
-        kettleRef.current.position.set(...manualPositionsRef.current.kettle);
+          
+        const isIdle = stage === "kettle-drag" || stage === "kettle-return";
+        const idleFloatY = isIdle ? Math.sin(clock.elapsedTime * 1.4 + 2) * 0.015 : 0;
+        const idleRotZ = isIdle ? Math.sin(clock.elapsedTime * 1.1 + 2) * 0.01 : 0;
+
+        kettleRef.current.position.set(
+          manualPositionsRef.current.kettle[0],
+          manualPositionsRef.current.kettle[1] + idleFloatY,
+          manualPositionsRef.current.kettle[2]
+        );
         kettleRef.current.rotation.set(
-          ...(isUsePosition ? kettleUse.rotation : kettleIdle.rotation),
+          (isUsePosition ? kettleUse.rotation[0] : kettleIdle.rotation[0]),
+          (isUsePosition ? kettleUse.rotation[1] : kettleIdle.rotation[1]),
+          (isUsePosition ? kettleUse.rotation[2] : kettleIdle.rotation[2]) + idleRotZ
         );
       } else {
         const enter = smoothstep(range(progress, 0.38, 0.48));
@@ -682,6 +718,10 @@ export function MatchaScene({
     if (chasenRef.current) {
       if (mode === "manual") {
         const stage = manualStageRef.current;
+        const isIdle = stage === "chasen-drag" || stage === "chasen-return" || stage === "done";
+        const idleFloatY = isIdle ? Math.sin(clock.elapsedTime * 1.6 + 4) * 0.015 : 0;
+        const idleRotZ = isIdle ? Math.sin(clock.elapsedTime * 1.3 + 4) * 0.02 : 0;
+
         if (stage === "whisking" || stage === "done") {
           const whiskRatio = smoothstep(
             Math.min(1, whiskStateRef.current.count / WHISK_TARGET_COUNT),
@@ -693,19 +733,25 @@ export function MatchaScene({
           );
           chasenRef.current.position.set(
             manualPosition[0],
-            chasenUse.position[1],
+            chasenUse.position[1] + (stage === "done" ? idleFloatY : 0),
             manualPosition[2],
           );
           chasenRef.current.rotation.set(
             chasenUse.rotation[0],
             0,
-            tiltZ * Math.max(0.35, whiskRatio),
+            tiltZ * Math.max(0.35, whiskRatio) + (stage === "done" ? idleRotZ : 0),
           );
         } else {
           const isUsePosition = isNearBowl(manualPositionsRef.current.chasen);
-          chasenRef.current.position.set(...manualPositionsRef.current.chasen);
+          chasenRef.current.position.set(
+            manualPositionsRef.current.chasen[0],
+            manualPositionsRef.current.chasen[1] + idleFloatY,
+            manualPositionsRef.current.chasen[2]
+          );
           chasenRef.current.rotation.set(
-            ...(isUsePosition ? chasenUse.rotation : chasenIdle.rotation),
+            isUsePosition ? chasenUse.rotation[0] : chasenIdle.rotation[0],
+            isUsePosition ? chasenUse.rotation[1] : chasenIdle.rotation[1],
+            (isUsePosition ? chasenUse.rotation[2] : chasenIdle.rotation[2]) + idleRotZ
           );
         }
       } else {
