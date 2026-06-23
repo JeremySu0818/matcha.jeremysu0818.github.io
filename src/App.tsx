@@ -94,6 +94,7 @@ function App() {
   const isHome = route === "" || route === "#";
   const isMake = route === "#make";
   const currentBg = ROUTE_BACKGROUNDS[route] || "";
+  const showNarrativeOverlay = sceneMode === "scroll" || manualDone;
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
@@ -183,15 +184,14 @@ function App() {
                       onManualStepChange={setActive3dStep}
                       onManualComplete={() => setManualDone(true)}
                     />
-                    {(sceneMode === "scroll" || manualDone) && (
-                      <Scroll html>
-                        <NarrativeOverlay
-                          onBack={() => {
-                            window.location.hash = "";
-                          }}
-                        />
-                      </Scroll>
-                    )}
+                    <Scroll html>
+                      <NarrativeOverlay
+                        hidden={!showNarrativeOverlay}
+                        onBack={() => {
+                          window.location.hash = "";
+                        }}
+                      />
+                    </Scroll>
                   </ScrollControls>
                   <SceneReadyTrigger onReady={markReady} />
                 </Suspense>
@@ -208,7 +208,7 @@ function App() {
               </span>
             </div>
 
-            {!(sceneMode === "manual" && !manualDone) && (
+            {showNarrativeOverlay && (
               <NavigationDots
                 steps={steps3d}
                 activeStep={active3dStep}

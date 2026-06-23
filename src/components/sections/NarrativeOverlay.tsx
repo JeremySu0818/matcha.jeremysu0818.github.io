@@ -39,10 +39,14 @@ function getPanelMargin(isFinal: boolean, index: number) {
 }
 
 interface NarrativeOverlayProps {
+  hidden?: boolean;
   onBack: () => void;
 }
 
-export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
+export function NarrativeOverlay({
+  hidden = false,
+  onBack,
+}: NarrativeOverlayProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const scroll = useScroll();
   const { t } = useTranslation();
@@ -97,7 +101,7 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
   ];
 
   useEffect(() => {
-    if (!rootRef.current) {
+    if (hidden || !rootRef.current) {
       return undefined;
     }
 
@@ -123,7 +127,11 @@ export function NarrativeOverlay({ onBack }: NarrativeOverlayProps) {
     }, rootRef);
 
     return () => ctx.revert();
-  }, [scroll.el]);
+  }, [hidden, scroll.el]);
+
+  if (hidden) {
+    return null;
+  }
 
   return (
     <>
