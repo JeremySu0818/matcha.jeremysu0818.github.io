@@ -64,10 +64,10 @@ export function WaterStream({
   const curve = useMemo(
     () =>
       new CatmullRomCurve3([
-        new Vector3(0.04, 1.64, 0.11),
-        new Vector3(0.19, 1.1, 0.07),
-        new Vector3(0.34, 0.47, 0.036),
-        new Vector3(0.49, -0.15, 0.0),
+        new Vector3(-0.46, 1.64, 0.11),
+        new Vector3(-0.31, 1.1, 0.07),
+        new Vector3(-0.16, 0.47, 0.036),
+        new Vector3(-0.01, -0.15, 0.0),
       ]),
     [],
   );
@@ -93,12 +93,12 @@ export function WaterStream({
       if (spout) {
         spout.localToWorld(p0.set(-12.5852, 11.6278, 0.0));
       } else {
-        p0.set(0.04, 1.64, 0.11);
+        p0.set(-0.46, 1.64, 0.11);
       }
 
       const pourProgress = range(progress, 0.49, 0.64);
       const bowlPoint = new Vector3(
-        -pourProgress * 0.3 + 0.49,
+        -pourProgress * 0.3 - 0.01,
         -0.15,
         -pourProgress * 0.1,
       );

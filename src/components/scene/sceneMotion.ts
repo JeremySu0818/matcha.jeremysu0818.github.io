@@ -3,7 +3,7 @@ import { mix, smoothstep } from "../../utils/easing";
 import type { Tuple3 } from "../../utils/threeTransforms";
 
 export const supportSurfaceY = -1.36;
-export const teaTrayPosition: Tuple3 = [0.5, 0.02, 0];
+export const teaTrayPosition: Tuple3 = [0.0, 0.02, 0];
 export const teaTrayTopY = supportSurfaceY + teaTrayPosition[1] + 0.1;
 
 export const sieveIdle = {
@@ -16,7 +16,7 @@ export const sieveIdle = {
 };
 
 export const sieveUse = {
-  position: [0.41, 1.82, 0.01] as Tuple3,
+  position: [-0.09, 1.82, 0.01] as Tuple3,
   rotationY: Math.PI / 2,
 };
 
@@ -30,17 +30,17 @@ export const kettleIdle = {
 };
 
 export const kettleUse = {
-  position: [0.519, 1.107, 1.663] as Tuple3,
+  position: [0.019, 1.107, 1.663] as Tuple3,
   rotation: [0.3, -Math.PI / 2, 0.72] as Tuple3,
 };
 
 export const chasenIdle = {
-  position: [-0.51, teaTrayTopY + 0.2515, teaTrayPosition[2] + 3] as Tuple3,
+  position: [-1.01, teaTrayTopY + 0.2515, teaTrayPosition[2] + 3] as Tuple3,
   rotation: [0.25, 0, 0] as Tuple3,
 };
 
 export const chasenUse = {
-  position: [0.49, 0.02, -0.07] as Tuple3,
+  position: [-0.01, 0.02, -0.07] as Tuple3,
   rotation: [-0.08, 0, 0] as Tuple3,
 };
 
