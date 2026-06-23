@@ -125,6 +125,10 @@ export const nlCopy: LocaleCopy = {
       chasenReturn: "Sleep de chasen terug naar zijn plek",
       done: "Ritueel voltooid",
     },
+    manualTutorialMobile: {
+      sieveReady: "Houd ingedrukt om matcha te zeven",
+      kettleReady: "Houd ingedrukt om water te gieten",
+    },
   },
   tools: {
     title: "Interactieve 3D-hulpmiddelen",

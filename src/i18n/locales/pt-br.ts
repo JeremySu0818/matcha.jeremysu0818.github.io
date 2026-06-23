@@ -125,6 +125,10 @@ export const ptBrCopy: LocaleCopy = {
       chasenReturn: "Arraste o chasen de volta para o lugar",
       done: "Ritual concluído",
     },
+    manualTutorialMobile: {
+      sieveReady: "Toque e segure para peneirar o matcha",
+      kettleReady: "Toque e segure para despejar a água",
+    },
   },
   tools: {
     title: "Utensílios 3D Interativos",

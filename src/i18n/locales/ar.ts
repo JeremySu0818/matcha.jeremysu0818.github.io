@@ -124,6 +124,10 @@ export const arCopy: LocaleCopy = {
       chasenReturn: "اسحب التشاسين لإعادته إلى مكانه",
       done: "اكتملت الطقوس",
     },
+    manualTutorialMobile: {
+      sieveReady: "اضغط مطولًا لنخل الماتشا",
+      kettleReady: "اضغط مطولًا لصب الماء",
+    },
   },
   tools: {
     title: "أدوات ثلاثية الأبعاد تفاعلية",

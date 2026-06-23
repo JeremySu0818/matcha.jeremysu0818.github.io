@@ -124,6 +124,10 @@ export const zhCnCopy: LocaleCopy = {
       chasenReturn: "拖拽茶筅放回原位",
       done: "仪式完成",
     },
+    manualTutorialMobile: {
+      sieveReady: "长按过筛抹茶",
+      kettleReady: "长按注水",
+    },
   },
   tools: {
     title: "茶道具 3D 互动展示",

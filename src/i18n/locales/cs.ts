@@ -124,6 +124,10 @@ export const csCopy: LocaleCopy = {
       chasenReturn: "Přetáhněte chasen zpět na původní místo",
       done: "Rituál dokončen",
     },
+    manualTutorialMobile: {
+      sieveReady: "Podržte pro prosátí matchy",
+      kettleReady: "Podržte pro nalití vody",
+    },
   },
   tools: {
     title: "Interaktivní 3D nástroje",

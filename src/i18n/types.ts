@@ -68,6 +68,10 @@ export interface TranslationSchema {
     chasenReturn: string;
     done: string;
   };
+  manualTutorialMobile: {
+    sieveReady: string;
+    kettleReady: string;
+  };
 }
 
 export interface ToolsCopy {

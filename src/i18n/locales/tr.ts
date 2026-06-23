@@ -124,6 +124,10 @@ export const trCopy: LocaleCopy = {
       chasenReturn: "Chaseni yerine geri sürükleyin",
       done: "Ritüel Tamamlandı",
     },
+    manualTutorialMobile: {
+      sieveReady: "Matcha'yı elemek için uzun basın",
+      kettleReady: "Su dökmek için uzun basın",
+    },
   },
   tools: {
     title: "Etkileşimli 3D Araçlar",

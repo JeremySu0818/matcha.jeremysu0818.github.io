@@ -124,6 +124,10 @@ export const enCopy: LocaleCopy = {
       chasenReturn: "Drag the chasen back to its place",
       done: "Ritual Complete",
     },
+    manualTutorialMobile: {
+      sieveReady: "Long press to sift matcha",
+      kettleReady: "Long press to pour water",
+    },
   },
   tools: {
     title: "Interactive 3D Tools",

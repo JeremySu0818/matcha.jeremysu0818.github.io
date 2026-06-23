@@ -124,6 +124,10 @@ export const jaCopy: LocaleCopy = {
       chasenReturn: "茶筅を元の位置へドラッグして戻す",
       done: "お手前頂戴いたします",
     },
+    manualTutorialMobile: {
+      sieveReady: "長押しして抹茶をふるう",
+      kettleReady: "長押ししてお湯を注ぐ",
+    },
   },
   tools: {
     title: "茶道具 3D 展示",

@@ -124,6 +124,10 @@ export const huCopy: LocaleCopy = {
       chasenReturn: "Húzd vissza a chasent a helyére",
       done: "Rituálé befejezve",
     },
+    manualTutorialMobile: {
+      sieveReady: "Tartsa lenyomva a matcha szitálásához",
+      kettleReady: "Tartsa lenyomva a víz öntéséhez",
+    },
   },
   tools: {
     title: "Interaktív 3D eszközök",

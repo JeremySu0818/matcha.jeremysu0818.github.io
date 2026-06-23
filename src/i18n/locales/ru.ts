@@ -125,6 +125,10 @@ export const ruCopy: LocaleCopy = {
       chasenReturn: "Перетащите chasen обратно на его место",
       done: "Ритуал завершен",
     },
+    manualTutorialMobile: {
+      sieveReady: "Нажмите и удерживайте, чтобы просеять матча",
+      kettleReady: "Нажмите и удерживайте, чтобы налить воду",
+    },
   },
   tools: {
     title: "Интерактивные 3D-инструменты",

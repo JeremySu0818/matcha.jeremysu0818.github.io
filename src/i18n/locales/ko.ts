@@ -124,6 +124,10 @@ export const koCopy: LocaleCopy = {
       chasenReturn: "차선을 원래 자리로 드래그해 돌려놓으세요",
       done: "다도 의식 완료",
     },
+    manualTutorialMobile: {
+      sieveReady: "길게 눌러 말차를 체에 거르기",
+      kettleReady: "길게 눌러 물 붓기",
+    },
   },
   tools: {
     title: "대화형 3D 다구 전시",

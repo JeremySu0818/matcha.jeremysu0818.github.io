@@ -124,6 +124,10 @@ export const viCopy: LocaleCopy = {
       chasenReturn: "Kéo chasen về lại vị trí cũ",
       done: "Nghi lễ hoàn tất",
     },
+    manualTutorialMobile: {
+      sieveReady: "Nhấn giữ để rây matcha",
+      kettleReady: "Nhấn giữ để rót nước",
+    },
   },
   tools: {
     title: "Dụng cụ 3D Tương tác",

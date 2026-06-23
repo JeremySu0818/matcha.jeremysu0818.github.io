@@ -163,8 +163,18 @@ function App() {
               onSceneModeChange={handleSceneModeChange}
             />
 
-            <div className="relative z-10 h-full w-full">
+            <div
+              className="relative z-10 h-full w-full"
+              style={{
+                touchAction: sceneMode === "manual" ? "none" : "auto",
+                userSelect: sceneMode === "manual" ? "none" : "auto",
+              }}
+            >
               <Canvas
+                style={{
+                  touchAction: sceneMode === "manual" ? "none" : "auto",
+                  userSelect: sceneMode === "manual" ? "none" : "auto",
+                }}
                 shadows
                 dpr={[1, 2]}
                 camera={{

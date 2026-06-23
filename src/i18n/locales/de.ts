@@ -125,6 +125,10 @@ export const deCopy: LocaleCopy = {
       chasenReturn: "Ziehe den Chasen zurück an seinen Platz",
       done: "Ritual beendet",
     },
+    manualTutorialMobile: {
+      sieveReady: "Lange drücken, um Matcha zu sieben",
+      kettleReady: "Lange drücken, um Wasser zu gießen",
+    },
   },
   tools: {
     title: "Interaktive 3D-Werkzeuge",

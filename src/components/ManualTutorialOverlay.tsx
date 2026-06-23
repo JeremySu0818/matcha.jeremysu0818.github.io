@@ -1,5 +1,6 @@
 import type { ManualStage } from "./scene/MatchaScene";
 import { useTranslation } from "../i18n";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 interface ManualTutorialOverlayProps {
   stage: ManualStage;
@@ -23,6 +24,7 @@ const STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
 
 export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayProps) {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery("(max-width: 720px)");
 
   const getTutorialText = () => {
     switch (stage) {
@@ -30,14 +32,14 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
         return t.manualTutorial.sieveDrag;
       case "sieve-ready":
       case "sieve-shaking":
-        return t.manualTutorial.sieveReady;
+        return isMobile ? t.manualTutorialMobile.sieveReady : t.manualTutorial.sieveReady;
       case "sieve-return":
         return t.manualTutorial.sieveReturn;
       case "kettle-drag":
         return t.manualTutorial.kettleDrag;
       case "kettle-ready":
       case "pouring":
-        return t.manualTutorial.kettleReady;
+        return isMobile ? t.manualTutorialMobile.kettleReady : t.manualTutorial.kettleReady;
       case "kettle-return":
         return t.manualTutorial.kettleReturn;
       case "chasen-drag":

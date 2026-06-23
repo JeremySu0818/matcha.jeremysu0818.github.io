@@ -125,6 +125,10 @@ export const idCopy: LocaleCopy = {
       chasenReturn: "Seret chasen kembali ke tempatnya",
       done: "Ritual Selesai",
     },
+    manualTutorialMobile: {
+      sieveReady: "Tekan lama untuk mengayak matcha",
+      kettleReady: "Tekan lama untuk menuang air",
+    },
   },
   tools: {
     title: "Alat 3D Interaktif",

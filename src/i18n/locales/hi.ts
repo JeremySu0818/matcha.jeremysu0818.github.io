@@ -125,6 +125,10 @@ export const hiCopy: LocaleCopy = {
       chasenReturn: "चासेन को उसकी जगह वापस खींचें",
       done: "अनुष्ठान संपन्न",
     },
+    manualTutorialMobile: {
+      sieveReady: "माचा छानने के लिए देर तक दबाएँ",
+      kettleReady: "पानी डालने के लिए देर तक दबाएँ",
+    },
   },
   tools: {
     title: "इंटरएक्टिव 3D उपकरण",

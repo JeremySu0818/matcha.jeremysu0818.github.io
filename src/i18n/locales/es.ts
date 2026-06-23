@@ -125,6 +125,10 @@ export const esCopy: LocaleCopy = {
       chasenReturn: "Arrastra el chasen de vuelta a su lugar",
       done: "Ritual completado",
     },
+    manualTutorialMobile: {
+      sieveReady: "Mantén pulsado para tamizar el matcha",
+      kettleReady: "Mantén pulsado para verter el agua",
+    },
   },
   tools: {
     title: "Herramientas 3D interactivas",

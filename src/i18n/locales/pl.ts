@@ -125,6 +125,10 @@ export const plCopy: LocaleCopy = {
       chasenReturn: "Przeciągnij chasen z powrotem na jego miejsce",
       done: "Rytuał zakończony",
     },
+    manualTutorialMobile: {
+      sieveReady: "Przytrzymaj, aby przesiać matchę",
+      kettleReady: "Przytrzymaj, aby nalać wodę",
+    },
   },
   tools: {
     title: "Interaktywne narzędzia 3D",

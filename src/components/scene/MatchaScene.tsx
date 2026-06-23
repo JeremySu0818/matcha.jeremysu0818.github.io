@@ -9,6 +9,7 @@ import {
   MeshPhysicalMaterial,
   Plane,
   PerspectiveCamera,
+  Vector2,
   Vector3,
 } from "three";
 import type { SceneMode } from "../../app/sceneMode";
@@ -63,7 +64,11 @@ type DragState = {
   tool: ManualTool;
   pointerId: number;
   y: number;
-  offset: Vector3;
+  startPoint: Vector3;
+  startPosition: Tuple3;
+  lastClientX: number;
+  lastClientY: number;
+  inputScale: number;
 };
 
 interface MatchaSceneProps {
@@ -78,6 +83,8 @@ const MANUAL_START_PROGRESS = 0.16;
 const BOWL_DROP_RADIUS = 0.72;
 const WHISK_TRAVEL_PER_COUNT = 26;
 const WHISK_TARGET_COUNT = 42;
+const MOBILE_TOUCH_DRAG_SCALE = 1.15;
+const POINTER_MOVE_EPSILON = 0.01;
 
 function cloneTuple(tuple: Tuple3): Tuple3 {
   return [tuple[0], tuple[1], tuple[2]];
@@ -111,7 +118,7 @@ export function MatchaScene({
 }: MatchaSceneProps) {
   const mobile = useMediaQuery("(max-width: 720px)");
   const scroll = useScroll();
-  const { camera } = useThree();
+  const { camera, gl, raycaster } = useThree();
   const bowlRef = useRef<Group>(null);
   const sieveRef = useRef<Group>(null);
   const kettleRef = useRef<Group>(null);
@@ -127,13 +134,14 @@ export function MatchaScene({
   const dragRef = useRef<DragState | null>(null);
   const dragPlaneRef = useRef(new Plane(new Vector3(0, 1, 0), 0));
   const dragPointRef = useRef(new Vector3());
+  const dragPointerRef = useRef(new Vector2());
 
   const dynamicIdlePositions = useMemo<Record<ManualTool, Tuple3>>(() => {
     if (mobile) {
       return {
-        sieve: [sieveIdle.position[0], sieveIdle.position[1], -1.5],
-        kettle: [kettleIdle.position[0], kettleIdle.position[1], 1.6],
-        chasen: [chasenIdle.position[0], chasenIdle.position[1], 1.6],
+        sieve: [teaTrayPosition[0] + 2.0, sieveIdle.position[1], 0.0],
+        kettle: [teaTrayPosition[0] - 2.0, kettleIdle.position[1], 0.8],
+        chasen: [teaTrayPosition[0] - 2.0, chasenIdle.position[1], -0.8],
       };
     }
     return {
@@ -281,15 +289,38 @@ export function MatchaScene({
     updateManualStage("chasen-return");
   }, [updateManualStage]);
 
+  const projectPointerToDragPlane = useCallback(
+    (clientX: number, clientY: number, y: number, point: Vector3) => {
+      const rect = gl.domElement.getBoundingClientRect();
+      const pointer = dragPointerRef.current;
+
+      pointer.set(
+        ((clientX - rect.left) / rect.width) * 2 - 1,
+        -((clientY - rect.top) / rect.height) * 2 + 1,
+      );
+
+      dragPlaneRef.current.set(new Vector3(0, 1, 0), -y);
+      raycaster.setFromCamera(pointer, camera);
+      return raycaster.ray.intersectPlane(dragPlaneRef.current, point);
+    },
+    [camera, gl, raycaster],
+  );
+
   const registerWhiskMotion = useCallback(
-    (event: ThreeEvent<PointerEvent>, position: Tuple3) => {
+    (clientX: number, clientY: number, drag: DragState, position: Tuple3) => {
       if (manualStageRef.current !== "whisking" || !isNearBowl(position)) {
+        drag.lastClientX = clientX;
+        drag.lastClientY = clientY;
         return;
       }
 
       const movement =
-        Math.abs(event.nativeEvent.movementX) +
-        Math.abs(event.nativeEvent.movementY);
+        (Math.abs(clientX - drag.lastClientX) +
+          Math.abs(clientY - drag.lastClientY)) *
+        drag.inputScale;
+      drag.lastClientX = clientX;
+      drag.lastClientY = clientY;
+
       if (movement < 2) {
         return;
       }
@@ -315,72 +346,11 @@ export function MatchaScene({
     [beginChasenReturn],
   );
 
-  const handleManualPointerDown = useCallback(
-    (tool: ManualTool) => (event: ThreeEvent<PointerEvent>) => {
-      if (mode !== "manual" || !canDragTool(tool)) return;
-
-      event.stopPropagation();
-      (event.target as HTMLElement).setPointerCapture?.(event.pointerId);
-
-      const current = manualPositionsRef.current[tool];
-      const plane = dragPlaneRef.current;
-      const point = dragPointRef.current;
-
-      const targetY =
-        tool === "sieve"
-          ? sieveUse.position[1]
-          : tool === "kettle"
-            ? kettleUse.position[1]
-            : 1.5;
-
-      plane.set(new Vector3(0, 1, 0), -targetY);
-
-      if (!event.ray.intersectPlane(plane, point)) {
-        return;
-      }
-
-      dragRef.current = {
-        tool,
-        pointerId: event.pointerId,
-        y: targetY,
-        offset: point.clone().sub(new Vector3(current[0], targetY, current[2])),
-      };
-    },
-    [canDragTool, mode],
-  );
-
-  const handleManualPointerMove = useCallback(
-    (tool: ManualTool) => (event: ThreeEvent<PointerEvent>) => {
+  const finishManualDrag = useCallback(
+    (tool: ManualTool) => {
       const drag = dragRef.current;
       if (mode !== "manual" || !drag || drag.tool !== tool) return;
 
-      event.stopPropagation();
-      const plane = dragPlaneRef.current;
-      const point = dragPointRef.current;
-      plane.set(new Vector3(0, 1, 0), -drag.y);
-
-      if (!event.ray.intersectPlane(plane, point)) {
-        return;
-      }
-
-      const nextPosition: Tuple3 = [
-        clampDrag(point.x - drag.offset.x),
-        manualPositionsRef.current[tool][1],
-        clampDrag(point.z - drag.offset.z),
-      ];
-      applyManualPosition(tool, nextPosition);
-      registerWhiskMotion(event, nextPosition);
-    },
-    [applyManualPosition, mode, registerWhiskMotion],
-  );
-
-  const handleManualPointerUp = useCallback(
-    (tool: ManualTool) => (event: ThreeEvent<PointerEvent>) => {
-      const drag = dragRef.current;
-      if (mode !== "manual" || !drag || drag.tool !== tool) return;
-
-      event.stopPropagation();
-      (event.target as HTMLElement).releasePointerCapture?.(drag.pointerId);
       dragRef.current = null;
 
       const stage = manualStageRef.current;
@@ -446,8 +416,170 @@ export function MatchaScene({
         }
       }
     },
-    [applyManualPosition, completeManualRitual, mode, snapToolIdle, snapToolUse, updateManualStage, dynamicIdlePositions],
+    [applyManualPosition, completeManualRitual, dynamicIdlePositions, mode, snapToolIdle, snapToolUse, updateManualStage],
   );
+
+  const continueManualDrag = useCallback(
+    (event: PointerEvent | TouchEvent, clientX: number, clientY: number) => {
+      const drag = dragRef.current;
+      if (mode !== "manual" || !drag) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const point = dragPointRef.current;
+
+      if (!projectPointerToDragPlane(clientX, clientY, drag.y, point)) {
+        return;
+      }
+
+      const nextPosition: Tuple3 = [
+        clampDrag(
+          drag.startPosition[0] +
+            (point.x - drag.startPoint.x) * drag.inputScale,
+        ),
+        manualPositionsRef.current[drag.tool][1],
+        clampDrag(
+          drag.startPosition[2] +
+            (point.z - drag.startPoint.z) * drag.inputScale,
+        ),
+      ];
+      const currentPosition = manualPositionsRef.current[drag.tool];
+      const hasMoved =
+        Math.abs(nextPosition[0] - currentPosition[0]) > POINTER_MOVE_EPSILON ||
+        Math.abs(nextPosition[2] - currentPosition[2]) > POINTER_MOVE_EPSILON;
+
+      if (hasMoved) {
+        applyManualPosition(drag.tool, nextPosition);
+      }
+      registerWhiskMotion(clientX, clientY, drag, nextPosition);
+    },
+    [applyManualPosition, mode, projectPointerToDragPlane, registerWhiskMotion],
+  );
+
+  const handleDocumentPointerMove = useCallback(
+    (event: PointerEvent) => {
+      const drag = dragRef.current;
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      continueManualDrag(event, event.clientX, event.clientY);
+    },
+    [continueManualDrag],
+  );
+
+  const handleDocumentTouchMove = useCallback(
+    (event: TouchEvent) => {
+      const touch = event.touches[0] ?? event.changedTouches[0];
+      if (!touch) return;
+      continueManualDrag(event, touch.clientX, touch.clientY);
+    },
+    [continueManualDrag],
+  );
+
+  const handleDocumentPointerEnd = useCallback(
+    (event: PointerEvent) => {
+      const drag = dragRef.current;
+      if (mode !== "manual" || !drag || event.pointerId !== drag.pointerId) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      gl.domElement.releasePointerCapture?.(drag.pointerId);
+      removeDocumentDragListeners();
+      finishManualDrag(drag.tool);
+    },
+    [finishManualDrag, gl, mode],
+  );
+
+  const handleDocumentTouchEnd = useCallback(
+    (event: TouchEvent) => {
+      const drag = dragRef.current;
+      if (mode !== "manual" || !drag) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      gl.domElement.releasePointerCapture?.(drag.pointerId);
+      removeDocumentDragListeners();
+      finishManualDrag(drag.tool);
+    },
+    [finishManualDrag, gl, mode],
+  );
+
+  const handleManualPointerDown = useCallback(
+    (tool: ManualTool) => (event: ThreeEvent<PointerEvent>) => {
+      if (mode !== "manual" || !canDragTool(tool)) return;
+
+      event.stopPropagation();
+      event.nativeEvent.preventDefault();
+
+      const current = manualPositionsRef.current[tool];
+      const point = dragPointRef.current;
+
+      const targetY =
+        tool === "sieve"
+          ? sieveUse.position[1]
+          : tool === "kettle"
+            ? kettleUse.position[1]
+            : 1.5;
+
+      if (
+        !projectPointerToDragPlane(
+          event.nativeEvent.clientX,
+          event.nativeEvent.clientY,
+          targetY,
+          point,
+        )
+      ) {
+        return;
+      }
+
+      dragRef.current = {
+        tool,
+        pointerId: event.pointerId,
+        y: targetY,
+        startPoint: point.clone(),
+        startPosition: cloneTuple(current),
+        lastClientX: event.nativeEvent.clientX,
+        lastClientY: event.nativeEvent.clientY,
+        inputScale:
+          mobile && event.nativeEvent.pointerType !== "mouse"
+            ? MOBILE_TOUCH_DRAG_SCALE
+            : 1,
+      };
+
+      gl.domElement.setPointerCapture?.(event.pointerId);
+      document.addEventListener("pointermove", handleDocumentPointerMove, { passive: false });
+      document.addEventListener("pointerup", handleDocumentPointerEnd, { passive: false });
+      document.addEventListener("touchmove", handleDocumentTouchMove, { passive: false });
+      document.addEventListener("touchend", handleDocumentTouchEnd, { passive: false });
+      document.addEventListener("touchcancel", handleDocumentTouchEnd, { passive: false });
+    },
+    [canDragTool, gl, handleDocumentPointerEnd, handleDocumentPointerMove, handleDocumentTouchEnd, handleDocumentTouchMove, mobile, mode, projectPointerToDragPlane],
+  );
+
+  const handleManualPointerUp = useCallback(
+    (tool: ManualTool) => (event: ThreeEvent<PointerEvent>) => {
+      const drag = dragRef.current;
+      if (mode !== "manual" || !drag || drag.tool !== tool) return;
+
+      event.stopPropagation();
+      event.nativeEvent.preventDefault();
+      gl.domElement.releasePointerCapture?.(drag.pointerId);
+      removeDocumentDragListeners();
+      finishManualDrag(tool);
+    },
+    [finishManualDrag, gl, mode],
+  );
+
+  function removeDocumentDragListeners() {
+    document.removeEventListener("pointermove", handleDocumentPointerMove);
+    document.removeEventListener("pointerup", handleDocumentPointerEnd);
+    document.removeEventListener("touchmove", handleDocumentTouchMove);
+    document.removeEventListener("touchend", handleDocumentTouchEnd);
+    document.removeEventListener("touchcancel", handleDocumentTouchEnd);
+  }
 
   const handleManualContextMenu = useCallback(
     (tool: ManualTool) => (event: ThreeEvent<MouseEvent>) => {
@@ -479,15 +611,11 @@ export function MatchaScene({
   const manualHandlers = useCallback(
     (tool: ManualTool) => ({
       onPointerDown: handleManualPointerDown(tool),
-      onPointerMove: handleManualPointerMove(tool),
-      onPointerUp: handleManualPointerUp(tool),
       onContextMenu: handleManualContextMenu(tool),
     }),
     [
       handleManualContextMenu,
       handleManualPointerDown,
-      handleManualPointerMove,
-      handleManualPointerUp,
     ],
   );
 
@@ -592,7 +720,7 @@ export function MatchaScene({
         isFirstFrameRef.current = false;
       }
 
-      const topCamera = new Vector3(0.11, mobile ? 9.8 : 8.2, 0.02);
+      const topCamera = new Vector3(0.11, mobile ? 9.2 : 8.2, 0.02);
       camera.up.set(1, 0, 0);
       camera.position.lerp(topCamera, 0.12);
       (camera as PerspectiveCamera).lookAt(0.11, -0.5, 0);

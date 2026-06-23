@@ -124,6 +124,10 @@ export const frCopy: LocaleCopy = {
       chasenReturn: "Faites glisser le chasen pour le remettre à sa place",
       done: "Rituel terminé",
     },
+    manualTutorialMobile: {
+      sieveReady: "Appuyez longuement pour tamiser le matcha",
+      kettleReady: "Appuyez longuement pour verser l'eau",
+    },
   },
   tools: {
     title: "Utensiles 3D interactifs",
