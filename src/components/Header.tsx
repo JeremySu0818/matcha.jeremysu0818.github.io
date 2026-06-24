@@ -12,6 +12,7 @@ interface HeaderProps {
   sceneMode?: SceneMode;
   onSceneModeChange?: (mode: SceneMode) => void;
   showSwitcherHint?: boolean;
+  onSwitcherHintDismiss?: () => void;
 }
 
 export function Header({
@@ -22,6 +23,7 @@ export function Header({
   sceneMode,
   onSceneModeChange,
   showSwitcherHint = false,
+  onSwitcherHintDismiss,
 }: HeaderProps) {
   const { t, lang } = useTranslation();
   const calculatorCopy = getCalculatorCopy(lang);
@@ -198,6 +200,7 @@ export function Header({
               darkTheme={darkTheme}
               onModeChange={onSceneModeChange}
               showHint={showSwitcherHint}
+              onHintDismiss={onSwitcherHintDismiss}
             />
           </div>
         )}

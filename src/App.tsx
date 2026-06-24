@@ -34,14 +34,31 @@ function App() {
   const [manualStarted, setManualStarted] = useState(false);
   const [manualDone, setManualDone] = useState(false);
   const [showSwitcherHint, setShowSwitcherHint] = useState(false);
+  const switcherHintShowTimeoutRef = useRef<any>(null);
+  const switcherHintHideTimeoutRef = useRef<any>(null);
+
+  const clearSwitcherHintTimeouts = () => {
+    if (switcherHintShowTimeoutRef.current !== null) {
+      clearTimeout(switcherHintShowTimeoutRef.current);
+      switcherHintShowTimeoutRef.current = null;
+    }
+    if (switcherHintHideTimeoutRef.current !== null) {
+      clearTimeout(switcherHintHideTimeoutRef.current);
+      switcherHintHideTimeoutRef.current = null;
+    }
+  };
+
+  const dismissSwitcherHint = () => {
+    clearSwitcherHintTimeouts();
+    setShowSwitcherHint(false);
+  };
 
   useEffect(() => {
-    let showTimeoutId: any = null;
-    let hideTimeoutId: any = null;
+    clearSwitcherHintTimeouts();
     if (sceneMode === "manual" && manualDone) {
-      showTimeoutId = setTimeout(() => {
+      switcherHintShowTimeoutRef.current = setTimeout(() => {
         setShowSwitcherHint(true);
-        hideTimeoutId = setTimeout(() => {
+        switcherHintHideTimeoutRef.current = setTimeout(() => {
           setShowSwitcherHint(false);
         }, 20000); // Hide after 20 seconds
       }, 1500); // Show after 1.5 seconds
@@ -49,8 +66,7 @@ function App() {
       setShowSwitcherHint(false);
     }
     return () => {
-      if (showTimeoutId) clearTimeout(showTimeoutId);
-      if (hideTimeoutId) clearTimeout(hideTimeoutId);
+      clearSwitcherHintTimeouts();
     };
   }, [sceneMode, manualDone]);
   const [manualStage, setManualStage] = useState<ManualStage>("sieve-drag");
@@ -200,6 +216,7 @@ function App() {
               sceneMode={sceneMode}
               onSceneModeChange={handleSceneModeChange}
               showSwitcherHint={showSwitcherHint}
+              onSwitcherHintDismiss={dismissSwitcherHint}
             />
 
             <div

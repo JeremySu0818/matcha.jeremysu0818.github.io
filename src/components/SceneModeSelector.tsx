@@ -14,6 +14,7 @@ interface SceneModeSelectorProps {
   darkTheme?: boolean;
   onModeChange?: (mode: SceneMode) => void;
   showHint?: boolean;
+  onHintDismiss?: () => void;
 }
 
 export function SceneModeSelector({
@@ -21,6 +22,7 @@ export function SceneModeSelector({
   darkTheme = false,
   onModeChange,
   showHint = false,
+  onHintDismiss,
 }: SceneModeSelectorProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -93,6 +95,14 @@ export function SceneModeSelector({
     if (!onModeChange) return;
     onModeChange(nextMode);
     setIsOpen(false);
+  };
+
+  const handleToggleOpen = () => {
+    if (!isInteractive) return;
+    if (!isOpen) {
+      onHintDismiss?.();
+    }
+    setIsOpen(!isOpen);
   };
 
   const buttonTextColor = darkTheme
@@ -236,10 +246,7 @@ export function SceneModeSelector({
     <>
       <button
         ref={buttonRef}
-        onClick={() => {
-          if (!isInteractive) return;
-          setIsOpen(!isOpen);
-        }}
+        onClick={handleToggleOpen}
         className={`flex items-center ${isInteractive ? "cursor-pointer pointer-events-auto" : "pointer-events-none"}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
@@ -255,17 +262,6 @@ export function SceneModeSelector({
               <span>{modeLabel}</span>
               {renderChevronIcon(isOpen)}
             </span>
-            {SCENE_MODES.map((nextMode) => (
-              <span
-                key={nextMode}
-                className="scalable-mode-trigger-measure"
-                aria-hidden="true"
-              >
-                {renderModeIcon()}
-                <span>{t.sceneMode[nextMode]}</span>
-                {renderChevronIcon()}
-              </span>
-            ))}
           </span>
         </div>
       </button>
