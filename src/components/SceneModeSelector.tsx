@@ -7,6 +7,7 @@ import {
   getDropdownPosition,
   getInitialDropdownPosition,
 } from "../utils/dropdownPosition";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 interface SceneModeSelectorProps {
   mode: SceneMode;
@@ -23,6 +24,7 @@ export function SceneModeSelector({
 }: SceneModeSelectorProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 720px)");
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuPos, setMenuPos] = useState(getInitialDropdownPosition);
@@ -201,23 +203,30 @@ export function SceneModeSelector({
   const hintCard = showHintCard
     ? createPortal(
         <div
-          className="frosted-surface shadow-glass backdrop-blur-2xl border border-white/30 rounded-2xl p-4 text-center pointer-events-none"
           style={{
             position: "fixed",
             top: menuPos.top + 4,
             right: menuPos.right + (btnWidth - 220) / 2,
             width: "220px",
             zIndex: 99998,
-            animation: hintClosing
-              ? "slideUpOut 0.6s cubic-bezier(0.36, 0, 0.66, -0.56) forwards"
-              : "slideDownIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            backgroundColor: darkTheme ? "rgba(31, 49, 40, 0.4)" : "rgba(255, 255, 255, 0.2)",
-            color: darkTheme ? "#fff" : "#1f3128",
+            transform: isMobile ? "scale(0.8)" : "none",
+            transformOrigin: "top center",
           }}
         >
-          <p className="text-[14px] font-medium tracking-wide leading-relaxed">
-            {t.overlay.switcherHint}
-          </p>
+          <div
+            className="frosted-surface shadow-glass backdrop-blur-2xl border border-white/30 rounded-2xl p-4 text-center pointer-events-none"
+            style={{
+              animation: hintClosing
+                ? "slideUpOut 0.6s cubic-bezier(0.36, 0, 0.66, -0.56) forwards"
+                : "slideDownIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              backgroundColor: darkTheme ? "rgba(31, 49, 40, 0.4)" : "rgba(255, 255, 255, 0.2)",
+              color: darkTheme ? "#fff" : "#1f3128",
+            }}
+          >
+            <p className="text-[14px] font-medium tracking-wide leading-relaxed">
+              {t.overlay.switcherHint}
+            </p>
+          </div>
         </div>,
         document.body,
       )
