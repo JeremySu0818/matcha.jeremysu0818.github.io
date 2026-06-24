@@ -274,11 +274,57 @@ export function InkTextReveal({
       );
       const progressState = { value: 0 };
 
+      const renderViewportLockedLines = (scrollProgress: number) => {
+        const scrollerEl = scrollerElement instanceof Element
+          ? scrollerElement
+          : document.documentElement;
+        const scrollerRect = scrollerEl.getBoundingClientRect();
+        const anchorY = scrollerRect.top + scrollerRect.height * 0.8;
+
+        const weights = lineElements.map(getLinePrintWeight);
+        const totalWeight = weights.reduce((s, w) => s + w, 0);
+        if (totalWeight <= 0) return;
+
+        const printPosition =
+          clamp01(scrollProgress) * Math.max(MIN_LINE_PRINT_WEIGHT, totalWeight);
+        let consumedWeight = 0;
+
+        lineElements.forEach((line, index) => {
+          const rect = line.getBoundingClientRect();
+          const lineWeight = weights[index] ?? MIN_LINE_PRINT_WEIGHT;
+          const lineStart = consumedWeight;
+          consumedWeight += lineWeight;
+
+          // viewport-based: line position relative to the fixed anchor
+          let vpProgress: number;
+          if (rect.bottom <= anchorY) {
+            vpProgress = 1;
+          } else if (rect.top >= anchorY) {
+            vpProgress = 0;
+          } else {
+            const lineHeight = Math.max(1, rect.bottom - rect.top);
+            vpProgress = clamp01((anchorY - rect.top) / lineHeight);
+          }
+
+          // scroll-progress fallback: guarantees full reveal by end
+          let spProgress: number;
+          if (printPosition <= lineStart) {
+            spProgress = 0;
+          } else if (printPosition >= lineStart + lineWeight) {
+            spProgress = 1;
+          } else {
+            spProgress = (printPosition - lineStart) / lineWeight;
+          }
+
+          renderWeightedLine(line, Math.max(vpProgress, spProgress));
+        });
+      };
+
       const renderProgress = (progress: number) => {
         const safeProgress = clamp01(progress);
 
         if (lockPrintHeadToViewport) {
-          renderWeightedSequentialLines(lineElements, safeProgress);
+          renderViewportLockedLines(safeProgress);
           return;
         }
 
