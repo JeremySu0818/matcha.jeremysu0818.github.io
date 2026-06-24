@@ -1,11 +1,13 @@
-import { useMemo, useRef, type RefObject } from "react";
+import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
+  CanvasTexture,
   CircleGeometry,
   Color,
   DoubleSide,
   Group,
+  LinearFilter,
   Mesh,
   Shape,
   ShapeGeometry,
@@ -14,12 +16,16 @@ import {
   Vector3,
 } from "three";
 import { mix, range, smoothstep } from "../../utils/easing";
+import { MatchaTextureDeformer } from "./matchaFluid";
 
 type FoamSurfaceProps = {
   textureSrc: string;
   bowlSrc: string;
   progressRef?: RefObject<number>;
+  chasenRef?: RefObject<Group | null>;
 };
+
+const TEXTURE_IMAGE_SIZE = 2.8;
 
 const vertexShader = `
   precision mediump float;
@@ -37,14 +43,10 @@ const fragmentShader = `
   uniform vec3 uTint;
   uniform float uOpacity;
   uniform float uImageSize;
-  uniform float uTextureRotation;
   varying vec2 vSurface;
 
   void main() {
-    float rotationCos = cos(uTextureRotation);
-    float rotationSin = sin(uTextureRotation);
-    vec2 textureSurface = mat2(rotationCos, -rotationSin, rotationSin, rotationCos) * vSurface;
-    vec2 oversizedUv = textureSurface / uImageSize + vec2(0.5);
+    vec2 oversizedUv = vSurface / uImageSize + vec2(0.5);
     vec4 texel = texture2D(uTexture, oversizedUv);
     vec3 color = mix(texel.rgb, texel.rgb * uTint, 0.28);
     float alpha = texel.a * uOpacity;
@@ -173,12 +175,32 @@ export function FoamSurface({
   textureSrc,
   bowlSrc,
   progressRef,
+  chasenRef,
 }: FoamSurfaceProps) {
   const meshRef =
     useRef<Mesh<ShapeGeometry | CircleGeometry, ShaderMaterial>>(null);
+  const previousStirRef = useRef<{ u: number; v: number } | null>(null);
   const scroll = useScroll();
   const texture = useTexture(textureSrc) as Texture;
   const bowl = useGLTF(bowlSrc);
+  const chasenWorldPoint = useMemo(() => new Vector3(), []);
+  const chasenLocalPoint = useMemo(() => new Vector3(), []);
+  const fluidTexture = useMemo(() => {
+    const canvas = document.createElement("canvas");
+    const canvasTexture = new CanvasTexture(canvas);
+    canvasTexture.colorSpace = texture.colorSpace;
+    canvasTexture.minFilter = LinearFilter;
+    canvasTexture.magFilter = LinearFilter;
+    return canvasTexture;
+  }, [texture.colorSpace]);
+  const fluid = useMemo(
+    () =>
+      new MatchaTextureDeformer(
+        fluidTexture,
+        texture.image as CanvasImageSource,
+      ),
+    [fluidTexture, texture],
+  );
 
   const geometry = useMemo(
     () => createInnerWallSectionGeometry(bowl.scene),
@@ -186,16 +208,21 @@ export function FoamSurface({
   );
   const uniforms = useMemo(
     () => ({
-      uTexture: { value: texture },
+      uTexture: { value: fluidTexture },
       uTint: { value: new Color("#8fb960") },
       uOpacity: { value: 0 },
-      uImageSize: { value: 2.8 },
-      uTextureRotation: { value: 0 },
+      uImageSize: { value: TEXTURE_IMAGE_SIZE },
     }),
-    [texture],
+    [fluidTexture],
   );
 
-  useFrame(({ clock }) => {
+  useEffect(() => {
+    return () => {
+      fluidTexture.dispose();
+    };
+  }, [fluidTexture]);
+
+  useFrame(({ clock }, delta) => {
     if (!meshRef.current) {
       return;
     }
@@ -213,8 +240,30 @@ export function FoamSurface({
     surface.position.y =
       -0.12 + Math.sin(clock.elapsedTime * 1.4) * 0.003 * fadeIn;
     material.uniforms.uOpacity.value = mix(0, 0.94, fadeIn);
-    material.uniforms.uTextureRotation.value =
-      clock.elapsedTime * 0.1 + whisk * 1.2;
+
+    const collisionActive =
+      fadeIn > 0.01 && progress > 0.755 && progress < 0.995;
+
+    if (collisionActive && chasenRef?.current) {
+      chasenRef.current.getWorldPosition(chasenWorldPoint);
+      chasenLocalPoint.copy(chasenWorldPoint);
+      surface.worldToLocal(chasenLocalPoint);
+
+      const u = chasenLocalPoint.x / TEXTURE_IMAGE_SIZE + 0.5;
+      const v = chasenLocalPoint.y / TEXTURE_IMAGE_SIZE + 0.5;
+      const previous = previousStirRef.current;
+      const du = previous ? u - previous.u : 0;
+      const dv = previous ? v - previous.v : 0;
+      const speed = Math.hypot(du, dv);
+      const force = Math.min(2.4, 0.35 + speed * 260) * Math.max(0.45, whisk);
+
+      fluid.addCollisionStir(u, v, du, dv, force);
+      previousStirRef.current = { u, v };
+    } else {
+      previousStirRef.current = null;
+    }
+
+    fluid.frame(delta);
   });
 
   return (

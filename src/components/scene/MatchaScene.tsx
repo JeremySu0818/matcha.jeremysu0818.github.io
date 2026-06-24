@@ -1032,6 +1032,7 @@ export function MatchaScene({
             textureSrc={asset("textures/matcha-surface.png")}
             bowlSrc={asset("models/tea-bowl.glb")}
             progressRef={mode === "manual" ? manualProgressRef : undefined}
+            chasenRef={chasenRef}
           />
           <WaterFill
             bowlSrc={asset("models/tea-bowl.glb")}
