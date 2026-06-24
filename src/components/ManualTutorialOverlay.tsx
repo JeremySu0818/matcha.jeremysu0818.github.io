@@ -71,17 +71,24 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
   };
 
   const text = getTutorialText();
-  const positionStyle =
+  const rawStyle =
     (isMobile ? MOBILE_STAGE_COORDINATES : DESKTOP_STAGE_COORDINATES)[stage] || {
       top: "50%",
       left: "50%",
       transform: "translateX(-50%)",
     };
 
+  const positionStyle = isMobile
+    ? {
+        ...rawStyle,
+        transform: rawStyle.transform ? `${rawStyle.transform} scale(0.8)` : "scale(0.8)",
+      }
+    : rawStyle;
+
   return (
     <div
       style={positionStyle}
-      className={`absolute w-[170px] sm:w-[200px] aspect-[4/3] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
+      className={`absolute w-[170px] sm:w-[200px] aspect-[16/9] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
         visible && text ? "opacity-100" : "opacity-0"
       }`}
     >
