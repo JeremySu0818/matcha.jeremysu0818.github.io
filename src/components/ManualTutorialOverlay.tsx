@@ -7,7 +7,7 @@ interface ManualTutorialOverlayProps {
   visible: boolean;
 }
 
-const STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
+const DESKTOP_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "sieve-drag": { top: "30%", left: "15%" },
   "sieve-ready": { top: "60%", left: "20%" },
   "sieve-shaking": { top: "60%", left: "20%" },
@@ -20,6 +20,21 @@ const STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "whisking": { top: "60%", left: "70%" },
   "chasen-return": { top: "25%", left: "75%" },
   "done": { top: "25%", left: "75%" },
+};
+
+const MOBILE_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
+  "sieve-drag": { top: "24%", left: "50%", transform: "translateX(-50%)" },
+  "sieve-ready": { top: "54%", left: "50%", transform: "translateX(-50%)" },
+  "sieve-shaking": { top: "54%", left: "50%", transform: "translateX(-50%)" },
+  "sieve-return": { top: "24%", left: "50%", transform: "translateX(-50%)" },
+  "kettle-drag": { top: "58%", left: "50%", transform: "translateX(-50%)" },
+  "kettle-ready": { top: "67%", left: "50%", transform: "translateX(-50%)" },
+  "pouring": { top: "67%", left: "50%", transform: "translateX(-50%)" },
+  "kettle-return": { top: "58%", left: "50%", transform: "translateX(-50%)" },
+  "chasen-drag": { top: "77%", left: "40%", transform: "translateX(-50%)" },
+  "whisking": { top: "61%", left: "50%", transform: "translateX(-50%)" },
+  "chasen-return": { top: "77%", left: "40%", transform: "translateX(-50%)" },
+  "done": { top: "61%", left: "50%", transform: "translateX(-50%)" },
 };
 
 export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayProps) {
@@ -56,12 +71,17 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
   };
 
   const text = getTutorialText();
-  const positionStyle = STAGE_COORDINATES[stage] || { top: "50%", left: "50%" };
+  const positionStyle =
+    (isMobile ? MOBILE_STAGE_COORDINATES : DESKTOP_STAGE_COORDINATES)[stage] || {
+      top: "50%",
+      left: "50%",
+      transform: "translateX(-50%)",
+    };
 
   return (
     <div
       style={positionStyle}
-      className={`absolute w-[200px] aspect-[4/3] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
+      className={`absolute w-[170px] sm:w-[200px] aspect-[4/3] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
         visible && text ? "opacity-100" : "opacity-0"
       }`}
     >

@@ -230,7 +230,7 @@ function App() {
                         clearManualTimeout();
                         manualTimeoutRef.current = setTimeout(() => {
                           setManualDone(true);
-                        }, 2000);
+                        }, 3000);
                       }}
                     />
                     <Scroll html>
