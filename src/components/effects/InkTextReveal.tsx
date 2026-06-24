@@ -157,8 +157,8 @@ function getLinePrintWeight(line: HTMLElement) {
   return Math.max(MIN_LINE_PRINT_WEIGHT, textLength);
 }
 
-function renderWeightedLine(line: HTMLElement, progress: number) {
-  const width = Math.max(1, line.getBoundingClientRect().width);
+function renderWeightedLine(line: HTMLElement, progress: number, cachedWidth?: number) {
+  const width = Math.max(1, cachedWidth ?? line.getBoundingClientRect().width);
   const stop = clamp01(progress) * width;
   const edge = Math.min(width, stop + LOCKED_PRINT_HEAD_EDGE_WIDTH);
 
@@ -274,6 +274,20 @@ export function InkTextReveal({
       );
       const progressState = { value: 0 };
 
+      let cachedLineData: { localTop: number; height: number; weight: number }[] = [];
+      const updateLineData = () => {
+        const elementRect = element.getBoundingClientRect();
+        cachedLineData = lineElements.map((line) => {
+          const r = line.getBoundingClientRect();
+          const weight = getLinePrintWeight(line);
+          return {
+            localTop: r.top - elementRect.top,
+            height: r.height,
+            weight,
+          };
+        });
+      };
+
       const renderViewportLockedLines = (scrollProgress: number) => {
         const scrollerEl = scrollerElement instanceof Element
           ? scrollerElement
@@ -281,29 +295,37 @@ export function InkTextReveal({
         const scrollerRect = scrollerEl.getBoundingClientRect();
         const anchorY = scrollerRect.top + scrollerRect.height * 0.8;
 
-        const weights = lineElements.map(getLinePrintWeight);
-        const totalWeight = weights.reduce((s, w) => s + w, 0);
+        const totalWeight = cachedLineData.reduce((s, d) => s + d.weight, 0);
         if (totalWeight <= 0) return;
 
         const printPosition =
           clamp01(scrollProgress) * Math.max(MIN_LINE_PRINT_WEIGHT, totalWeight);
         let consumedWeight = 0;
 
+        const elementRect = element.getBoundingClientRect();
+
         lineElements.forEach((line, index) => {
-          const rect = line.getBoundingClientRect();
-          const lineWeight = weights[index] ?? MIN_LINE_PRINT_WEIGHT;
+          const data = cachedLineData[index] || {
+            localTop: 0,
+            height: 24,
+            weight: MIN_LINE_PRINT_WEIGHT,
+          };
+          const lineWeight = data.weight;
           const lineStart = consumedWeight;
           consumedWeight += lineWeight;
 
+          const lineTop = elementRect.top + data.localTop;
+          const lineBottom = lineTop + data.height;
+
           // viewport-based: line position relative to the fixed anchor
           let vpProgress: number;
-          if (rect.bottom <= anchorY) {
+          if (lineBottom <= anchorY) {
             vpProgress = 1;
-          } else if (rect.top >= anchorY) {
+          } else if (lineTop >= anchorY) {
             vpProgress = 0;
           } else {
-            const lineHeight = Math.max(1, rect.bottom - rect.top);
-            vpProgress = clamp01((anchorY - rect.top) / lineHeight);
+            const lineHeight = Math.max(1, data.height);
+            vpProgress = clamp01((anchorY - lineTop) / lineHeight);
           }
 
           // scroll-progress fallback: guarantees full reveal by end
@@ -316,7 +338,7 @@ export function InkTextReveal({
             spProgress = (printPosition - lineStart) / lineWeight;
           }
 
-          renderWeightedLine(line, Math.max(vpProgress, spProgress));
+          renderWeightedLine(line, Math.max(vpProgress, spProgress), data.weight);
         });
       };
 
@@ -373,6 +395,7 @@ export function InkTextReveal({
           setProgress(self.progress);
         },
         onRefresh: (self) => {
+          updateLineData();
           setProgress(self.progress, true);
         },
       });
