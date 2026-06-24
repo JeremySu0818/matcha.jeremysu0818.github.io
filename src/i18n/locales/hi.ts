@@ -77,6 +77,7 @@ export const hiCopy: LocaleCopy = {
       back: "मुख्य पृष्ठ पर वापस जाएं",
       replay: "एक बार फिर",
       start: "Start Ritual",
+      switcherHint: "सुचारू 3D एनिमेशन का आनंद लेने के लिए आप यहाँ 'स्क्रॉल' मोड पर भी स्विच कर सकते हैं!",
     },
     sceneMode: {
       label: "दृश्य मोड",

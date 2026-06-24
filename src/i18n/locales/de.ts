@@ -77,6 +77,7 @@ export const deCopy: LocaleCopy = {
       back: "Zur Startseite",
       replay: "Noch einmal",
       start: "Start Ritual",
+      switcherHint: "Sie können hier auch in den „Scroll“-Modus wechseln, um die flüssige 3D-Animation zu genießen!",
     },
     sceneMode: {
       label: "Szenenmodus",

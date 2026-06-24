@@ -33,6 +33,26 @@ function App() {
   const [sceneMode, setSceneMode] = useState<SceneMode>(() => readSceneMode());
   const [manualStarted, setManualStarted] = useState(false);
   const [manualDone, setManualDone] = useState(false);
+  const [showSwitcherHint, setShowSwitcherHint] = useState(false);
+
+  useEffect(() => {
+    let showTimeoutId: any = null;
+    let hideTimeoutId: any = null;
+    if (sceneMode === "manual" && manualDone) {
+      showTimeoutId = setTimeout(() => {
+        setShowSwitcherHint(true);
+        hideTimeoutId = setTimeout(() => {
+          setShowSwitcherHint(false);
+        }, 20000); // Hide after 20 seconds
+      }, 1500); // Show after 1.5 seconds
+    } else {
+      setShowSwitcherHint(false);
+    }
+    return () => {
+      if (showTimeoutId) clearTimeout(showTimeoutId);
+      if (hideTimeoutId) clearTimeout(hideTimeoutId);
+    };
+  }, [sceneMode, manualDone]);
   const [manualStage, setManualStage] = useState<ManualStage>("sieve-drag");
   const [manualResetToken, setManualResetToken] = useState(0);
   const isMobile = useViewportMobile(768);
@@ -179,6 +199,7 @@ function App() {
               onLoadAnimation={false}
               sceneMode={sceneMode}
               onSceneModeChange={handleSceneModeChange}
+              showSwitcherHint={showSwitcherHint}
             />
 
             <div

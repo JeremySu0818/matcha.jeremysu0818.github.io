@@ -77,6 +77,7 @@ export const nlCopy: LocaleCopy = {
       back: "Terug naar start",
       replay: "Nog een keer",
       start: "Start Ritual",
+      switcherHint: "Je kunt hier ook overschakelen naar de 'Scroll'-modus om te genieten van de vloeiende 3D-animatie!",
     },
     sceneMode: {
       label: "Scènemodus",

@@ -77,6 +77,7 @@ export const esCopy: LocaleCopy = {
       back: "Volver al inicio",
       replay: "Otra vez",
       start: "Start Ritual",
+      switcherHint: "¡También puedes cambiar al modo 'Desplazamiento' aquí para disfrutar de la animación 3D fluida!",
     },
     sceneMode: {
       label: "Modo de escena",

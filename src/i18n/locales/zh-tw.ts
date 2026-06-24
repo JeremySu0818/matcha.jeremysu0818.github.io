@@ -76,6 +76,7 @@ export const zhTwCopy: LocaleCopy = {
       back: "返回首頁",
       replay: "再來一次",
       start: "開始體驗",
+      switcherHint: "你也可以在此切換為「捲動」模式，體驗流暢的 3D 動畫！",
     },
     sceneMode: {
       label: "場景模式",

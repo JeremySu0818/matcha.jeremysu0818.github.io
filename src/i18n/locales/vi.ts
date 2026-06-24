@@ -76,6 +76,7 @@ export const viCopy: LocaleCopy = {
       back: "Về trang chủ",
       replay: "Làm lại lần nữa",
       start: "Start Ritual",
+      switcherHint: "Bạn cũng có thể chuyển sang chế độ 'Cuộn' tại đây để thưởng thức hoạt ảnh 3D mượt mà!",
     },
     sceneMode: {
       label: "Chế độ cảnh",

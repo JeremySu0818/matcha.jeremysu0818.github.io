@@ -76,6 +76,7 @@ export const zhCnCopy: LocaleCopy = {
       back: "返回首页",
       replay: "再来一次",
       start: "开始体验",
+      switcherHint: "你也可以在此切换为「滚动」模式，体验流畅的 3D 动画！",
     },
     sceneMode: {
       label: "场景模式",

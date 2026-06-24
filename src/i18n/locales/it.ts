@@ -77,6 +77,7 @@ export const itCopy: LocaleCopy = {
       back: "Torna all'inizio",
       replay: "Ancora una volta",
       start: "Start Ritual",
+      switcherHint: "Puoi anche passare alla modalità 'Scorrimento' qui per goderti la fluida animazione 3D!",
     },
     sceneMode: {
       label: "Modalità scena",

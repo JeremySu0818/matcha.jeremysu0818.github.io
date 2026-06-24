@@ -42,6 +42,7 @@ export interface TranslationSchema {
     back: string;
     replay: string;
     start: string;
+    switcherHint: string;
   };
   sceneMode: {
     label: string;

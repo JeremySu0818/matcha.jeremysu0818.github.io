@@ -76,6 +76,7 @@ export const enCopy: LocaleCopy = {
       back: "Back to Home",
       replay: "Brew Again",
       start: "Start Ritual",
+      switcherHint: "You can also switch to 'Scroll' mode here to enjoy the smooth animation!",
     },
     sceneMode: {
       label: "Scene Mode",

@@ -12,28 +12,53 @@ interface SceneModeSelectorProps {
   mode: SceneMode;
   darkTheme?: boolean;
   onModeChange?: (mode: SceneMode) => void;
+  showHint?: boolean;
 }
 
 export function SceneModeSelector({
   mode,
   darkTheme = false,
   onModeChange,
+  showHint = false,
 }: SceneModeSelectorProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuPos, setMenuPos] = useState(getInitialDropdownPosition);
+  const [btnWidth, setBtnWidth] = useState(0);
+  const [hintVisible, setHintVisible] = useState(false);
+  const [hintClosing, setHintClosing] = useState(false);
+
+  useEffect(() => {
+    if (showHint) {
+      setHintVisible(true);
+      setHintClosing(false);
+    } else {
+      if (hintVisible) {
+        setHintClosing(true);
+        const timer = setTimeout(() => {
+          setHintVisible(false);
+          setHintClosing(false);
+        }, 600); // match animation duration (0.6s)
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [showHint, hintVisible]);
 
   const updatePosition = useCallback(() => {
     if (!buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
     setMenuPos(getDropdownPosition(rect));
+    setBtnWidth(rect.width);
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      updatePosition();
+    updatePosition();
+  }, [updatePosition]);
+
+  useEffect(() => {
+    if (isOpen || showHint) {
       window.addEventListener("resize", updatePosition);
       window.addEventListener("scroll", updatePosition, true);
       return () => {
@@ -41,7 +66,7 @@ export function SceneModeSelector({
         window.removeEventListener("scroll", updatePosition, true);
       };
     }
-  }, [isOpen, updatePosition]);
+  }, [isOpen, showHint, updatePosition]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -171,6 +196,33 @@ export function SceneModeSelector({
       )
     : null;
 
+  const showHintCard = (hintVisible || showHint) && !isOpen;
+
+  const hintCard = showHintCard
+    ? createPortal(
+        <div
+          className="frosted-surface shadow-glass backdrop-blur-2xl border border-white/30 rounded-2xl p-4 text-center pointer-events-none"
+          style={{
+            position: "fixed",
+            top: menuPos.top + 4,
+            right: menuPos.right + (btnWidth - 220) / 2,
+            width: "220px",
+            zIndex: 99998,
+            animation: hintClosing
+              ? "slideUpOut 0.6s cubic-bezier(0.36, 0, 0.66, -0.56) forwards"
+              : "slideDownIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)",
+            backgroundColor: darkTheme ? "rgba(31, 49, 40, 0.4)" : "rgba(255, 255, 255, 0.2)",
+            color: darkTheme ? "#fff" : "#1f3128",
+          }}
+        >
+          <p className="text-[14px] font-medium tracking-wide leading-relaxed">
+            {t.overlay.switcherHint}
+          </p>
+        </div>,
+        document.body,
+      )
+    : null;
+
   return (
     <>
       <button
@@ -209,6 +261,7 @@ export function SceneModeSelector({
         </div>
       </button>
       {dropdownMenu}
+      {hintCard}
     </>
   );
 }

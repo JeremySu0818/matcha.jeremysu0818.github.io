@@ -76,6 +76,7 @@ export const csCopy: LocaleCopy = {
       back: "Zpět na úvod",
       replay: "Ještě jednou",
       start: "Start Ritual",
+      switcherHint: "Zde můžete také přepnout do režimu „Rolování“ a užít si plynulou 3D animaci!",
     },
     sceneMode: {
       label: "Režim scény",

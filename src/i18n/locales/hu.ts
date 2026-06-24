@@ -76,6 +76,7 @@ export const huCopy: LocaleCopy = {
       back: "Vissza a főoldalra",
       replay: "Még egyszer",
       start: "Start Ritual",
+      switcherHint: "Itt átválthatsz „Görgetés” módba is, hogy élvezd a zökkenőmentes 3D animációt!",
     },
     sceneMode: {
       label: "Jelenetmód",

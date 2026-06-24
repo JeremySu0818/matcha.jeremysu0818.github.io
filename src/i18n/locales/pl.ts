@@ -77,6 +77,7 @@ export const plCopy: LocaleCopy = {
       back: "Powrót do startu",
       replay: "Jeszcze raz",
       start: "Start Ritual",
+      switcherHint: "Możesz także przełączyć tutaj na tryb „Przewijanie”, aby cieszyć się płynną animacją 3D!",
     },
     sceneMode: {
       label: "Tryb sceny",

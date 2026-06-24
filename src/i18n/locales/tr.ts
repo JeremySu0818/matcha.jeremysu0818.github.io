@@ -76,6 +76,7 @@ export const trCopy: LocaleCopy = {
       back: "Ana Sayfaya Dön",
       replay: "Bir kez daha",
       start: "Start Ritual",
+      switcherHint: "Sorunsuz 3D animasyonun keyfini çıkarmak için buradan 'Kaydırma' moduna da geçebilirsiniz!",
     },
     sceneMode: {
       label: "Sahne modu",

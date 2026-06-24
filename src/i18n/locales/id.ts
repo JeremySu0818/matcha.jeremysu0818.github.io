@@ -77,6 +77,7 @@ export const idCopy: LocaleCopy = {
       back: "Kembali ke Beranda",
       replay: "Ulangi lagi",
       start: "Start Ritual",
+      switcherHint: "Anda juga dapat beralih ke mode 'Gulir' di sini untuk menikmati animasi 3D yang mulus!",
     },
     sceneMode: {
       label: "Mode adegan",

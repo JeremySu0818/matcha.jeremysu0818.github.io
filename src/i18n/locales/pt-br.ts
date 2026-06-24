@@ -77,6 +77,7 @@ export const ptBrCopy: LocaleCopy = {
       back: "Voltar ao início",
       replay: "Fazer de novo",
       start: "Start Ritual",
+      switcherHint: "Você também pode alternar para o modo 'Rolagem' aqui para aproveitar a animação 3D suave!",
     },
     sceneMode: {
       label: "Modo da cena",

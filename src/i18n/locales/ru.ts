@@ -77,6 +77,7 @@ export const ruCopy: LocaleCopy = {
       back: "На главную",
       replay: "Ещё раз",
       start: "Start Ritual",
+      switcherHint: "Вы также можете переключиться в режим «Прокрутка» здесь, чтобы насладиться плавной 3D-анимацией!",
     },
     sceneMode: {
       label: "Режим сцены",

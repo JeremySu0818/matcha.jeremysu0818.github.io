@@ -76,6 +76,7 @@ export const frCopy: LocaleCopy = {
       back: "Retour à l'accueil",
       replay: "Recommencer",
       start: "Start Ritual",
+      switcherHint: "Vous pouvez également passer en mode « Défilement » ici pour profiter de l'animation 3D fluide !",
     },
     sceneMode: {
       label: "Mode de scène",

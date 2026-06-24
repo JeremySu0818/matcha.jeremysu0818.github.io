@@ -76,6 +76,7 @@ export const jaCopy: LocaleCopy = {
       back: "ホームに戻る",
       replay: "もう一度",
       start: "体験を始める",
+      switcherHint: "ここから「スクロール」モードに切り替えて、滑らかな3Dアニメーションを楽しむこともできます！",
     },
     sceneMode: {
       label: "シーンモード",

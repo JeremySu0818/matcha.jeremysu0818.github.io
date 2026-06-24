@@ -76,6 +76,7 @@ export const arCopy: LocaleCopy = {
       back: "رجوع للرئيسية",
       replay: "مرة أخرى",
       start: "Start Ritual",
+      switcherHint: "يمكنك أيضاً الانتقال إلى وضع \"التمرير\" هنا للاستمتاع بالحركة ثلاثية الأبعاد السلسة!",
     },
     sceneMode: {
       label: "وضع المشهد",
