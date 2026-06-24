@@ -62,7 +62,7 @@ export const nlCopy: LocaleCopy = {
       eyebrow: "Nu",
       title: "Ben je klaar?",
       p1: "Nu heb je vast een andere kijk op matcha gekregen. Het is niet zomaar een drankje, maar een eeuwenoude levenskunst.",
-      p2: "Als volgende wacht een interactieve 3D-ervaring. Bij het naar beneden scrollen zie je de stappen van de bereiding op je eigen tempo.",
+      p2: "Als volgende wacht een interactieve 3D-ervaring. Door de stappen handmatig uit te voeren, zie je de bereiding op je eigen tempo.",
       button: "Start 3D-scène",
     },
     loader: {

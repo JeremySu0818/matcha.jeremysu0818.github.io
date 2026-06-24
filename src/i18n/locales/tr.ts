@@ -61,7 +61,7 @@ export const trCopy: LocaleCopy = {
       eyebrow: "Şimdi",
       title: "Hazır mısınız?",
       p1: "Bunları okuduktan sonra matcha'ya bakışınız değişmiş olmalı. O sadece bir içecek değil, asırlık bir yaşam sanatıdır.",
-      p2: "Sırada etkileşimli bir 3D deneyimi var. Aşağı kaydırdıkça hazırlama adımları kendi hızınızda görselleşecek.",
+      p2: "Sırada etkileşimli bir 3D deneyimi var. Adımları manuel olarak uyguladıkça hazırlama adımları kendi hızınızda görselleşecek.",
       button: "3D Sahneye Gir",
     },
     loader: {

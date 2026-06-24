@@ -62,7 +62,7 @@ export const deCopy: LocaleCopy = {
       eyebrow: "Jetzt",
       title: "Bereit?",
       p1: "Nun haben Sie eine neue Perspektive auf Matcha gewonnen. Es ist nicht nur ein Getränk, sondern eine jahrhundertealte Lebenskunst.",
-      p2: "Als nächstes erwartet Sie ein interaktives 3D-Erlebnis. Wenn Sie nach unten scrollen, sehen Sie die Schritte der Zubereitung in Ihrem eigenen Tempo. Erleben Sie die Entstehung einer Schale Tee.",
+      p2: "Als nächstes erwartet Sie ein interaktives 3D-Erlebnis. Wenn Sie die Schritte manuell ausführen, sehen Sie die Zubereitung in Ihrem eigenen Tempo. Erleben Sie die Entstehung einer Schale Tee.",
       button: "3D-Szene starten",
     },
     loader: {

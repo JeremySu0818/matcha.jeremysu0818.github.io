@@ -61,7 +61,7 @@ export const enCopy: LocaleCopy = {
       eyebrow: "Now",
       title: "Are You Ready?",
       p1: "Having read this, you likely have a completely new perspective on matcha. It is not just a flavor, but a century-old art of living.",
-      p2: "Next, we have prepared a 3D immersive scroll-driven animation experience for you. As you scroll down, the scene will fluidly depict the complete matcha ritual at your own pace—from sifting and pouring to whisking. Follow your rhythm, and witness the birth of a bowl of tea.",
+      p2: "Next, we have prepared an interactive 3D experience for you. Through manual steps, you can personally perform the complete matcha ritual at your own pace—from sifting and pouring to whisking. Follow your rhythm, and witness the birth of a bowl of tea.",
       button: "Enter 3D Scene",
     },
     loader: {

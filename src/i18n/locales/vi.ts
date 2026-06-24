@@ -61,7 +61,7 @@ export const viCopy: LocaleCopy = {
       eyebrow: "Hiện tại",
       title: "Bạn đã sẵn sàng?",
       p1: "Sau khi đọc những điều này, chắc hẳn bạn đã có góc nhìn khác về matcha. Đó không chỉ là một thức uống, mà là nghệ thuật sống trăm năm.",
-      p2: "Tiếp theo sẽ là trải nghiệm 3D tương tác. Khi cuộn xuống, các bước pha trà sẽ được tái hiện sinh động theo tốc độ của riêng bạn.",
+      p2: "Tiếp theo sẽ là trải nghiệm 3D tương tác. Khi tự tay thực hiện các bước, quy trình pha trà sẽ được tái hiện sinh động theo tốc độ của riêng bạn.",
       button: "Vào không gian 3D",
     },
     loader: {

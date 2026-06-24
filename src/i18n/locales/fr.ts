@@ -61,7 +61,7 @@ export const frCopy: LocaleCopy = {
       eyebrow: "Présent",
       title: "Êtes-vous prêt ?",
       p1: "Après avoir lu cela, vous avez sûrement une perspective différente du matcha. Ce n'est pas seulement une boisson, mais un art de vivre centenaire.",
-      p2: "À présent, nous vous proposons une expérience interactive en 3D. En faisant défiler vers le bas, vous observerez les étapes de la préparation à votre propre rythme.",
+      p2: "À présent, nous vous proposons une expérience interactive en 3D. En réalisant vous-même les étapes, vous observerez la préparation à votre propre rythme.",
       button: "Entrer dans la scène 3D",
     },
     loader: {

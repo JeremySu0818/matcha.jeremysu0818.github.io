@@ -10,11 +10,11 @@ export function isSceneMode(value: string | null): value is SceneMode {
 
 export function readSceneMode(): SceneMode {
   if (typeof window === "undefined") {
-    return "scroll";
+    return "manual";
   }
 
   const saved = window.localStorage.getItem(SCENE_MODE_STORAGE_KEY);
-  return isSceneMode(saved) ? saved : "scroll";
+  return isSceneMode(saved) ? saved : "manual";
 }
 
 export function saveSceneMode(mode: SceneMode) {

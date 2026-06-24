@@ -61,7 +61,7 @@ export const csCopy: LocaleCopy = {
       eyebrow: "Nyní",
       title: "Jste připraveni?",
       p1: "Nyní máte jistě jiný pohled na čaj matcha. Není to jen nápoj, ale staleté umění žít.",
-      p2: "Dále vás čeká interaktivní 3D zážitek. Při rolování dolů se kroky přípravy vizualizují ve vašem tempu.",
+      p2: "Dále vás čeká interaktivní 3D zážitek. Při ručním provádění kroků se příprava vizualizuje ve vašem tempu.",
       button: "Vstoupit do 3D scény",
     },
     loader: {

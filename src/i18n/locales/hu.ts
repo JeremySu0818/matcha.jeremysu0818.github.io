@@ -61,7 +61,7 @@ export const huCopy: LocaleCopy = {
       eyebrow: "Most",
       title: "Készen állsz?",
       p1: "Ezek után biztosan másképp nézel a matchára. Ez nem csak egy ital, hanem egy évszázados életművészet.",
-      p2: "Következik egy interaktív 3D élmény. Ahogy lefelé görgetsz, a készítés lépései a saját tempódban jelennek meg.",
+      p2: "Következik egy interaktív 3D élmény. Ahogy manuálisan végzed a lépéseket, a készítés folyamata a saját tempódban jelenik meg.",
       button: "Belépés a 3D jelenetbe",
     },
     loader: {

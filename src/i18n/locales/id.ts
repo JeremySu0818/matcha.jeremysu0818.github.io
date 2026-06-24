@@ -62,7 +62,7 @@ export const idCopy: LocaleCopy = {
       eyebrow: "Sekarang",
       title: "Apakah Anda Siap?",
       p1: "Setelah membaca ini, pandangan Anda tentang matcha pasti telah berubah. Ini bukan sekadar minuman, melainkan seni hidup yang berusia ratusan tahun.",
-      p2: "Berikutnya adalah pengalaman 3D interaktif. Saat Anda menggulir ke bawah, langkah-langkah persiapan akan divisualisasikan sesuai kecepatan Anda.",
+      p2: "Berikutnya adalah pengalaman 3D interaktif. Saat Anda melakukan langkah-langkah secara manual, proses persiapan akan divisualisasikan sesuai kecepatan Anda.",
       button: "Masuk ke Adegan 3D",
     },
     loader: {

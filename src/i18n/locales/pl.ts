@@ -62,7 +62,7 @@ export const plCopy: LocaleCopy = {
       eyebrow: "Teraz",
       title: "Czy jesteś gotów?",
       p1: "Teraz z pewnością masz inne spojrzenie na matchę. To nie tylko napój, ale stuletnia sztuka życia.",
-      p2: "Następnie czeka Cię interaktywne doświadczenie 3D. Podczas przewijania w dół kroki przygotowania będą wizualizować się w Twoim tempie.",
+      p2: "Następnie czeka Cię interaktywne doświadczenie 3D. Wykonując kroki ręcznie, proces przygotowania będzie wizualizować się w Twoim tempie.",
       button: "Wejdź do sceny 3D",
     },
     loader: {

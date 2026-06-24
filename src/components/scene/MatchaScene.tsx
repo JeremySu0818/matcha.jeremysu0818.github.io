@@ -110,7 +110,7 @@ function stageToStep(stage: ManualStage) {
 }
 
 export function MatchaScene({
-  mode = "scroll",
+  mode = "manual",
   resetToken = 0,
   onManualStepChange,
   onManualStageChange,

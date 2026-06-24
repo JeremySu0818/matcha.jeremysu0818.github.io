@@ -62,7 +62,7 @@ export const ptBrCopy: LocaleCopy = {
       eyebrow: "Agora",
       title: "Pronto?",
       p1: "Após ler isso, com certeza você tem uma perspectiva diferente do matcha. Não é apenas uma bebida, mas uma arte de viver centenária.",
-      p2: "A seguir, propomos uma experiência interativa em 3D. Ao rolar para baixo, você verá a preparação do chá no seu ritmo.",
+      p2: "A seguir, propomos uma experiência interativa em 3D. Ao realizar os passos manualmente, você verá a preparação do chá no seu ritmo.",
       button: "Entrar na cena 3D",
     },
     loader: {

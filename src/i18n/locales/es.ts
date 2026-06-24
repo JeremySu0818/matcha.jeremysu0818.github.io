@@ -62,7 +62,7 @@ export const esCopy: LocaleCopy = {
       eyebrow: "Ahora",
       title: "¿Estás listo?",
       p1: "Tras leer esto, seguramente tienes una perspectiva diferente del matcha. No es solo una bebida, sino un arte de vivir centenario.",
-      p2: "A continuación, te ofrecemos una experiencia interactiva en 3D. Al desplazarte hacia abajo, verás la preparación del té a tu propio ritmo.",
+      p2: "A continuación, te ofrecemos una experiencia interactiva en 3D. Podrás interactuar de forma manual y experimentar la preparación del té a tu propio ritmo.",
       button: "Entrar a la escena 3D",
     },
     loader: {
