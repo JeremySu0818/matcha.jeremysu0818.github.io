@@ -2,7 +2,7 @@ import { useTranslation } from "../i18n";
 import type { SceneMode } from "../app/sceneMode";
 import { Header } from "./Header";
 import { NavigationDots } from "./NavigationDots";
-import { ScrollReveal } from "./ScrollReveal";
+import { InkTextReveal } from "./effects/InkTextReveal";
 import { ShadeSimulator } from "./interactive/ShadeSimulator";
 import { ToolsShowcase } from "./interactive/ToolsShowcase";
 import { getLandingSteps } from "./landing/landingNavigation";
@@ -14,10 +14,39 @@ interface LandingPageProps {
   sceneMode: SceneMode;
 }
 
+const landingScroller = "#landing-scroll-container";
+
+function ChapterText({
+  eyebrow,
+  title,
+  paragraphs,
+}: {
+  eyebrow: string;
+  title: string;
+  paragraphs: string[];
+}) {
+  return (
+    <>
+      <span className="font-mono text-xs font-medium uppercase tracking-[0.25em] text-white/70">
+        {eyebrow}
+      </span>
+      <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight text-white drop-shadow-sm md:text-5xl">
+        {renderTitle(title)}
+      </h2>
+      <div className="mb-8 h-[1px] w-full max-w-[18rem] bg-white/35"></div>
+      <InkTextReveal
+        as="div"
+        text={paragraphs.join("\n\n")}
+        scroller={landingScroller}
+        className="ink-text-reveal--light body-text text-lg leading-loose"
+      />
+    </>
+  );
+}
+
 export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
   const { t, lang } = useTranslation();
-  const { activeStep, bottomMaskFade, handleStepClick } =
-    useLandingScrollNavigation();
+  const { activeStep, handleStepClick } = useLandingScrollNavigation();
   const steps = getLandingSteps(t);
 
   return (
@@ -25,14 +54,6 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
       id="landing-scroll-container"
       className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
     >
-      <div
-        className="fixed bottom-0 left-0 right-0 h-36 origin-bottom bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none z-30"
-        style={{
-          opacity: 1 - bottomMaskFade,
-          transform: `translateY(${bottomMaskFade * 2.5}rem) scaleY(${1 - bottomMaskFade * 0.2})`,
-        }}
-      />
-
       <div className="relative z-10 w-full">
         <Header
           activeLink="home"
@@ -77,74 +98,51 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
           id="section-chapter-1"
           className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
         >
-          <ScrollReveal className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-              {t.chapters.chapter1.eyebrow}
-            </span>
-            <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {renderTitle(t.chapters.chapter1.title)}
-            </h2>
-            <div className="mb-8 h-[1px] w-full bg-white/30"></div>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter1.p1}
-            </p>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter1.p2}
-            </p>
-            <p className="body-text text-lg leading-relaxed text-white">
-              {t.chapters.chapter1.p3}
-            </p>
-          </ScrollReveal>
+          <div className="landing-copy-panel w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+            <ChapterText
+              eyebrow={t.chapters.chapter1.eyebrow}
+              title={t.chapters.chapter1.title}
+              paragraphs={[
+                t.chapters.chapter1.p1,
+                t.chapters.chapter1.p2,
+                t.chapters.chapter1.p3,
+              ]}
+            />
+          </div>
         </section>
 
         <section
           id="section-chapter-2"
           className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24"
         >
-          <ScrollReveal className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-              {t.chapters.chapter2.eyebrow}
-            </span>
-            <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {renderTitle(t.chapters.chapter2.title)}
-            </h2>
-            <div className="mb-8 h-[1px] w-full bg-white/30"></div>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter2.p1}
-            </p>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter2.p2}
-            </p>
-            <p className="body-text text-lg leading-relaxed text-white">
-              {t.chapters.chapter2.p3}
-            </p>
-
+          <div className="landing-copy-panel w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+            <ChapterText
+              eyebrow={t.chapters.chapter2.eyebrow}
+              title={t.chapters.chapter2.title}
+              paragraphs={[
+                t.chapters.chapter2.p1,
+                t.chapters.chapter2.p2,
+                t.chapters.chapter2.p3,
+              ]}
+            />
             <ShadeSimulator lang={lang} />
-          </ScrollReveal>
+          </div>
         </section>
 
         <section
           id="section-chapter-3"
           className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
         >
-          <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-              {t.chapters.chapter3.eyebrow}
-            </span>
-            <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {renderTitle(t.chapters.chapter3.title)}
-            </h2>
-            <div className="mb-8 h-[1px] w-full bg-white/30"></div>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter3.p1}
-            </p>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter3.p2}
-            </p>
-            <p className="body-text text-lg leading-relaxed text-white">
-              {t.chapters.chapter3.p3}
-            </p>
-
+          <div className="landing-copy-panel w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+            <ChapterText
+              eyebrow={t.chapters.chapter3.eyebrow}
+              title={t.chapters.chapter3.title}
+              paragraphs={[
+                t.chapters.chapter3.p1,
+                t.chapters.chapter3.p2,
+                t.chapters.chapter3.p3,
+              ]}
+            />
             <ToolsShowcase lang={lang} />
           </div>
         </section>
@@ -153,23 +151,16 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
           id="section-chapter-4"
           className="flex min-h-screen w-full items-center justify-start px-8 py-24 md:px-24"
         >
-          <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-              {t.chapters.chapter4.eyebrow}
-            </span>
-            <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {renderTitle(t.chapters.chapter4.title)}
-            </h2>
-            <div className="mb-8 h-[1px] w-full bg-white/30"></div>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter4.p1}
-            </p>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter4.p2}
-            </p>
-            <p className="body-text text-lg leading-relaxed text-white">
-              {t.chapters.chapter4.p3}
-            </p>
+          <div className="landing-copy-panel w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+            <ChapterText
+              eyebrow={t.chapters.chapter4.eyebrow}
+              title={t.chapters.chapter4.title}
+              paragraphs={[
+                t.chapters.chapter4.p1,
+                t.chapters.chapter4.p2,
+                t.chapters.chapter4.p3,
+              ]}
+            />
           </div>
         </section>
 
@@ -177,23 +168,16 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
           id="section-chapter-5"
           className="flex min-h-screen w-full items-center justify-end px-8 py-24 md:px-24"
         >
-          <div className="w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-              {t.chapters.chapter5.eyebrow}
-            </span>
-            <h2 className="heading-serif mb-8 mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {renderTitle(t.chapters.chapter5.title)}
-            </h2>
-            <div className="mb-8 h-[1px] w-full bg-white/30"></div>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter5.p1}
-            </p>
-            <p className="body-text mb-6 text-lg leading-relaxed text-white">
-              {t.chapters.chapter5.p2}
-            </p>
-            <p className="body-text text-lg leading-relaxed text-white">
-              {t.chapters.chapter5.p3}
-            </p>
+          <div className="landing-copy-panel w-full rounded-[2rem] border border-white/30 bg-white/20 p-10 shadow-glass backdrop-blur-2xl md:w-[680px] md:p-16">
+            <ChapterText
+              eyebrow={t.chapters.chapter5.eyebrow}
+              title={t.chapters.chapter5.title}
+              paragraphs={[
+                t.chapters.chapter5.p1,
+                t.chapters.chapter5.p2,
+                t.chapters.chapter5.p3,
+              ]}
+            />
           </div>
         </section>
 
@@ -201,17 +185,17 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
           id="section-final"
           className="flex min-h-[85vh] w-full flex-col items-center justify-center px-8 py-24 text-center md:px-24"
         >
-          <div className="flex w-full max-w-4xl flex-col items-center rounded-[2rem] border border-white/30 bg-white/20 p-12 shadow-glass backdrop-blur-3xl md:p-24">
-            <span className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-white/70">
+          <div className="landing-copy-panel flex w-full max-w-4xl flex-col items-center rounded-[2rem] border border-white/30 bg-white/20 p-12 shadow-glass backdrop-blur-3xl md:p-24">
+            <span className="mb-6 font-mono text-xs font-medium uppercase tracking-[0.25em] text-white/70">
               {t.final.eyebrow}
             </span>
-            <h2 className="heading-serif mb-8 text-5xl drop-shadow-sm md:text-6xl">
+            <h2 className="heading-serif mb-8 text-5xl text-white md:text-6xl">
               {t.final.title}
             </h2>
-            <p className="body-text mb-6 max-w-2xl text-xl leading-relaxed text-white">
+            <p className="body-text mb-6 max-w-2xl text-xl leading-loose text-white">
               {t.final.p1}
             </p>
-            <p className="body-text mb-14 max-w-2xl text-xl leading-relaxed text-white/90">
+            <p className="body-text mb-14 max-w-2xl text-xl leading-loose text-white/90">
               {t.final.p2}
             </p>
             <button
