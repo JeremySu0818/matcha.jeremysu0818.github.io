@@ -248,7 +248,7 @@ export function NarrativeOverlay({
                   <div className="animate-fade-in-up-on-load delay-900">
                     <div className="flex flex-col items-center gap-4 animate-bounce">
                       <span className="font-mono text-xs uppercase tracking-[0.2em] text-matcha-ink/80">
-                        Scroll
+                        {t.hero.scroll}
                       </span>
                       <div className="h-12 w-[1px] bg-matcha-ink/50"></div>
                     </div>
