@@ -38,6 +38,7 @@ function ChapterText({
         as="div"
         text={paragraphs.join("\n\n")}
         scroller={landingScroller}
+        lockPrintHeadToViewport={true}
         className="ink-text-reveal--light body-text text-lg leading-loose"
       />
     </>

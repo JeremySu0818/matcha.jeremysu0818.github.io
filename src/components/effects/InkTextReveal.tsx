@@ -16,6 +16,7 @@ type InkTextRevealProps = {
   className?: string;
   lineClassName?: string;
   scroller?: string | HTMLElement | null;
+  lockPrintHeadToViewport?: boolean;
 };
 
 type RevealLine = {
@@ -126,6 +127,8 @@ function measureWrappedLines(element: HTMLElement, text: string): RevealLine[] {
 const SMOOTH_REVEAL_DURATION = 0.42;
 const LINE_WINDOW = 1.35;
 const LINE_STRIDE = 0.72;
+const LOCKED_PRINT_HEAD_EDGE_WIDTH = 0.75;
+const MIN_LINE_PRINT_WEIGHT = 1;
 
 function resolveScroller(scroller?: string | HTMLElement | null) {
   if (!scroller) return undefined;
@@ -143,12 +146,75 @@ function getLineProgress(progress: number, index: number, lineCount: number) {
   return clamp01((progress * length - start) / LINE_WINDOW);
 }
 
+function getLinePrintWeight(line: HTMLElement) {
+  const width = line.getBoundingClientRect().width;
+  const textLength = normalizeLabel(line.textContent || "").length;
+
+  if (Number.isFinite(width) && width > 0) {
+    return Math.max(MIN_LINE_PRINT_WEIGHT, width);
+  }
+
+  return Math.max(MIN_LINE_PRINT_WEIGHT, textLength);
+}
+
+function renderWeightedLine(line: HTMLElement, progress: number) {
+  const width = Math.max(1, line.getBoundingClientRect().width);
+  const stop = clamp01(progress) * width;
+  const edge = Math.min(width, stop + LOCKED_PRINT_HEAD_EDGE_WIDTH);
+
+  line.style.backgroundImage = `linear-gradient(90deg, var(--ink-reveal-active) 0px, var(--ink-reveal-active) ${stop.toFixed(
+    3,
+  )}px, var(--ink-reveal-idle) ${edge.toFixed(
+    3,
+  )}px, var(--ink-reveal-idle) 100%)`;
+  line.style.backgroundPosition = "0% 0%";
+  line.style.backgroundSize = "100% 100%";
+}
+
+function renderWeightedSequentialLines(
+  lineElements: HTMLElement[],
+  progress: number,
+) {
+  const weights = lineElements.map(getLinePrintWeight);
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+  const printPosition = clamp01(progress) * Math.max(MIN_LINE_PRINT_WEIGHT, totalWeight);
+  let consumedWeight = 0;
+
+  lineElements.forEach((line, index) => {
+    const lineStart = consumedWeight;
+    const lineWeight = weights[index] ?? MIN_LINE_PRINT_WEIGHT;
+    const lineEnd = lineStart + lineWeight;
+    consumedWeight = lineEnd;
+
+    if (printPosition <= lineStart) {
+      renderWeightedLine(line, 0);
+      return;
+    }
+
+    if (printPosition >= lineEnd) {
+      renderWeightedLine(line, 1);
+      return;
+    }
+
+    renderWeightedLine(line, (printPosition - lineStart) / lineWeight);
+  });
+}
+
+function renderLineProgress(line: HTMLElement, progress: number) {
+  const backgroundPosition = 100 - clamp01(progress) * 100;
+
+  line.style.backgroundImage = "";
+  line.style.backgroundSize = "";
+  line.style.backgroundPosition = `${backgroundPosition.toFixed(3)}% 0%`;
+}
+
 export function InkTextReveal({
   as: Component = "div",
   text,
   className = "",
   lineClassName = "",
   scroller,
+  lockPrintHeadToViewport = false,
 }: InkTextRevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [lines, setLines] = useState<RevealLine[]>(() => [
@@ -211,21 +277,23 @@ export function InkTextReveal({
       const renderProgress = (progress: number) => {
         const safeProgress = clamp01(progress);
 
+        if (lockPrintHeadToViewport) {
+          renderWeightedSequentialLines(lineElements, safeProgress);
+          return;
+        }
+
         lineElements.forEach((line, index) => {
-          const lineProgress = getLineProgress(
-            safeProgress,
-            index,
-            visibleLineCount,
+          renderLineProgress(
+            line,
+            getLineProgress(safeProgress, index, visibleLineCount),
           );
-          const backgroundPosition = 100 - lineProgress * 100;
-          line.style.backgroundPosition = `${backgroundPosition.toFixed(3)}% 0%`;
         });
       };
 
       const setProgress = (nextProgress: number, immediate = false) => {
         const targetProgress = clamp01(nextProgress);
 
-        if (immediate) {
+        if (immediate || lockPrintHeadToViewport) {
           progressTween?.kill();
           progressTween = null;
           progressState.value = targetProgress;
@@ -268,7 +336,7 @@ export function InkTextReveal({
       progressTween?.kill();
       ctx.revert();
     };
-  }, [lines, scroller]);
+  }, [lines, scroller, lockPrintHeadToViewport]);
 
   return createElement(
     Component,
