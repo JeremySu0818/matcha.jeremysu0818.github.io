@@ -3,11 +3,15 @@ import { createPortal } from "react-dom";
 import type { SceneMode } from "../app/sceneMode";
 import { SCENE_MODES } from "../app/sceneMode";
 import { useTranslation } from "../i18n";
+import {
+  getDropdownPosition,
+  getInitialDropdownPosition,
+} from "../utils/dropdownPosition";
 
 interface SceneModeSelectorProps {
   mode: SceneMode;
   darkTheme?: boolean;
-  onModeChange: (mode: SceneMode) => void;
+  onModeChange?: (mode: SceneMode) => void;
 }
 
 export function SceneModeSelector({
@@ -19,15 +23,12 @@ export function SceneModeSelector({
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
+  const [menuPos, setMenuPos] = useState(getInitialDropdownPosition);
 
   const updatePosition = useCallback(() => {
     if (!buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
-    setMenuPos({
-      top: rect.bottom + 8,
-      right: window.innerWidth - rect.right,
-    });
+    setMenuPos(getDropdownPosition(rect));
   }, []);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export function SceneModeSelector({
   }, [isOpen]);
 
   const handleModeChange = (nextMode: SceneMode) => {
+    if (!onModeChange) return;
     onModeChange(nextMode);
     setIsOpen(false);
   };
@@ -80,6 +82,43 @@ export function SceneModeSelector({
         : "text-matcha-ink/75 hover:text-matcha-ink hover:bg-matcha-ink/5";
 
   const modeLabel = t.sceneMode[mode];
+  const isInteractive = Boolean(onModeChange);
+
+  const renderModeIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="opacity-80 w-[1em] h-[1em]"
+    >
+      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="M12 22V12" />
+    </svg>
+  );
+
+  const renderChevronIcon = (isRotated = false) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="10"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`opacity-60 w-[0.7em] h-[0.7em] transition-transform duration-300 ${isRotated ? "rotate-180" : ""}`}
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
 
   const dropdownMenu = isOpen
     ? createPortal(
@@ -99,7 +138,8 @@ export function SceneModeSelector({
             }`}
             style={{
               width: "11rem",
-              maxHeight: "260px",
+              maxWidth: menuPos.maxWidth,
+              maxHeight: menuPos.maxHeight,
               overflowY: "auto",
               borderRadius: "1rem",
               border: "1px solid var(--glass-border)",
@@ -135,46 +175,37 @@ export function SceneModeSelector({
     <>
       <button
         ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center cursor-pointer pointer-events-auto"
+        onClick={() => {
+          if (!isInteractive) return;
+          setIsOpen(!isOpen);
+        }}
+        className={`flex items-center ${isInteractive ? "cursor-pointer pointer-events-auto" : "pointer-events-none"}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label={t.sceneMode.label}
+        tabIndex={isInteractive ? 0 : -1}
       >
         <div
           className={`flex items-center gap-1.5 transition-colors duration-300 text-sm scalable-lang-btn tracking-wider ${buttonTextColor}`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="opacity-80 w-[1em] h-[1em]"
-          >
-            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-            <path d="m3.3 7 8.7 5 8.7-5" />
-            <path d="M12 22V12" />
-          </svg>
-          <span>{modeLabel}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""} opacity-60 w-[0.7em] h-[0.7em]`}
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
+          <span className="scalable-mode-trigger">
+            <span className="scalable-mode-trigger-current">
+              {renderModeIcon()}
+              <span>{modeLabel}</span>
+              {renderChevronIcon(isOpen)}
+            </span>
+            {SCENE_MODES.map((nextMode) => (
+              <span
+                key={nextMode}
+                className="scalable-mode-trigger-measure"
+                aria-hidden="true"
+              >
+                {renderModeIcon()}
+                <span>{t.sceneMode[nextMode]}</span>
+                {renderChevronIcon()}
+              </span>
+            ))}
+          </span>
         </div>
       </button>
       {dropdownMenu}

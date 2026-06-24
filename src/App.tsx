@@ -150,13 +150,14 @@ function App() {
       <div className="relative z-10 w-full h-full">
         {isHome && (
           <LandingPage
+            sceneMode={sceneMode}
             onEnter={() => {
               window.location.hash = "#3d";
             }}
           />
         )}
 
-        {isMake && <CalculatorPage />}
+        {isMake && <CalculatorPage sceneMode={sceneMode} />}
 
         {!isHome && !isMake && (
           <main

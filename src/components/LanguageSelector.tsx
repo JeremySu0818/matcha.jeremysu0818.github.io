@@ -9,6 +9,10 @@ import {
   getScrollPositionForRoute,
   saveScrollPosition,
 } from "../utils/scrollRegistry";
+import {
+  getDropdownPosition,
+  getInitialDropdownPosition,
+} from "../utils/dropdownPosition";
 
 const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   "zh-tw": "繁體中文",
@@ -42,7 +46,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
+  const [menuPos, setMenuPos] = useState(getInitialDropdownPosition);
 
   const currentLang =
     typeof window !== "undefined" ? getBrowserLanguage() : "en";
@@ -85,10 +89,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
   const updatePosition = useCallback(() => {
     if (!buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
-    setMenuPos({
-      top: rect.bottom + 8,
-      right: window.innerWidth - rect.right,
-    });
+    setMenuPos(getDropdownPosition(rect));
   }, []);
 
   useEffect(() => {
@@ -165,7 +166,8 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
             }`}
             style={{
               width: "11rem",
-              maxHeight: "260px",
+              maxWidth: menuPos.maxWidth,
+              maxHeight: menuPos.maxHeight,
               overflowY: "auto",
               borderRadius: "1rem",
               border: "1px solid var(--glass-border)",

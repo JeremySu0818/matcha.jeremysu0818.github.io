@@ -7,6 +7,8 @@ import {
   Color,
   Points,
   ShaderMaterial,
+  Matrix4,
+  Group,
 } from "three";
 import { range, smoothstep } from "../../utils/easing";
 
@@ -14,6 +16,7 @@ type PowderParticlesProps = {
   count: number;
   mobile: boolean;
   progressRef?: RefObject<number>;
+  bowlRef?: RefObject<Group | null>;
 };
 
 const vertexShader = `
@@ -50,6 +53,7 @@ export function PowderParticles({
   count,
   mobile,
   progressRef,
+  bowlRef,
 }: PowderParticlesProps) {
   const pointsRef = useRef<Points<BufferGeometry, ShaderMaterial>>(null);
   const scroll = useScroll();
@@ -99,8 +103,16 @@ export function PowderParticles({
 
     const fallProgress = range(progress, 0.18, 0.27);
     const leave = smoothstep(range(progress, 0.45, 0.53));
-    const dissolve = range(progress, 0.58, 0.76);
+    const pourDissolve = range(progress, 0.52, 0.66) * 0.4;
+    const whiskDissolve = range(progress, 0.76, 0.90) * 0.6;
+    const dissolve = pourDissolve + whiskDissolve;
     const baseOpacity = 1.0 - dissolve;
+
+    const relativeMatrix = new Matrix4();
+    if (bowlRef?.current && pointsRef.current) {
+      relativeMatrix.copy(pointsRef.current.matrixWorld).invert().multiply(bowlRef.current.matrixWorld);
+    }
+    const e = relativeMatrix.elements;
 
     for (let i = 0; i < count; i++) {
       const rx = randoms[i * 3];
@@ -125,7 +137,7 @@ export function PowderParticles({
       const landX = Math.cos(angleLand) * radiusLand;
       const landZ = Math.sin(angleLand) * radiusLand;
 
-      const delay = 0.27 + rx * 0.08;
+      const delay = 0.27 + rx * 0.07;
 
       let x = 0;
       let y = 0;
@@ -168,6 +180,10 @@ export function PowderParticles({
         const endY = bowlColliderY + powderColliderY;
         const endZ = landZ;
 
+        const finalX = e[0] * endX + e[4] * endY + e[8] * endZ + e[12];
+        const finalY = e[1] * endX + e[5] * endY + e[9] * endZ + e[13];
+        const finalZ = e[2] * endX + e[6] * endY + e[10] * endZ + e[14];
+
         if (grainFall < 1.0) {
           const spreadFactor = Math.sin(grainFall * Math.PI) * 0.18;
           const driftX = (ry - 0.5) * spreadFactor;
@@ -180,13 +196,13 @@ export function PowderParticles({
 
           const gravityFall = grainFall * grainFall;
 
-          x = startX + (endX - startX) * grainFall + driftX + microDriftX;
-          y = startY + (endY - startY) * gravityFall;
-          z = startZ + (endZ - startZ) * grainFall + driftZ + microDriftZ;
+          x = startX + (finalX - startX) * grainFall + driftX + microDriftX;
+          y = startY + (finalY - startY) * gravityFall;
+          z = startZ + (finalZ - startZ) * grainFall + driftZ + microDriftZ;
         } else {
-          x = endX;
-          y = endY;
-          z = endZ;
+          x = finalX;
+          y = finalY;
+          z = finalZ;
         }
       }
 

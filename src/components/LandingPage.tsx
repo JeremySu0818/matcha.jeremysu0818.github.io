@@ -1,4 +1,5 @@
 import { useTranslation } from "../i18n";
+import type { SceneMode } from "../app/sceneMode";
 import { Header } from "./Header";
 import { NavigationDots } from "./NavigationDots";
 import { ScrollReveal } from "./ScrollReveal";
@@ -10,9 +11,10 @@ import { useLandingScrollNavigation } from "./landing/useLandingScrollNavigation
 
 interface LandingPageProps {
   onEnter: () => void;
+  sceneMode: SceneMode;
 }
 
-export function LandingPage({ onEnter }: LandingPageProps) {
+export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
   const { t, lang } = useTranslation();
   const { activeStep, bottomMaskFade, handleStepClick } =
     useLandingScrollNavigation();
@@ -37,6 +39,7 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           darkTheme={true}
           pointerEventsNone={false}
           onLoadAnimation={true}
+          sceneMode={sceneMode}
         />
 
         <section

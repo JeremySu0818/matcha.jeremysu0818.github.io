@@ -33,9 +33,8 @@ export function Header({
     const handleResize = () => {
       header.style.setProperty("--header-scale", "1");
 
-      const clientWidth = header.clientWidth;
       const scrollWidth = header.scrollWidth;
-
+      const clientWidth = header.clientWidth;
       const paddingLeft = parseFloat(
         window.getComputedStyle(header).paddingLeft || "0",
       );
@@ -43,7 +42,6 @@ export function Header({
         window.getComputedStyle(header).paddingRight || "0",
       );
       const availableWidth = clientWidth - paddingLeft - paddingRight;
-
       const contentWidth = scrollWidth - paddingLeft - paddingRight;
 
       if (contentWidth > availableWidth && availableWidth > 0) {
@@ -70,19 +68,19 @@ export function Header({
       window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };
-  }, []);
+  }, [activeLink, calculatorCopy.nav, lang, sceneMode, t.header.title, t.nav.home, t.nav.scene3d]);
 
   const headerClass = pointerEventsNone
-    ? "fixed left-0 top-0 z-50 flex w-full items-center justify-between px-8 py-8 md:px-16 gap-6 md:gap-12 pointer-events-none scalable-header"
-    : "fixed left-0 top-0 z-50 flex w-full items-center justify-between px-8 py-8 md:px-16 gap-6 md:gap-12 scalable-header";
+    ? "fixed left-0 top-0 z-50 flex w-full items-center justify-between pointer-events-none scalable-header"
+    : "fixed left-0 top-0 z-50 flex w-full items-center justify-between scalable-header";
 
   const containerClass = pointerEventsNone
-    ? "flex items-center gap-4 md:gap-8 pointer-events-auto"
-    : "flex items-center gap-4 md:gap-8";
+    ? "scalable-header-primary pointer-events-auto"
+    : "scalable-header-primary";
 
   const navClass = pointerEventsNone
-    ? "flex items-center gap-4 md:gap-6 pointer-events-auto"
-    : "flex items-center gap-4 md:gap-6";
+    ? "scalable-header-nav pointer-events-auto"
+    : "scalable-header-nav";
 
   const logoColor = darkTheme ? "text-white" : "text-matcha-ink";
   const navTextColor = darkTheme ? "text-white" : "text-matcha-ink";
@@ -91,6 +89,7 @@ export function Header({
   const delay100 = `animate-fade-in-up${animSuffix} delay-100`;
   const delay200 = `animate-fade-in-up${animSuffix} delay-200`;
   const delay300 = `animate-fade-in-up${animSuffix} delay-300`;
+  const showSceneModeSelector = Boolean(sceneMode && onSceneModeChange);
 
   return (
     <header
@@ -176,13 +175,18 @@ export function Header({
           </a>
         </nav>
       </div>
-      <div className={`${delay300} flex items-center gap-4 md:gap-6`}>
-        {sceneMode && onSceneModeChange && (
-          <SceneModeSelector
-            mode={sceneMode}
-            darkTheme={darkTheme}
-            onModeChange={onSceneModeChange}
-          />
+      <div className={`${delay300} scalable-header-controls`}>
+        {sceneMode && (
+          <div
+            className={showSceneModeSelector ? "" : "invisible pointer-events-none"}
+            aria-hidden={showSceneModeSelector ? undefined : true}
+          >
+            <SceneModeSelector
+              mode={sceneMode}
+              darkTheme={darkTheme}
+              onModeChange={onSceneModeChange}
+            />
+          </div>
         )}
         <LanguageSelector darkTheme={darkTheme} />
       </div>

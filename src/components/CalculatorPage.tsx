@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import type { SceneMode } from "../app/sceneMode";
 import { Header } from "./Header";
 import { TeaCalculator } from "../features/calculator/TeaCalculator";
 import { getCalculatorCopy, useTranslation } from "../i18n";
@@ -8,7 +9,11 @@ import {
   registerScrollPositionGetter,
 } from "../utils/scrollRegistry";
 
-export function CalculatorPage() {
+interface CalculatorPageProps {
+  sceneMode: SceneMode;
+}
+
+export function CalculatorPage({ sceneMode }: CalculatorPageProps) {
   const { lang } = useTranslation();
   const copy = getCalculatorCopy(lang);
 
@@ -43,6 +48,7 @@ export function CalculatorPage() {
           darkTheme={true}
           pointerEventsNone={false}
           onLoadAnimation={true}
+          sceneMode={sceneMode}
         />
 
         <main className="mx-auto w-full max-w-5xl px-8 pb-32 pt-32 md:px-16 md:pt-40">

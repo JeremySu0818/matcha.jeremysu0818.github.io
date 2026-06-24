@@ -368,14 +368,14 @@ export function MatchaScene({
 
       if (tool === "sieve" && stage === "sieve-return") {
         snapToolIdle("sieve");
-        manualProgressRef.current = Math.max(manualProgressRef.current, 0.43);
+        manualProgressRef.current = Math.max(manualProgressRef.current, 0.49);
         updateManualStage("kettle-drag");
       }
 
       if (tool === "kettle" && stage === "kettle-drag") {
         if (isNearBowl(position, 1.8)) {
           snapToolUse("kettle");
-          manualProgressRef.current = 0.48;
+          manualProgressRef.current = 0.49;
           updateManualStage("kettle-ready");
         } else {
           snapToolIdle("kettle");
@@ -584,7 +584,7 @@ export function MatchaScene({
       if (tool === "sieve" && stage === "sieve-ready") {
         snapToolUse("sieve");
         updateManualStage("sieve-shaking");
-        startManualAnimation(0.18, 0.46, 4000, () => {
+        startManualAnimation(0.18, 0.49, 4200, () => {
           updateManualStage("sieve-return");
         });
       }
@@ -803,7 +803,7 @@ export function MatchaScene({
         sieveRef.current.rotation.order = "YXZ";
         sieveRef.current.rotation.set(
           rollX,
-          mix(mobile ? sieveUse.rotationY : sieveIdle.rotationY, sieveUse.rotationY, active),
+          mix(sieveIdle.rotationY, sieveUse.rotationY, active),
           0,
         );
       }
@@ -1051,6 +1051,7 @@ export function MatchaScene({
           count={20000}
           mobile={mobile}
           progressRef={mode === "manual" ? manualProgressRef : undefined}
+          bowlRef={bowlRef}
         />
       </group>
 
