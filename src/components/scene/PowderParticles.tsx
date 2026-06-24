@@ -120,12 +120,11 @@ export function PowderParticles({
       const rz = randoms[i * 3 + 2];
 
       const angle = rx * Math.PI * 2;
-      const r2 = seeded(i + 137);
-      const radius = Math.sqrt(ry) * 0.65;
+      const radius = Math.sqrt(ry) * 0.35;
 
-      const clumpOffsetX = Math.cos(angle) * radius * 0.55;
-      const clumpOffsetZ = Math.sin(angle) * radius * 0.45;
-      const clumpOffsetY = (rz - 0.5) * 0.55 + (r2 - 0.5) * 0.3;
+      const clumpOffsetX = Math.cos(angle) * radius;
+      const clumpOffsetZ = Math.sin(angle) * radius;
+      const clumpOffsetY = (rz - 0.5) * 0.55;
 
       const siftAngle = seeded(i + 211) * Math.PI * 2;
       const siftRadius = Math.sqrt(seeded(i + 263)) * 0.42;
