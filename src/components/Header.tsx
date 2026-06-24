@@ -33,20 +33,30 @@ export function Header({
     const handleResize = () => {
       header.style.setProperty("--header-scale", "1");
 
-      const scrollWidth = header.scrollWidth;
+      const primary = header.querySelector<HTMLElement>(
+        ".scalable-header-primary",
+      );
+      const controls = header.querySelector<HTMLElement>(
+        ".scalable-header-controls",
+      );
       const clientWidth = header.clientWidth;
-      const paddingLeft = parseFloat(
-        window.getComputedStyle(header).paddingLeft || "0",
-      );
-      const paddingRight = parseFloat(
-        window.getComputedStyle(header).paddingRight || "0",
-      );
+      const headerStyle = window.getComputedStyle(header);
+      const paddingLeft = parseFloat(headerStyle.paddingLeft || "0");
+      const paddingRight = parseFloat(headerStyle.paddingRight || "0");
+      const parsedColumnGap = parseFloat(headerStyle.columnGap);
+      const parsedGap = parseFloat(headerStyle.gap);
+      const headerGap = Number.isFinite(parsedColumnGap)
+        ? parsedColumnGap
+        : Number.isFinite(parsedGap)
+          ? parsedGap
+          : 0;
       const availableWidth = clientWidth - paddingLeft - paddingRight;
-      const contentWidth = scrollWidth - paddingLeft - paddingRight;
+      const contentWidth =
+        (primary?.scrollWidth ?? 0) + (controls?.scrollWidth ?? 0) + headerGap;
 
       if (contentWidth > availableWidth && availableWidth > 0) {
         const calculatedScale = (availableWidth / contentWidth) * 0.98;
-        const finalScale = Math.max(0.6, Math.min(1, calculatedScale));
+        const finalScale = Math.max(0.42, Math.min(1, calculatedScale));
         setScale(finalScale);
         header.style.setProperty("--header-scale", String(finalScale));
       } else {
@@ -68,7 +78,7 @@ export function Header({
       window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };
-  }, [activeLink, calculatorCopy.nav, lang, sceneMode, t.header.title, t.nav.home, t.nav.scene3d]);
+  }, [activeLink, calculatorCopy.nav, lang, t.header.title, t.nav.home, t.nav.scene3d]);
 
   const headerClass = pointerEventsNone
     ? "fixed left-0 top-0 z-50 flex w-full items-center justify-between pointer-events-none scalable-header"
