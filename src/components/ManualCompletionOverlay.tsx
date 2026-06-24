@@ -25,7 +25,7 @@ export function ManualCompletionOverlay({
 
   return (
     <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-6">
-      <div className="glass-card w-full max-w-[520px] rounded-[2rem] border border-white/30 bg-white/20 p-8 text-left shadow-glass backdrop-blur-2xl pointer-events-auto md:p-10">
+      <div className="glass-card w-full max-w-[520px] rounded-[2rem] border border-white/30 bg-white/20 p-8 text-left shadow-glass backdrop-blur-2xl pointer-events-auto md:p-10 animate-fade-in-up">
         <span className="eyebrow block font-mono text-xs uppercase tracking-[0.25em] text-matcha-ink/70">
           {t.overlay.finalRecipe}
         </span>

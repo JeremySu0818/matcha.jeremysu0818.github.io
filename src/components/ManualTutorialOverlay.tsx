@@ -65,7 +65,10 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
         visible && text ? "opacity-100" : "opacity-0"
       }`}
     >
-      <p className="text-matcha-ink text-[15px] font-medium tracking-wide">
+      <p
+        key={text}
+        className="text-matcha-ink text-[15px] font-medium tracking-wide animate-fade-in"
+      >
         {text}
       </p>
     </div>

@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Scroll, ScrollControls } from "@react-three/drei";
 import {
@@ -37,6 +37,20 @@ function App() {
   const [manualResetToken, setManualResetToken] = useState(0);
   const isMobile = useViewportMobile(768);
   const steps3d = getSceneSteps(t);
+
+  const manualTimeoutRef = useRef<any>(null);
+  const clearManualTimeout = () => {
+    if (manualTimeoutRef.current !== null) {
+      clearTimeout(manualTimeoutRef.current);
+      manualTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      clearManualTimeout();
+    };
+  }, []);
   const { loaded, markReady } = useLoadingGate(route === "#3d" ? route : null);
 
   const handle3dStepClick = (index: number) => {
@@ -59,6 +73,7 @@ function App() {
   };
 
   const handleSceneModeChange = (nextMode: SceneMode) => {
+    clearManualTimeout();
     setSceneMode(nextMode);
     saveSceneMode(nextMode);
     setManualDone(false);
@@ -72,6 +87,7 @@ function App() {
   };
 
   const handleManualReplay = () => {
+    clearManualTimeout();
     setManualDone(false);
     setManualStarted(false);
     setManualStage("sieve-drag");
@@ -85,6 +101,7 @@ function App() {
 
   useEffect(() => {
     if (route === "#3d") {
+      clearManualTimeout();
       setActive3dStep(sceneMode === "manual" ? 2 : 0);
       setManualDone(false);
       setManualStarted(false);
@@ -209,7 +226,12 @@ function App() {
                       resetToken={manualResetToken}
                       onManualStepChange={setActive3dStep}
                       onManualStageChange={setManualStage}
-                      onManualComplete={() => setManualDone(true)}
+                      onManualComplete={() => {
+                        clearManualTimeout();
+                        manualTimeoutRef.current = setTimeout(() => {
+                          setManualDone(true);
+                        }, 2000);
+                      }}
                     />
                     <Scroll html>
                       <NarrativeOverlay
@@ -252,7 +274,6 @@ function App() {
                 sceneMode === "manual" &&
                 manualStarted &&
                 !manualDone &&
-                manualStage !== "done" &&
                 loaded
               }
             />
