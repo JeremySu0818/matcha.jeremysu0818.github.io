@@ -23,6 +23,12 @@ export const plCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Podróż herbaty",
+        card1Badge: "Pochodzenie Tang",
+        card2Title: "Kształtowanie rytuału",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Piękno niedoskonałości",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Rozdział 01",
         title: "Z Chin do Japonii,\npodróż herbaty",
         p1: "Historia matchy zaczyna się w czasach dynastii Tang. Wtedy w Chinach liście herbaty prasowano w kostki, mielono na proszek i mieszano z wodą. W 1191 roku japoński mnich Eisai przywiózł tę metodę i nasiona herbaty do kraju, sadząc je niedaleko Kioto.",
@@ -44,6 +50,14 @@ export const plCopy: LocaleCopy = {
         p3: "Chashaku to prosta bambusowa łyżeczka do proszku. Każdą łyżeczkę mistrzowie rzeźbią ręcznie i są przekazywane z pokolenia na pokolenie.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonia)",
+        waDesc: "Pojednanie z otoczeniem, innymi i samym sobą.",
+        keiTitle: "Kei (Szacunek)",
+        keiDesc: "Szczery szacunek dla wszystkiego, nie tylko grzeczność.",
+        seiTitle: "Sei (Czystość)",
+        seiDesc: "Jasność umysłu, wolna od rozproszeń i niepokoju.",
+        jakuTitle: "Jaku (Spokój)",
+        jakuDesc: "Głębokie poczucie spełnienia w ciszy i spokoju.",
         eyebrow: "Rozdział 04",
         title: "Wa, Kei, Sei, Jaku,\nżycie w czterech słowach",
         p1: "Sen no Rikyu wyraził ducha herbaty w czterech pojęciach: Wa (Harmonia) z otoczeniem; Kei (Szacunek) do wszystkiego; Sei (Czystość) umysłu; i Jaku (Spokój) w ciszy.",
@@ -51,6 +65,12 @@ export const plCopy: LocaleCopy = {
         p3: "Ta myśl rezonuje również dzisiaj. W świecie pełnym powiadomień ceremonia przypomina nam: odłóż telefon i bądź w teraźniejszości.",
       },
       chapter5: {
+        card1Title: "Przygotowanie",
+        card1Badge: "Uproszczenie",
+        card2Title: "Ubijanie",
+        card2Badge: "Technika",
+        card3Title: "Doskonalenie",
+        card3Badge: "Akceptacja",
         eyebrow: "Rozdział 05",
         title: "Przygotowanie matchy\njest łatwiejsze niż myślisz",
         p1: "Wielu uważa, że ceremonia jest skomplikowana i wymaga drogich naczyń. Tak nie jest. Na początek wystarczą tylko chawan, chasen, chashaku i dobrej jakości proszek matcha.",
@@ -136,7 +156,7 @@ export const plCopy: LocaleCopy = {
     desc: "Kliknij poniższe narzędzia, aby otworzyć przeglądarkę 3D. Obracaj i przybliżaj, aby z bliska przyjrzeć się kunsztowi wykonania.",
     clickToView: "Kliknij, aby zobaczyć model 3D",
     close3D: "Zamknij widok 3D",
-    loading: "Ładowanie...",
+    loading: "Przygotowanie",
     interactionHint: "Przeciągnij, aby obrócić, przewiń, aby powiększyć",
     tools: [
       {

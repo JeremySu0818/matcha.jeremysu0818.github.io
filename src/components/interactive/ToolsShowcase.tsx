@@ -97,7 +97,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
   };
 
   return (
-    <div className="relative mt-8">
+    <div className="mt-8">
       {activeTool && isMobile && typeof document !== "undefined" && createPortal(
         <div
           className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md transition-all duration-500 ${
@@ -118,10 +118,9 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
 
       {!isMobile && (
         <div
-          className={`absolute inset-x-0 -inset-y-6 z-20 flex flex-col bg-[#1A241D] border border-white/20 rounded-3xl overflow-hidden transition-opacity duration-500 ease-in-out ${
-            activeTool ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          className={`absolute inset-0 z-20 flex flex-col bg-[#1A241D] overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            activeTool ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-6 pointer-events-none"
           }`}
-          style={{ clipPath: "inset(0 round 1.5rem)" }}
         >
           {renderShowcaseContent()}
         </div>

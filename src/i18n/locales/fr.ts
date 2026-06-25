@@ -22,6 +22,12 @@ export const frCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Le voyage du thé",
+        card1Badge: "Origine Tang",
+        card2Title: "La naissance du rituel",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Beauté de l'imperfection",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Chapitre 01",
         title: "De la Chine au Japon,\nle voyage d'un thé",
         p1: "L'histoire du matcha commence sous la dynastie Tang. En Chine, les feuilles de thé étaient pressées en briques, moulues en poudre puis fouettées avec de l'eau. En 1191, le moine japonais Eisai rapporta cette méthode et des graines de thé chez lui pour les planter près de Kyoto.",
@@ -43,6 +49,14 @@ export const frCopy: LocaleCopy = {
         p3: "Le Chashaku est une cuillère fine en bambou. Bien qu'elle serve uniquement à doser la poudre, chacune est taillée à la main par des maîtres du thé et transmise de génération en génération.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonie)",
+        waDesc: "Réconciliation avec l'environnement, les autres et soi-même.",
+        keiTitle: "Kei (Respect)",
+        keiDesc: "Honneur sincère envers toutes choses, pas seulement de politesse.",
+        seiTitle: "Sei (Pureté)",
+        seiDesc: "Clarté d'esprit, libérée des distractions et du bruit.",
+        jakuTitle: "Jaku (Tranquillité)",
+        jakuDesc: "Profond sentiment de plénitude dans le silence et la paix.",
         eyebrow: "Chapitre 04",
         title: "Wa, Kei, Sei, Jaku,\nune vie en quatre mots",
         p1: "Sen no Rikyu condensa l'esprit du thé en quatre concepts : Wa (Harmonie) avec l'environnement ; Kei (Respect) envers toutes choses ; Sei (Pureté) de l'esprit ; et Jaku (Tranquillité) dans le silence.",
@@ -50,6 +64,12 @@ export const frCopy: LocaleCopy = {
         p3: "Cette idée résonne dans nos vies modernes. Parmi tant de notifications, la cérémonie du thé nous rappelle de poser notre téléphone et de vivre l'instant présent.",
       },
       chapter5: {
+        card1Title: "Préparer",
+        card1Badge: "Simplifier",
+        card2Title: "Fouetter",
+        card2Badge: "Technique",
+        card3Title: "Perfectionner",
+        card3Badge: "Accepter",
         eyebrow: "Chapitre 05",
         title: "Préparer son matcha,\nplus simple qu'il n'y paraît",
         p1: "On pense souvent que la cérémonie du thé est complexe et requiert des ustensiles coûteux. C'est faux. Pour commencer, vous avez seulement besoin d'un Chawan, d'un Chasen, d'un Chashaku et de matcha en poudre de bonne qualité.",
@@ -135,7 +155,7 @@ export const frCopy: LocaleCopy = {
     desc: "Cliquez sur les ustensiles ci-dessous pour ouvrir le visualiseur 3D. Faites pivoter et zoomez pour explorer le savoir-faire de près.",
     clickToView: "Cliquez pour voir le modèle 3D",
     close3D: "Fermer la vue 3D",
-    loading: "Chargement...",
+    loading: "Préparation",
     interactionHint: "Glissez pour faire pivoter, défilez pour zoomer",
     tools: [
       {

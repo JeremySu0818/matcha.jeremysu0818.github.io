@@ -22,6 +22,12 @@ export const zhCnCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "点茶东渡",
+        card1Badge: "唐代遗风",
+        card2Title: "茶道革新",
+        card2Badge: "千利休",
+        card3Title: "侘寂美学",
+        card3Badge: "一期一会",
         eyebrow: "第一章",
         title: "从中国到日本，\n一杯茶的旅行",
         p1: "抹茶这件事，要从唐朝说起。那时候中国人把茶叶压成茶饼，要喝的时候磨成粉再加水搅拌，这就是点茶法的雏形。日本僧人荣西在 1191 年回国的时候，把这套喝法和茶的种子一起带了回去，种在了京都郊外的土地上。",
@@ -43,6 +49,14 @@ export const zhCnCopy: LocaleCopy = {
         p3: "茶杓（Chashaku）就更有意思了，一根薄薄的竹片，只是用来挖茶粉，但每一根都是由茶人或职人亲手削制，有些名师留下来的茶杓甚至是传家宝，一辈一辈地传下去。",
       },
       chapter4: {
+        waTitle: "和 (和谐)",
+        waDesc: "与环境、他人与自我的真心和解。",
+        keiTitle: "敬 (尊敬)",
+        keiDesc: "对万事万物怀抱无表演性质的真诚敬意。",
+        seiTitle: "清 (清净)",
+        seiDesc: "摒除世俗杂念，使心灵清澈无碍。",
+        jakuTitle: "寂 (安祥)",
+        jakuDesc: "在静谧中感受灵性的充实，而非孤寂。",
         eyebrow: "第四章",
         title: "和、敬、清、寂，\n四个字说完一辈子",
         p1: "千利休用这四个字浓缩了整个茶道的精神。和，是你和环境、和对方、和自己的和解；敬，不是那种表演性质的礼貌，而是真心觉得眼前的每件事都值得尊重；清，不是干净，而是没有杂念；寂，是在安静里感受到的那种充实感，而不是空洞的孤独。",
@@ -50,6 +64,12 @@ export const zhCnCopy: LocaleCopy = {
         p3: "这个概念放到现代生活里其实很有共鸣。我们每天都在被通知轰炸、滑不完的动态，抹茶茶道提醒的就是一件事：放下手机，好好待在这一刻。",
       },
       chapter5: {
+        card1Title: "备器 (Preparation)",
+        card1Badge: "简约的开始",
+        card2Title: "击拂 (Whisking)",
+        card2Badge: "温度的奥秘",
+        card3Title: "体悟 (Refining)",
+        card3Badge: "接纳不完美",
         eyebrow: "第五章",
         title: "打一碗抹茶，\n没你想的那么难",
         p1: "很多人以为茶道是遥远的事，搞很久学不来，或是要有很多昂贵的道具才能开始。其实不然。一开始你只需要一个茶碗、一把茶筅、一根茶杓，加上品质说得过去的抹茶粉，就可以在家里试试看了。",
@@ -135,7 +155,7 @@ export const zhCnCopy: LocaleCopy = {
     desc: "点击下方道具，进入 3D 视图模式，你可以自由旋转、缩放，细细品味这些老朋友们的工艺细节。",
     clickToView: "点击查看 3D 模型",
     close3D: "关闭 3D 视图",
-    loading: "载入中...",
+    loading: "准备中",
     interactionHint: "拖拽以旋转，滚动以缩放",
     tools: [
       {

@@ -23,6 +23,12 @@ export const nlCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "De Reis van Thee",
+        card1Badge: "Tang Oorsprong",
+        card2Title: "Het Ritueel Gevormd",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Schoonheid van Imperfectie",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Hoofdstuk 01",
         title: "Van China naar Japan,\nde reis van een thee",
         p1: "Het verhaal van matcha begint in de Tang-dynastie. Destijds perste men in China theeblaadjes tot koeken, maalden ze tot poeder en mengden ze met water. In 1191 keerde de Japanse monnik Eisai terug uit China met deze methode en theezaden, en plantte ze nabij Kyoto.",
@@ -44,6 +50,14 @@ export const nlCopy: LocaleCopy = {
         p3: "De Chashaku is een eenvoudige, dunne bamboelepel. Hoewel hij alleen dient voor het portioneren van het poeder, wordt elke lepel met de hand gesneden door theemeesters.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonie)",
+        waDesc: "Verzoening met de omgeving, anderen en jezelf.",
+        keiTitle: "Kei (Respect)",
+        keiDesc: "Oprecht respect voor alles, niet alleen uiterlijke beleefdheid.",
+        seiTitle: "Sei (Zuiverheid)",
+        seiDesc: "Helderheid van geest, vrij van afleiding en ruis.",
+        jakuTitle: "Jaku (Stilte)",
+        jakuDesc: "Diep gevoel van vervulling in stilte en rust.",
         eyebrow: "Hoofdstuk 04",
         title: "Wa, Kei, Sei, Jaku,\neen leven in vier woorden",
         p1: "Sen no Rikyu vatte de geest van thee samen in vier principes: Wa (Harmonie) met de omgeving; Kei (Respect) voor alle dingen; Sei (Zuiverheid) van geest; en Jaku (Stilte) in de rust.",
@@ -51,6 +65,12 @@ export const nlCopy: LocaleCopy = {
         p3: "Dit idee resoneert in het moderne leven. Te midden van eindeloze meldingen herinnert de theeceremonie ons eraan: leg de telefoon weg en wees in het moment.",
       },
       chapter5: {
+        card1Title: "Voorbereiden",
+        card1Badge: "Vereenvoudigen",
+        card2Title: "Kloppen",
+        card2Badge: "Technique",
+        card3Title: "Perfectioneren",
+        card3Badge: "Aanvaarden",
         eyebrow: "Hoofdstuk 05",
         title: "Matcha bereiden,\nniet zo moeilijk als je denkt",
         p1: "Velen denken dat de ceremonie ingewikkeld is en dure accessoires vereist. Dat is niet zo. Om te beginnen heb je alleen een Chawan, een Chasen, een Chashaku en matchapoeder van goede kwaliteit nodig.",
@@ -136,7 +156,7 @@ export const nlCopy: LocaleCopy = {
     desc: "Klik op de hulpmiddelen hieronder om de 3D-viewer te openen. Draai en zoom om het vakmanschap van dichtbij te bekijken.",
     clickToView: "Klik om het 3D-model te bekijken",
     close3D: "Sluit 3D-weergave",
-    loading: "Laden...",
+    loading: "Voorbereiden",
     interactionHint: "Sweep om te draaien, scroll om te zoomen",
     tools: [
       {

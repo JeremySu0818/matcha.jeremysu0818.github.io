@@ -23,6 +23,12 @@ export const deCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Die Reise des Tees",
+        card1Badge: "Tang-Ursprung",
+        card2Title: "Das Ritual entsteht",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Schönheit des Unvollkommenen",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Kapitel 01",
         title: "Von China nach Japan,\ndie Reise eines Tees",
         p1: "Die Geschichte von Matcha beginnt in der Tang-Dynastie. Damals presste man in China Teeblätter zu Fladen, mahlte sie zu Pulver und verrührte sie mit Wasser – der Vorläufer der heutigen Methode. Als der japanische Mönch Eisai 1191 aus China zurückkehrte, brachte er diese Methode und Teesamen mit nach Hause und pflanzte sie in der Nähe von Kyoto an.",
@@ -44,6 +50,14 @@ export const deCopy: LocaleCopy = {
         p3: "Der Chashaku ist ein schlichter, dünner Bambuslöffel. Obwohl er nur zum Portionieren des Pulvers dient, wird jeder von Teemeistern handgeschnitzt und oft über Generationen weitervererbt.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonie)",
+        waDesc: "Einklang mit der Umwelt, anderen und sich selbst.",
+        keiTitle: "Kei (Respekt)",
+        keiDesc: "Echte Achtung vor allen Dingen, nicht bloß Höflichkeit.",
+        seiTitle: "Sei (Reinheit)",
+        seiDesc: "Reinheit des Geistes, frei von jeglicher Ablenkung.",
+        jakuTitle: "Jaku (Stille)",
+        jakuDesc: "Tiefe innere Erfüllung in der Ruhe und dem Frieden.",
         eyebrow: "Kapitel 04",
         title: "Wa, Kei, Sei, Jaku,\nein Leben in vier Wörtern",
         p1: "Sen no Rikyu fasste den Geist des Tees in vier Prinzipien zusammen: Wa (Harmonie) steht für den Einklang mit der Welt; Kei (Respekt) ist die Achtung vor allen Dingen; Sei (Reinheit) ist die Klarheit des Geistes; Jaku (Stille) ist die tiefe Erfüllung in der Ruhe.",
@@ -51,6 +65,12 @@ export const deCopy: LocaleCopy = {
         p3: "Dieses Konzept spricht auch den modernen Menschen an. Inmitten von Benachrichtigungen erinnert uns die Teezeremonie an eines: Leg das Telefon weg und sei ganz in diesem Moment.",
       },
       chapter5: {
+        card1Title: "Vorbereiten",
+        card1Badge: "Einfachheit",
+        card2Title: "Schlagen",
+        card2Badge: "Technique",
+        card3Title: "Vollenden",
+        card3Badge: "Akzeptanz",
         eyebrow: "Kapitel 05",
         title: "Matcha zubereiten,\nnicht so schwer, wie Sie denken",
         p1: "Viele glauben, die Teezeremonie sei kompliziert und erfordere teures Zubehör. Das ist nicht so. Für den Anfang brauchen Sie nur eine Chawan, einen Chasen, einen Chashaku und Matchapulver in guter Qualität.",
@@ -136,7 +156,7 @@ export const deCopy: LocaleCopy = {
     desc: "Klicken Sie auf die Werkzeuge unten, um den 3D-Viewer zu öffnen. Drehen und zoomen Sie, um die Handwerkskunst aus der Nähe zu betrachten.",
     clickToView: "Klicken, um das 3D-Modell anzuzeigen",
     close3D: "3D-Ansicht schließen",
-    loading: "Wird geladen...",
+    loading: "Wird geladen",
     interactionHint: "Ziehen zum Drehen, Scrollen zum Zoomen",
     tools: [
       {

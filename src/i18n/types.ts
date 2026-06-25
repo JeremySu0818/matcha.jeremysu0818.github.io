@@ -17,11 +17,11 @@ export interface TranslationSchema {
     scroll: string;
   };
   chapters: {
-    chapter1: ChapterCopy;
+    chapter1: Chapter1Copy;
     chapter2: ChapterCopy;
     chapter3: ChapterCopy;
-    chapter4: ChapterCopy;
-    chapter5: ChapterCopy;
+    chapter4: Chapter4Copy;
+    chapter5: Chapter5Copy;
   };
   final: {
     eyebrow: string;
@@ -135,12 +135,41 @@ export interface LocaleCopy {
   calculator: CalculatorCopy;
 }
 
-interface ChapterCopy {
+export interface ChapterCopy {
   eyebrow: string;
   title: string;
   p1: string;
   p2: string;
   p3: string;
+}
+
+export interface Chapter1Copy extends ChapterCopy {
+  card1Title: string;
+  card1Badge: string;
+  card2Title: string;
+  card2Badge: string;
+  card3Title: string;
+  card3Badge: string;
+}
+
+export interface Chapter4Copy extends ChapterCopy {
+  waTitle: string;
+  waDesc: string;
+  keiTitle: string;
+  keiDesc: string;
+  seiTitle: string;
+  seiDesc: string;
+  jakuTitle: string;
+  jakuDesc: string;
+}
+
+export interface Chapter5Copy extends ChapterCopy {
+  card1Title: string;
+  card1Badge: string;
+  card2Title: string;
+  card2Badge: string;
+  card3Title: string;
+  card3Badge: string;
 }
 
 interface StepCopy {

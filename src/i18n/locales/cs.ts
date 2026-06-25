@@ -22,6 +22,12 @@ export const csCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Cesta čaje",
+        card1Badge: "Původ Tang",
+        card2Title: "Formování rituálu",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Krása nedokonalosti",
+        card3Badge: "Ičigo Ičie",
         eyebrow: "Kapitola 01",
         title: "Z Číny do Japonska,\ncesta jednoho čaje",
         p1: "Příběh čaje matcha začíná za dynastie Tang. Tehdy se v Číně lisovaly čajové lístky do lisovaných cihel, mlely se na prášek a šlehaly s teplou vodou. V roce 1191 přivezl japonský mnich Eisai tuto metodu a čajová semínka domů a zasadil je nedaleko Kjóta.",
@@ -43,6 +49,14 @@ export const csCopy: LocaleCopy = {
         p3: "Chashaku je jednoduchá bambusová lžička na prášek. Každou lžičku mistři vyřezávají ručně a předávají se z generace na generaci.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonie)",
+        waDesc: "Sounáležitost s okolím, ostatními a samým sebou.",
+        keiTitle: "Kei (Respekt)",
+        keiDesc: "Upřímný respekt ke všemu, nikoli jen zdvořilost.",
+        seiTitle: "Sei (Čistota)",
+        seiDesc: "Jasná mysl bez jakéhokoli rozptylování.",
+        jakuTitle: "Jaku (Klid)",
+        jakuDesc: "Hluboký pocit naplnění v tichu a míru.",
         eyebrow: "Kapitola 04",
         title: "Wa, Kei, Sei, Jaku,\nživot ve čtyřech slovech",
         p1: "Sen no Rikyu vyjádřil ducha čaje ve čtyřech pojmech: Wa (Harmonie) s okolím; Kei (Respekt) ke všemu; Sei (Čistota) mysli; a Jaku (Klid) v tichu.",
@@ -50,6 +64,12 @@ export const csCopy: LocaleCopy = {
         p3: "Tato myšlenka rezonuje i dnes. V uspěchaném světě plném oznámení nám čajový obřad připomíná: odložte telefon a buďte v přítomném okamžiku.",
       },
       chapter5: {
+        card1Title: "Příprava",
+        card1Badge: "Zjednodušení",
+        card2Title: "Šlehání",
+        card2Badge: "Technika",
+        card3Title: "Zdokonalování",
+        card3Badge: "Přijetí",
         eyebrow: "Kapitola 05",
         title: "Příprava čaje matcha\nje jednodušší, než se zdá",
         p1: "Mnozí si myslí, že obřad je složitý a vyžaduje drahé nádobí. Není tomu tak. Pro začátek stačí jen chawan, chasen, chashaku a kvalitní prášek matcha.",
@@ -135,7 +155,7 @@ export const csCopy: LocaleCopy = {
     desc: "Kliknutím na nástroje níže otevřete 3D prohlížeč. Otáčením a přibližováním prozkoumáte řemeslné zpracování zblízka.",
     clickToView: "Kliknutím zobrazíte 3D model",
     close3D: "Zavřít 3D zobrazení",
-    loading: "Načítání...",
+    loading: "Příprava",
     interactionHint: "Tažením otáčejte, rolováním přibližujte",
     tools: [
       {

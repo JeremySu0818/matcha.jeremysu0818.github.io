@@ -22,6 +22,12 @@ export const huCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "A tea utazása",
+        card1Badge: "Tang eredet",
+        card2Title: "A rituálé kialakulása",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "A tökéletlenség szépsége",
+        card3Badge: "Icsigo Icsie",
         eyebrow: "01. Fejezet",
         title: "Kínából Japánba,\negy tea utazása",
         p1: "A matcha története a Tang-dinasztiában kezdődik. Akkoriban Kínában a tealeveleket tömbökbe préselték, porrá őrölték és vízzel keverték. 1191-ben a japán szerzetes, Eisai hazatért ezzel a módszerrel és teamagokkal, és Kyoto közelében ültette el őket.",
@@ -43,6 +49,14 @@ export const huCopy: LocaleCopy = {
         p3: "A Chashaku egy egyszerű, vékony bambuszkanál. Bár csak a por mérésére szolgál, mindegyiket teamesterek faragják kézzel, és generációkon át öröklődnek.",
       },
       chapter4: {
+        waTitle: "Wa (Harmónia)",
+        waDesc: "Megbékélés a környezettel, másokkal és önmagunkkal.",
+        keiTitle: "Kei (Tisztelet)",
+        keiDesc: "Valódi tisztelet minden iránt, nem csak formaság.",
+        seiTitle: "Sei (Tisztaság)",
+        seiDesc: "Tiszta tudat, mentes a zavaró tényezőktől.",
+        jakuTitle: "Jaku (Nyugalom)",
+        jakuDesc: "Mély megelégedettség érzése a csendben és békében.",
         eyebrow: "04. Fejezet",
         title: "Wa, Kei, Sei, Jaku,\negy élet négy szóban",
         p1: "Sen no Rikyu a tea szellemét négy fogalomba sűrítette: Wa (Harmónia) a környezettel; Kei (Tisztelet) minden iránt; Sei (Tisztaság) a tudatban; és Jaku (Csend) a nyugalomban.",
@@ -50,6 +64,12 @@ export const huCopy: LocaleCopy = {
         p3: "Ez a gondolat a modern életben is visszhangra talál. A teaszertartás emlékeztet minket: tedd le a telefont és légy jelen a pillanatban.",
       },
       chapter5: {
+        card1Title: "Előkészítés",
+        card1Badge: "Egyszerűsítés",
+        card2Title: "Habosítás",
+        card2Badge: "Technika",
+        card3Title: "Tökéletesítés",
+        card3Badge: "Elfogadás",
         eyebrow: "05. Fejezet",
         title: "Matcha készítés,\negyszerűbb, mint gondolnád",
         p1: "Sokan azt gondolják, hogy a szertartás bonyolult és drága eszközöket igényel. Ez nem így van. Kezdetnek csak egy chawanra, chasenre, chashakura és jó minőségű matcha porra van szükséged.",
@@ -135,7 +155,7 @@ export const huCopy: LocaleCopy = {
     desc: "Kattintson az alábbi eszközökre a 3D néző megnyitásához. Forgassa és nagyítsa a kézműves munka közeli felfedezéséhez.",
     clickToView: "Kattintson a 3D modell megtekintéséhez",
     close3D: "3D nézet bezárása",
-    loading: "Betöltés...",
+    loading: "Előkészítés",
     interactionHint: "Húzza a forgatáshoz, görgessen a nagyításhoz",
     tools: [
       {

@@ -22,6 +22,12 @@ export const trCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Çayın Yolculuğu",
+        card1Badge: "Tang Kökeni",
+        card2Title: "Ritüelin Doğuşu",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Kusurluluğun Güzelliği",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Bölüm 01",
         title: "Çin'den Japonya'ya,\nBir Çayın Yolculuğu",
         p1: "Matcha'nın hikayesi Tang Hanedanlığı'nda başlar. O zamanlar Çin'de çay yaprakları kalıplar halinde preslenir, toz haline getirilir ve suyla karıştırılırdı. 1191'de Japon rahip Eisai bu yöntemi ve çay tohumlarını Kyoto yakınlarında ekmek üzere ülkesine getirdi.",
@@ -43,6 +49,14 @@ export const trCopy: LocaleCopy = {
         p3: "Chashaku, basit, ince bir bambu kaşıktır. Sadece tozu ölçmek için kullanılsa da her biri çay ustaları tarafından elle yontulur ve nesiller boyu aktarılır.",
       },
       chapter4: {
+        waTitle: "Wa (Uyum)",
+        waDesc: "Çevreyle, başkalarıyla ve kendinle barışma.",
+        keiTitle: "Kei (Saygı)",
+        keiDesc: "Her şeye karşı samimi bir saygı, sadece nezaket değil.",
+        seiTitle: "Sei (Saflık)",
+        seiDesc: "Zihnin berraklığı, dikkat dağıtıcı şeylerden uzak.",
+        jakuTitle: "Jaku (Huzur)",
+        jakuDesc: "Sessizlik ve barış içinde derin bir doyum hissi.",
         eyebrow: "Bölüm 04",
         title: "Wa, Kei, Sei, Jaku,\nDört Kelimede Bir Ömür",
         p1: "Sen no Rikyu çayın ruhunu dört kavramda özetlemiştir: Wa (Uyum) çevreyle; Kei (Saygı) her şeye karşı; Sei (Saflık) zihinde; ve Jaku (Huzur) sessizlikte.",
@@ -50,6 +64,12 @@ export const trCopy: LocaleCopy = {
         p3: "Bu fikir modern yaşamda da yankı buluyor. Sonsuz bildirimler arasında çay töreni bize şunu hatırlatır: Telefonu bırakın ve o anda kalın.",
       },
       chapter5: {
+        card1Title: "Hazırlık",
+        card1Badge: "Sade Başlangıç",
+        card2Title: "Çırpma",
+        card2Badge: "Teknik",
+        card3Title: "Olgunlaşma",
+        card3Badge: "Kusuru Kabul",
         eyebrow: "Bölüm 05",
         title: "Matcha Hazırlamak,\nSandığınızdan Daha Kolay",
         p1: "Pek çok kişi çay töreninin karmaşık olduğunu ve pahalı ekipman gerektirdiğini düşünür. Öyle değil. Başlamak için sadece bir Chawan, bir Chasen, bir Chashaku ve kaliteli matcha tozuna ihtiyacınız var.",
@@ -135,7 +155,7 @@ export const trCopy: LocaleCopy = {
     desc: "3D görüntüleyiciyi açmak için aşağıdaki araçlara tıklayın. El işçiliğini yakından incelemek için döndürün ve yakınlaştırın.",
     clickToView: "3D modeli görmek için tıklayın",
     close3D: "3D Görünümü Kapat",
-    loading: "Yükleniyor...",
+    loading: "Hazırlanıyor",
     interactionHint: "Döndürmek için sürükleyin, yakınlaştırmak için kaydırın",
     tools: [
       {

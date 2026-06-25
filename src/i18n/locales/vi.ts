@@ -22,6 +22,12 @@ export const viCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Hành trình Trà",
+        card1Badge: "Nguồn gốc Đường",
+        card2Title: "Nghi thức hình thành",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Vẻ đẹp bất toàn",
+        card3Badge: "Nhất kỳ nhất hội",
         eyebrow: "Chương 01",
         title: "Từ Trung Hoa đến Nhật Bản,\nHành trình của trà",
         p1: "Câu chuyện về matcha bắt đầu từ thời nhà Đường. Khi đó ở Trung Quốc, lá trà được ép thành bánh, nghiền thành bột và khuấy với nước ấm. Năm 1191, thiền sư Eisai mang cách uống này cùng hạt giống trà về lại Nhật Bản, gieo trồng ở ngoại ô Kyoto.",
@@ -43,6 +49,14 @@ export const viCopy: LocaleCopy = {
         p3: "Chashaku là muỗng tre mỏng dùng để múc bột trà. Mỗi chiếc muỗng đều được các nghệ nhân đẽo gọt thủ công và được truyền qua nhiều thế hệ như một báu vật.",
       },
       chapter4: {
+        waTitle: "Hòa (Hài hòa)",
+        waDesc: "Hòa hợp với môi trường, người khác và chính mình.",
+        keiTitle: "Kính (Tôn trọng)",
+        keiDesc: "Sự tôn kính chân thành với vạn vật, không chỉ là lễ nghi.",
+        seiTitle: "Thanh (Thanh tịnh)",
+        seiDesc: "Tâm trí sáng suốt, không bị phân tâm bởi tạp niệm.",
+        jakuTitle: "Tịch (Tĩnh lặng)",
+        jakuDesc: "Cảm giác viên mãn sâu sắc trong sự tĩnh lặng và an bình.",
         eyebrow: "Chương 04",
         title: "Hòa, Kính, Thanh, Tịch,\nMột đời gói gọn trong bốn chữ",
         p1: "Sen no Rikyu đúc kết tinh thần trà đạo qua bốn chữ: Hòa (hòa hợp với vạn vật); Kính (tôn trọng mọi điều); Thanh (tâm hồn thanh tịnh); và Tịch (sự an yên trong tĩnh lặng).",
@@ -50,6 +64,12 @@ export const viCopy: LocaleCopy = {
         p3: "Ý tưởng này rất ý nghĩa trong cuộc sống hiện đại. Giữa vô vàn thông báo điện thoại, trà đạo nhắc nhở chúng ta: hãy đặt điện thoại xuống và trọn vẹn trong phút giây này.",
       },
       chapter5: {
+        card1Title: "Chuẩn bị",
+        card1Badge: "Đơn giản hóa",
+        card2Title: "Đánh trà",
+        card2Badge: "Kỹ thuật",
+        card3Title: "Trải nghiệm",
+        card3Badge: "Chấp nhận",
         eyebrow: "Chương 05",
         title: "Pha một chén matcha,\nKhông khó như bạn nghĩ",
         p1: "Nhiều người nghĩ trà đạo rất xa vời và cần trà cụ đắt đỏ. Không hẳn thế. Để bắt đầu, bạn chỉ cần một Chawan, một Chasen, một Chashaku và bột matcha chất lượng tốt tại nhà.",
@@ -135,7 +155,7 @@ export const viCopy: LocaleCopy = {
     desc: "Nhấp vào các dụng cụ bên dưới để mở trình xem 3D. Xoay và thu phóng để khám phá kỹ nghệ thủ công ở cự ly gần.",
     clickToView: "Nhấp để xem mô hình 3D",
     close3D: "Đóng chế độ xem 3D",
-    loading: "Đang tải...",
+    loading: "Đang chuẩn bị",
     interactionHint: "Kéo để xoay, cuộn để thu phóng",
     tools: [
       {

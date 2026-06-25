@@ -22,6 +22,12 @@ export const enCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Tea's Journey",
+        card1Badge: "Tang Origin",
+        card2Title: "The Ritual Formed",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Beauty of Imperfection",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Chapter 01",
         title: "From China to Japan,\nA Tea's Journey",
         p1: "The story of matcha begins in the Tang Dynasty. Back then, people in China pressed tea leaves into cakes, ground them into powder, and whisked it with water—the prototype of the whisked tea method. When the Japanese monk Eisai returned from China in 1191, he brought this method along with tea seeds back home, planting them in Kyoto's outskirts.",
@@ -43,6 +49,14 @@ export const enCopy: LocaleCopy = {
         p3: "The Chashaku is even more interesting—a simple, thin bamboo scoop. Though only used to portion powder, each is hand-carved by tea masters. Some legendary scoops are passed down as family heirlooms for generations.",
       },
       chapter4: {
+        waTitle: "Wa (Harmony)",
+        waDesc: "Reconciliation with environment, others, and self.",
+        keiTitle: "Kei (Respect)",
+        keiDesc: "Genuine honor for all things, not just polite performance.",
+        seiTitle: "Sei (Purity)",
+        seiDesc: "Clarity of mind, free of distractions and noise.",
+        jakuTitle: "Jaku (Tranquility)",
+        jakuDesc: "Deep sense of fulfillment in silence and peace.",
         eyebrow: "Chapter 04",
         title: "Wa, Kei, Sei, Jaku,\nA Lifetime in Four Words",
         p1: "Sen no Rikyu condensed the spirit of tea into four concepts. Wa (Harmony) is reconciliation with environment, others, and self; Kei (Respect) is genuine honor for all things, not just polite performance; Sei (Purity) is clarity of mind, free of distractions; Jaku (Tranquility) is a deep sense of fulfillment in silence, rather than empty loneliness.",
@@ -50,6 +64,12 @@ export const enCopy: LocaleCopy = {
         p3: "This concept resonates deeply in modern life. As we are bombarded by notifications and infinite scrolling, the tea ceremony reminds us of one thing: put down the phone, and fully occupy this moment.",
       },
       chapter5: {
+        card1Title: "Prepare",
+        card1Badge: "Simplify",
+        card2Title: "Whisk",
+        card2Badge: "Technique",
+        card3Title: "Perfect",
+        card3Badge: "Embrace",
         eyebrow: "Chapter 05",
         title: "Whisking Matcha,\nNot as Hard as You Think",
         p1: "Many assume the tea ceremony is remote and complex, requiring years of study or expensive gear. That is not so. To start, you only need a Chawan, a Chasen, a Chashaku, and a decent grade of matcha powder to try it at home.",
@@ -135,7 +155,7 @@ export const enCopy: LocaleCopy = {
     desc: "Click on the tools below to open a 3D viewer. Rotate and zoom to explore the craftsmanship up close.",
     clickToView: "Click to view 3D model",
     close3D: "Close 3D View",
-    loading: "Loading...",
+    loading: "Preparing",
     interactionHint: "Drag to rotate, scroll to zoom",
     tools: [
       {

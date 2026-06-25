@@ -23,6 +23,12 @@ export const ptBrCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "A jornada do chá",
+        card1Badge: "Origem Tang",
+        card2Title: "O ritual se forma",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Beleza da imperfeição",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Capítulo 01",
         title: "Da China ao Japão,\na viagem de um chá",
         p1: "A história do matcha começa na dinastia Tang. Naquela época, na China, prensavam-se as folhas de chá em blocos, moendo-as em pó e misturando com água. Em 1191, o monge japonês Eisai voltou da China com este método e sementes de chá, plantando-as perto de Kyoto.",
@@ -44,6 +50,14 @@ export const ptBrCopy: LocaleCopy = {
         p3: "O Chashaku é uma colher fina de bambu. Embora sirva apenas para dosar o pó, cada uma é esculpida à mão por mestres do chá e transmitida de geração em geração.",
       },
       chapter4: {
+        waTitle: "Wa (Harmonia)",
+        waDesc: "Reconciliação com o ambiente, os outros e si mesmo.",
+        keiTitle: "Kei (Respeito)",
+        keiDesc: "Respeito genuíno por todas as coisas, não apenas polidez.",
+        seiTitle: "Sei (Pureza)",
+        seiDesc: "Clareza mental, livre de distrações e ruídos.",
+        jakuTitle: "Jaku (Tranquilidade)",
+        jakuDesc: "Profundo sentimento de plenitude no silêncio e na paz.",
         eyebrow: "Capítulo 04",
         title: "Wa, Kei, Sei, Jaku,\numa vida em quatro palavras",
         p1: "Sen no Rikyu condensou o espírito do chá em quatro conceitos: Wa (Harmonia) com o ambiente; Kei (Respeito) por todas as coisas; Sei (Pureza) da mente; e Jaku (Tranquilidade) no silêncio.",
@@ -51,6 +65,12 @@ export const ptBrCopy: LocaleCopy = {
         p3: "Esta ideia ressoa na vida moderna. Entre tantas notificações, a cerimônia do chá nos lembra de deixar o celular e estar presentes no aqui e agora.",
       },
       chapter5: {
+        card1Title: "Preparar",
+        card1Badge: "Simplificar",
+        card2Title: "Bater",
+        card2Badge: "Técnica",
+        card3Title: "Aprimorar",
+        card3Badge: "Aceitar",
         eyebrow: "Capítulo 05",
         title: "Preparar matcha,\nmais fácil do que você pensa",
         p1: "Muitos pensam que a cerimônia do chá é complexa e requer utensílios caros. Não é bem assim. Para começar, você só precisa de um Chawan, um Chasen, um Chashaku e matcha em pó de boa qualidade.",
@@ -136,7 +156,7 @@ export const ptBrCopy: LocaleCopy = {
     desc: "Clique nos utensílios abaixo para abrir o visualizador 3D. Gire e amplie para explorar de perto a riqueza dos detalhes.",
     clickToView: "Clique para ver o modelo 3D",
     close3D: "Fechar Visualização 3D",
-    loading: "Carregando...",
+    loading: "Preparando",
     interactionHint: "Arraste para girar, role para ampliar",
     tools: [
       {

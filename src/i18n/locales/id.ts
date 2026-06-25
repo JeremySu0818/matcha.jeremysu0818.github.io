@@ -23,6 +23,12 @@ export const idCopy: LocaleCopy = {
     },
     chapters: {
       chapter1: {
+        card1Title: "Perjalanan Teh",
+        card1Badge: "Asal Usul Tang",
+        card2Title: "Ritual Terbentuk",
+        card2Badge: "Sen no Rikyu",
+        card3Title: "Keindahan Ketidaksempurnaan",
+        card3Badge: "Ichigo Ichie",
         eyebrow: "Bab 01",
         title: "Dari Tiongkok ke Jepang,\nPerjalanan Secangkir Teh",
         p1: "Kisah matcha dimulai pada Dinasti Tang. Saat itu di Tiongkok, daun teh ditekan menjadi balok, digiling menjadi bubuk dan dicampur dengan air. Pada tahun 1191, biksu Jepang Eisai membawa metode ini dan biji teh pulang untuk ditanam di dekat Kyoto.",
@@ -44,6 +50,14 @@ export const idCopy: LocaleCopy = {
         p3: "Chashaku adalah sendok bambu tipis yang sederhana. Meskipun hanya untuk menakar bubuk, masing-masing diukir dengan tangan oleh master teh dan diwariskan dari generasi ke generasi.",
       },
       chapter4: {
+        waTitle: "Wa (Harmoni)",
+        waDesc: "Rekonsiliasi dengan lingkungan, sesama, dan diri sendiri.",
+        keiTitle: "Kei (Hormat)",
+        keiDesc: "Penghormatan tulus untuk semua hal, bukan sekadar basa-basi.",
+        seiTitle: "Sei (Kemurnian)",
+        seiDesc: "Kejelasan pikiran, bebas dari gangguan dan kebisingan.",
+        jakuTitle: "Jaku (Ketenangan)",
+        jakuDesc: "Rasa kepuasan yang mendalam dalam kesunyian dan kedamaian.",
         eyebrow: "Bab 04",
         title: "Wa, Kei, Sei, Jaku,\nHidup dalam Empat Kata",
         p1: "Sen no Rikyu merangkum semangat teh dalam empat konsep: Wa (Keselarasan) dengan lingkungan; Kei (Rasa Hormat) terhadap segalanya; Sei (Kemurnian) dalam pikiran; dan Jaku (Ketenangan) dalam keheningan.",
@@ -51,6 +65,12 @@ export const idCopy: LocaleCopy = {
         p3: "Ide ini beresonansi dalam kehidupan modern. Di tengah notifikasi yang tak henti-hentinya, upacara teh mengingatkan kita: letakkan ponsel dan tetaplah berada di momen itu.",
       },
       chapter5: {
+        card1Title: "Persiapan",
+        card1Badge: "Sederhana",
+        card2Title: "Mengocok",
+        card2Badge: "Teknik",
+        card3Title: "Memahami",
+        card3Badge: "Menerima",
         eyebrow: "Bab 05",
         title: "Menyiapkan Matcha,\nLebih Mudah dari yang Anda Pikirkan",
         p1: "Banyak orang berpikir bahwa upacara teh itu rumit dan membutuhkan peralatan mahal. Tidak juga. Untuk memulai Anda hanya membutuhkan Chawan, Chasen, Chashaku, dan bubuk matcha berkualitas baik di rumah.",
@@ -136,7 +156,7 @@ export const idCopy: LocaleCopy = {
     desc: "Klik alat di bawah ini untuk membuka penampil 3D. Putar dan perbesar untuk menjelajahi keahlian pembuatannya dari dekat.",
     clickToView: "Klik untuk melihat model 3D",
     close3D: "Tutup Tampilan 3D",
-    loading: "Memuat...",
+    loading: "Menyiapkan",
     interactionHint: "Seret untuk memutar, gulir untuk memperbesar",
     tools: [
       {
