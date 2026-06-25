@@ -101,6 +101,7 @@ export function SceneModeSelector({
     if (!isInteractive) return;
     if (!isOpen) {
       onHintDismiss?.();
+      updatePosition();
     }
     setIsOpen(!isOpen);
   };
