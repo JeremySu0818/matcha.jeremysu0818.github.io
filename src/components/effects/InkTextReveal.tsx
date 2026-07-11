@@ -317,7 +317,6 @@ export function InkTextReveal({
           const lineTop = elementRect.top + data.localTop;
           const lineBottom = lineTop + data.height;
 
-          // viewport-based: line position relative to the fixed anchor
           let vpProgress: number;
           if (lineBottom <= anchorY) {
             vpProgress = 1;
@@ -328,7 +327,6 @@ export function InkTextReveal({
             vpProgress = clamp01((anchorY - lineTop) / lineHeight);
           }
 
-          // scroll-progress fallback: guarantees full reveal by end
           let spProgress: number;
           if (printPosition <= lineStart) {
             spProgress = 0;

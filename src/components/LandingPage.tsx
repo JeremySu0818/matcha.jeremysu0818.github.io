@@ -7,6 +7,7 @@ import { ShadeSimulator } from "./interactive/ShadeSimulator";
 import { ToolsShowcase } from "./interactive/ToolsShowcase";
 import { getLandingSteps } from "./landing/landingNavigation";
 import { renderTitle } from "./landing/renderTitle";
+import { useLandingHeaderTheme } from "./landing/useLandingHeaderTheme";
 import { useLandingScrollNavigation } from "./landing/useLandingScrollNavigation";
 
 interface LandingPageProps {
@@ -20,6 +21,7 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
   const { t, lang } = useTranslation();
   const { activeStep, handleStepClick } = useLandingScrollNavigation();
   const steps = getLandingSteps(t);
+  const useLightHeaderText = useLandingHeaderTheme(lang);
   const useLightNavigation = [0, 2, 4, 6].includes(activeStep);
 
   const history = [
@@ -94,7 +96,7 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
     >
       <Header
         activeLink="home"
-        darkTheme={useLightNavigation}
+        darkTheme={useLightHeaderText}
         pointerEventsNone={false}
         onLoadAnimation
         sceneMode={sceneMode}

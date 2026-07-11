@@ -60,8 +60,8 @@ function App() {
         setShowSwitcherHint(true);
         switcherHintHideTimeoutRef.current = setTimeout(() => {
           setShowSwitcherHint(false);
-        }, 20000); // Hide after 20 seconds
-      }, 1500); // Show after 1.5 seconds
+        }, 20000); 
+      }, 1500);
     } else {
       setShowSwitcherHint(false);
     }
