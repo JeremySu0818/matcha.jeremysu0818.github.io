@@ -104,7 +104,9 @@ function App() {
     setActive3dStep(boundedIndex);
     sceneScrollEl.scrollTo({
       top: targetTop,
-      behavior: "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
     });
   };
 
@@ -165,17 +167,21 @@ function App() {
         };
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#fbfaf4]">
+    <div className="app-shell relative h-screen w-screen overflow-hidden">
+      <div className="route-backdrop fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#f1eee5]">
         {UNIQUE_BACKGROUNDS.map((bgUrl) => (
           <div
             key={bgUrl}
-            className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[800ms] ease-in-out ${
+            className={`route-backdrop__image absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[800ms] ease-in-out ${
               currentBg === bgUrl ? "opacity-100" : "opacity-0"
             }`}
             style={{ backgroundImage: `url('${bgUrl}')` }}
           >
-            <div className="absolute inset-0 bg-black/35" />
+            <div
+              className={`route-backdrop__scrim absolute inset-0 ${
+                isMake ? "route-backdrop__scrim--make" : "route-backdrop__scrim--home"
+              }`}
+            />
           </div>
         ))}
         {(isHome || isMake) && (
@@ -197,7 +203,7 @@ function App() {
 
         {!isHome && !isMake && (
           <main
-            className={`relative h-screen w-screen overflow-hidden text-white ${loaded ? "is-loaded" : ""}`}
+            className={`scene-page relative h-screen w-screen overflow-hidden text-white ${loaded ? "is-loaded" : ""}`}
             onContextMenu={
               sceneMode === "manual"
                 ? (event) => {
@@ -210,7 +216,7 @@ function App() {
 
             <Header
               activeLink="3d"
-              darkTheme={false}
+              darkTheme
               pointerEventsNone={true}
               onLoadAnimation={false}
               sceneMode={sceneMode}

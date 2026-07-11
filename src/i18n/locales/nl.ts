@@ -96,7 +96,7 @@ export const nlCopy: LocaleCopy = {
       waterTemp: "Temperatuur",
       back: "Terug naar start",
       replay: "Nog een keer",
-      start: "Start Ritual",
+      start: "Ritueel starten",
       switcherHint: "Je kunt hier ook overschakelen naar de 'Scroll'-modus om te genieten van de vloeiende 3D-animatie!",
     },
     sceneMode: {

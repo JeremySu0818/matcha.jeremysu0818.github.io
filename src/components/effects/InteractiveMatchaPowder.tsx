@@ -34,6 +34,13 @@ export function InteractiveMatchaPowder({ isMobile }: InteractiveMatchaPowderPro
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      canvas.style.display = "none";
+      return () => {
+        canvas.style.display = "block";
+      };
+    }
+
     let animationFrameId: number;
     let width = window.innerWidth;
     let height = window.innerHeight;

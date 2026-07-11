@@ -95,7 +95,7 @@ export const arCopy: LocaleCopy = {
       waterTemp: "حرارة الماء",
       back: "رجوع للرئيسية",
       replay: "مرة أخرى",
-      start: "Start Ritual",
+      start: "ابدأ الطقس",
       switcherHint: "يمكنك أيضاً الانتقال إلى وضع \"التمرير\" هنا للاستمتاع بالحركة ثلاثية الأبعاد السلسة!",
     },
     sceneMode: {

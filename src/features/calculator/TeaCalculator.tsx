@@ -185,6 +185,8 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                 <label className="calculator-value">
                   <input
                     type="number"
+                    aria-label={copy.serving}
+                    inputMode="decimal"
                     value={current.serving}
                     min={config.servingMin}
                     max={config.servingMax}
@@ -195,7 +197,10 @@ export function TeaCalculator({ copy }: TeaCalculatorProps) {
                     }}
                     onBlur={() =>
                       update({
-                        serving: Math.max(config.servingMin, current.serving),
+                        serving: Math.min(
+                          config.servingMax,
+                          Math.max(config.servingMin, current.serving),
+                        ),
                       })
                     }
                   />

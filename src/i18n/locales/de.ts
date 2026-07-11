@@ -96,7 +96,7 @@ export const deCopy: LocaleCopy = {
       waterTemp: "Temperatur",
       back: "Zur Startseite",
       replay: "Noch einmal",
-      start: "Start Ritual",
+      start: "Ritual beginnen",
       switcherHint: "Sie können hier auch in den „Scroll“-Modus wechseln, um die flüssige 3D-Animation zu genießen!",
     },
     sceneMode: {

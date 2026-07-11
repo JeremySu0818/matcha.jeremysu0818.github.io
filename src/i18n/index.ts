@@ -40,6 +40,7 @@ export function useTranslation() {
     }
 
     document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   }, [lang]);
 
   const t = getTranslationCopy(lang);

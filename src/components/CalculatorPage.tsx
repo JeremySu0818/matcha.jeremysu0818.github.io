@@ -40,38 +40,40 @@ export function CalculatorPage({ sceneMode }: CalculatorPageProps) {
   return (
     <div
       id="calculator-scroll-container"
-      className="relative h-screen w-full overflow-y-auto overflow-x-hidden scroll-smooth font-sans text-white"
+      className="site-scroll calculator-page"
     >
-      <div className="relative z-10 w-full">
-        <Header
-          activeLink="make"
-          darkTheme={true}
-          pointerEventsNone={false}
-          onLoadAnimation={true}
-          sceneMode={sceneMode}
-        />
+      <Header
+        activeLink="make"
+        darkTheme
+        pointerEventsNone={false}
+        onLoadAnimation
+        sceneMode={sceneMode}
+      />
 
-        <main className="mx-auto w-full max-w-5xl px-8 pb-32 pt-32 md:px-16 md:pt-40">
-          <div className="mb-12 max-w-2xl animate-fade-in-up delay-300">
-            <div className="mb-6 inline-flex items-center gap-4">
-              <span className="h-[1px] w-12 bg-white/60"></span>
-              <span className="font-mono text-sm font-medium uppercase tracking-[0.3em] text-white/90">
-                {copy.eyebrow}
-              </span>
-            </div>
-            <h1 className="heading-serif mt-4 text-4xl leading-tight drop-shadow-sm md:text-5xl">
-              {copy.title}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/90 drop-shadow">
-              {copy.description}
-            </p>
+      <main className="calculator-page__layout">
+        <header className="calculator-intro">
+          <div className="calculator-intro__folio" aria-hidden="true">
+            <span>03</span>
+            <i />
           </div>
+          <div className="calculator-intro__copy">
+            <p className="editorial-eyebrow">{copy.eyebrow}</p>
+            <h1>{copy.title}</h1>
+            <p>{copy.description}</p>
+          </div>
+          <div className="calculator-intro__measure" aria-hidden="true">
+            <span>0</span>
+            <span>25</span>
+            <span>50</span>
+            <span>75</span>
+            <span>100</span>
+          </div>
+        </header>
 
-          <div>
-            <TeaCalculator copy={copy} />
-          </div>
-        </main>
-      </div>
+        <div className="calculator-instrument">
+          <TeaCalculator copy={copy} />
+        </div>
+      </main>
     </div>
   );
 }

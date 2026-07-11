@@ -96,7 +96,7 @@ export const ptBrCopy: LocaleCopy = {
       waterTemp: "Temperatura",
       back: "Voltar ao início",
       replay: "Fazer de novo",
-      start: "Start Ritual",
+      start: "Iniciar ritual",
       switcherHint: "Você também pode alternar para o modo 'Rolagem' aqui para aproveitar a animação 3D suave!",
     },
     sceneMode: {

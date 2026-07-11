@@ -96,7 +96,7 @@ export const plCopy: LocaleCopy = {
       waterTemp: "Temperatura wody",
       back: "Powrót do startu",
       replay: "Jeszcze raz",
-      start: "Start Ritual",
+      start: "Rozpocznij rytuał",
       switcherHint: "Możesz także przełączyć tutaj na tryb „Przewijanie”, aby cieszyć się płynną animacją 3D!",
     },
     sceneMode: {

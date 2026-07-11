@@ -85,19 +85,27 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
       }
     : rawStyle;
 
+  const sequence = stage.startsWith("sieve")
+    ? "01"
+    : stage.startsWith("kettle") || stage === "pouring"
+      ? "02"
+      : stage === "done"
+        ? "04"
+        : "03";
+
   return (
     <div
       style={positionStyle}
-      className={`absolute w-[170px] sm:w-[200px] aspect-[16/9] flex items-center justify-center bg-white/20 border border-white/30 p-4 rounded-2xl shadow-glass backdrop-blur-2xl text-center pointer-events-none transition-all duration-[900ms] ease-in-out z-20 ${
-        visible && text ? "opacity-100" : "opacity-0"
+      className={`manual-tutorial ${
+        visible && text ? "is-visible" : ""
       }`}
+      role="status"
+      aria-live="polite"
+      aria-hidden={!visible || !text}
     >
-      <p
-        key={text}
-        className="text-matcha-ink text-[15px] font-medium tracking-wide animate-fade-in"
-      >
-        {text}
-      </p>
+      <span aria-hidden="true">{sequence}</span>
+      <p key={text}>{text}</p>
+      <i aria-hidden="true" />
     </div>
   );
 }

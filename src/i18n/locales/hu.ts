@@ -95,7 +95,7 @@ export const huCopy: LocaleCopy = {
       waterTemp: "Vízhőmérséklet",
       back: "Vissza a főoldalra",
       replay: "Még egyszer",
-      start: "Start Ritual",
+      start: "Rituálé indítása",
       switcherHint: "Itt átválthatsz „Görgetés” módba is, hogy élvezd a zökkenőmentes 3D animációt!",
     },
     sceneMode: {

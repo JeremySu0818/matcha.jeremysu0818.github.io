@@ -95,7 +95,7 @@ export const trCopy: LocaleCopy = {
       waterTemp: "Su Sıcaklığı",
       back: "Ana Sayfaya Dön",
       replay: "Bir kez daha",
-      start: "Start Ritual",
+      start: "Ritüeli başlat",
       switcherHint: "Sorunsuz 3D animasyonun keyfini çıkarmak için buradan 'Kaydırma' moduna da geçebilirsiniz!",
     },
     sceneMode: {

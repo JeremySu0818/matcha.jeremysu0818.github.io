@@ -95,7 +95,7 @@ export const frCopy: LocaleCopy = {
       waterTemp: "Température",
       back: "Retour à l'accueil",
       replay: "Recommencer",
-      start: "Start Ritual",
+      start: "Commencer le rituel",
       switcherHint: "Vous pouvez également passer en mode « Défilement » ici pour profiter de l'animation 3D fluide !",
     },
     sceneMode: {

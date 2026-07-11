@@ -96,7 +96,7 @@ export const ruCopy: LocaleCopy = {
       waterTemp: "Температура",
       back: "На главную",
       replay: "Ещё раз",
-      start: "Start Ritual",
+      start: "Начать ритуал",
       switcherHint: "Вы также можете переключиться в режим «Прокрутка» здесь, чтобы насладиться плавной 3D-анимацией!",
     },
     sceneMode: {

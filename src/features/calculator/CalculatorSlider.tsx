@@ -41,6 +41,8 @@ export function CalculatorSlider({
           <input
             ref={inputRef}
             type="number"
+            aria-label={label}
+            inputMode="decimal"
             value={inputValue}
             min={min}
             max={max}
@@ -69,6 +71,9 @@ export function CalculatorSlider({
           step={step}
           value={value}
           onChange={(event) => onChange(Number(event.target.value))}
+          onInput={(event) =>
+            onChange(Number((event.target as HTMLInputElement).value))
+          }
         />
       </div>
       <div className="calculator-bounds">

@@ -95,7 +95,7 @@ export const koCopy: LocaleCopy = {
       waterTemp: "물 온도",
       back: "홈으로 돌아가기",
       replay: "다시 한 번",
-      start: "Start Ritual",
+      start: "의식 시작",
       switcherHint: "여기서 '스크롤' 모드로 전환하여 부드러운 3D 애니메이션을 감상할 수도 있습니다!",
     },
     sceneMode: {

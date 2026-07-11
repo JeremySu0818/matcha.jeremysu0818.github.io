@@ -95,7 +95,7 @@ export const csCopy: LocaleCopy = {
       waterTemp: "Teplota vody",
       back: "Zpět na úvod",
       replay: "Ještě jednou",
-      start: "Start Ritual",
+      start: "Zahájit rituál",
       switcherHint: "Zde můžete také přepnout do režimu „Rolování“ a užít si plynulou 3D animaci!",
     },
     sceneMode: {

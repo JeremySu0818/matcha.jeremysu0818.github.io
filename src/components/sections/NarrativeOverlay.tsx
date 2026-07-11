@@ -14,30 +14,6 @@ export type Step = {
   align: "left" | "right" | "center";
 };
 
-function getStepAlignment(align: Step["align"]) {
-  if (align === "center") {
-    return "items-center text-left md:text-center px-8 md:px-24";
-  }
-
-  if (align === "left") {
-    return "items-center md:items-start text-left px-8 md:px-24";
-  }
-
-  return "items-center md:items-end text-left px-8 md:px-24";
-}
-
-function getPanelMargin(isFinal: boolean, index: number) {
-  if (isFinal) {
-    return "mt-[10vh]";
-  }
-
-  if (index === 0) {
-    return "mt-[16vh]";
-  }
-
-  return "mt-[22vh]";
-}
-
 interface NarrativeOverlayProps {
   hidden?: boolean;
   onAction: () => void;
@@ -53,47 +29,47 @@ export function NarrativeOverlay({
   const scroll = useScroll();
   const { t } = useTranslation();
 
-  const localizedSteps = [
+  const localizedSteps: Step[] = [
     {
       id: "intro",
-      eyebrow: t.hero?.eyebrow,
+      eyebrow: t.hero.eyebrow,
       title: t.steps.intro.title,
       body: t.steps.intro.body,
-      align: "center" as const,
+      align: "center",
     },
     {
       id: "powder",
       eyebrow: t.steps.powder.eyebrow,
       title: t.steps.powder.title,
       body: t.steps.powder.body,
-      align: "right" as const,
+      align: "right",
     },
     {
       id: "sift",
       eyebrow: t.steps.sift.eyebrow,
       title: t.steps.sift.title,
       body: t.steps.sift.body,
-      align: "left" as const,
+      align: "left",
     },
     {
       id: "water",
       eyebrow: t.steps.water.eyebrow,
       title: t.steps.water.title,
       body: t.steps.water.body,
-      align: "right" as const,
+      align: "right",
     },
     {
       id: "whisk",
       eyebrow: t.steps.whisk.eyebrow,
       title: t.steps.whisk.title,
       body: t.steps.whisk.body,
-      align: "left" as const,
+      align: "left",
     },
     {
       id: "finish",
       title: t.steps.finish.title,
       body: t.steps.finish.body,
-      align: "center" as const,
+      align: "center",
     },
   ];
 
@@ -104,161 +80,115 @@ export function NarrativeOverlay({
   ];
 
   useEffect(() => {
-    if (hidden || !rootRef.current) {
+    if (
+      hidden ||
+      !rootRef.current ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       return undefined;
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".eyebrow-anim").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, x: -16 },
-          {
-            autoAlpha: 1,
-            x: 0,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el,
-              scroller: scroll.el,
-              start: "top 82%",
-              end: "center 48%",
-              scrub: 0.5,
+      gsap.utils
+        .toArray<HTMLElement>(".scene-narrative__eyebrow")
+        .forEach((element) => {
+          gsap.fromTo(
+            element,
+            { autoAlpha: 0, x: -14 },
+            {
+              autoAlpha: 1,
+              x: 0,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: element,
+                scroller: scroll.el,
+                start: "top 84%",
+                end: "center 52%",
+                scrub: 0.5,
+              },
             },
-          },
-        );
-      });
+          );
+        });
     }, rootRef);
 
     return () => ctx.revert();
   }, [hidden, scroll.el]);
 
-  if (hidden) {
-    return null;
-  }
+  if (hidden) return null;
 
   return (
-    <>
-      <div
-        ref={rootRef}
-        className="pointer-events-none relative w-screen overflow-hidden"
-      >
-        {localizedSteps.map((step, index) => {
-          const isFinal = step.id === "finish";
-          const alignment = getStepAlignment(step.align);
-          const panelMargin = getPanelMargin(isFinal, index);
+    <div ref={rootRef} className="scene-narrative">
+      {localizedSteps.map((step, index) => {
+        const isIntro = index === 0;
+        const isFinal = step.id === "finish";
 
-          return (
-            <section
-              key={step.id}
-              className={`relative flex h-screen w-screen flex-col justify-center ${alignment}`}
-              aria-label={step.title}
-            >
-              <div
-                className={`${index === 0 ? "hero-copy-panel" : "copy-panel"} z-10 flex w-full flex-col ${
-                  index === 0
-                    ? "max-w-4xl items-start text-left md:items-center md:text-center"
-                    : "md:w-[460px]"
-                } ${panelMargin}`}
-              >
-                {index === 0 ? (
-                  <>
-                    <div className="mb-6 inline-flex items-center gap-4 eyebrow-anim animate-fade-in-up-on-load delay-300">
-                      <span className="h-[1px] w-12 bg-matcha-ink/60"></span>
-                      <span className="font-mono text-sm font-medium uppercase tracking-[0.3em] text-matcha-ink/90">
-                        {step.eyebrow || "A Ritual of Focus"}
-                      </span>
-                    </div>
-                    <h1 className="heading-serif text-[4.5rem] font-normal leading-[0.9] tracking-tight md:text-[9rem] text-matcha-ink animate-fade-in-up-on-load delay-500">
-                      {step.title}
-                    </h1>
-                    <p className="mt-10 max-w-2xl text-xl leading-relaxed text-matcha-ink animate-fade-in-up-on-load delay-700">
-                      {step.body}
-                    </p>
-                  </>
-                ) : (
-                  <div
-                    className={
-                      isFinal
-                        ? "glass-card w-full rounded-[2rem] border border-white/30 bg-white/20 p-8 shadow-glass md:p-10 text-left pointer-events-auto"
-                        : "glass-card-desktop w-full text-left pointer-events-auto p-6 md:rounded-[2rem] md:border md:border-white/30 md:bg-white/20 md:p-10 md:shadow-glass"
-                    }
-                  >
-                    {step.eyebrow ? (
-                      <span className="eyebrow block font-mono text-xs uppercase tracking-[0.25em] text-matcha-ink/70 eyebrow-anim">
-                        {step.eyebrow}
-                      </span>
-                    ) : (
-                      isFinal && (
-                        <span className="eyebrow block font-mono text-xs uppercase tracking-[0.25em] text-matcha-ink/70 eyebrow-anim">
-                          {t.overlay.finalRecipe}
-                        </span>
-                      )
-                    )}
-
-                    <h2 className="heading-serif mb-6 mt-3 text-3xl leading-tight drop-shadow-sm md:text-4xl text-matcha-ink">
-                      {step.title}
-                    </h2>
-                    <div className="mb-6 h-[1px] w-full bg-white/30"></div>
-
-                    {isFinal ? (
-                      <>
-                        <div className="mb-6">
-                          {recipeRows.map(([label, value]) => (
-                            <div key={label}>
-                              <div className="flex items-baseline justify-between gap-8 py-3">
-                                <span className="font-sans text-[0.8125rem] text-matcha-ink/70 tracking-[0.04em]">
-                                  {label}
-                                </span>
-                                <span className="font-mono text-[0.875rem] font-medium text-matcha-ink tracking-[0.02em]">
-                                  {value}
-                                </span>
-                              </div>
-                              <div className="h-[1px] w-full bg-white/10"></div>
-                            </div>
-                          ))}
-                        </div>
-                        <p className="body-text text-base md:text-lg leading-relaxed text-matcha-ink mb-8">
-                          {step.body}
-                        </p>
-                        <div className="flex justify-center w-full">
-                          <button
-                            onClick={onAction}
-                            className="group relative flex items-center overflow-hidden rounded-full border border-white/50 bg-white/20 px-10 py-5 transition-all duration-500 hover:bg-white/30 hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] focus:outline-none"
-                          >
-                            <span className="font-mono text-sm font-bold uppercase tracking-[0.25em] text-white">
-                              {actionLabel}
-                            </span>
-                            <span className="ml-6 flex h-8 w-8 items-center justify-center rounded-full bg-white text-matcha-ink transition-transform duration-500 group-hover:scale-110">
-                              →
-                            </span>
-                          </button>
-                        </div>
-                      </>
-                    ) : (
-                      <p className="body-text mb-4 text-base md:text-lg leading-relaxed text-matcha-ink">
-                        {step.body}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {index === 0 && (
-                <div className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none z-50">
-                  <div className="animate-fade-in-up-on-load delay-900">
-                    <div className="flex flex-col items-center gap-4 animate-bounce">
-                      <span className="font-mono text-xs uppercase tracking-[0.2em] text-matcha-ink/80">
-                        {t.hero.scroll}
-                      </span>
-                      <div className="h-12 w-[1px] bg-matcha-ink/50"></div>
-                    </div>
-                  </div>
+        return (
+          <section
+            key={step.id}
+            className={`scene-narrative__section scene-narrative__section--${step.align} ${
+              isIntro ? "is-intro" : ""
+            } ${isFinal ? "is-final" : ""}`}
+            aria-label={step.title}
+          >
+            {isIntro ? (
+              <div className="scene-intro-copy">
+                <div className="scene-intro-copy__folio" aria-hidden="true">
+                  01 / 06
                 </div>
-              )}
-            </section>
-          );
-        })}
-      </div>
-    </>
+                <p className="editorial-eyebrow scene-narrative__eyebrow">
+                  {step.eyebrow}
+                </p>
+                <h1>{step.title}</h1>
+                <p className="scene-intro-copy__body">{step.body}</p>
+              </div>
+            ) : isFinal ? (
+              <div className="scene-recipe-sheet">
+                <div className="scene-recipe-sheet__folio" aria-hidden="true">
+                  06 / 06
+                </div>
+                <p className="editorial-eyebrow scene-narrative__eyebrow">
+                  {t.overlay.finalRecipe}
+                </p>
+                <h2>{step.title}</h2>
+                <div className="scene-recipe-sheet__rows">
+                  {recipeRows.map(([label, value]) => (
+                    <div key={label}>
+                      <span>{label}</span>
+                      <strong>{value}</strong>
+                    </div>
+                  ))}
+                </div>
+                <p className="scene-recipe-sheet__body">{step.body}</p>
+                <button type="button" onClick={onAction} className="editorial-action">
+                  <span>{actionLabel}</span>
+                  <i aria-hidden="true" />
+                </button>
+              </div>
+            ) : (
+              <div className="scene-annotation">
+                <div className="scene-annotation__line" aria-hidden="true" />
+                <span className="scene-annotation__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")} / 06
+                </span>
+                {step.eyebrow && (
+                  <p className="editorial-eyebrow scene-narrative__eyebrow">
+                    {step.eyebrow}
+                  </p>
+                )}
+                <h2>{step.title}</h2>
+                <p>{step.body}</p>
+              </div>
+            )}
+
+            {isIntro && (
+              <div className="scene-scroll-cue" aria-hidden="true">
+                <span>{t.hero.scroll}</span>
+                <i />
+              </div>
+            )}
+          </section>
+        );
+      })}
+    </div>
   );
 }

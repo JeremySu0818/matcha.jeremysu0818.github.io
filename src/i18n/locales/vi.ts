@@ -95,7 +95,7 @@ export const viCopy: LocaleCopy = {
       waterTemp: "Nhiệt độ nước",
       back: "Về trang chủ",
       replay: "Làm lại lần nữa",
-      start: "Start Ritual",
+      start: "Bắt đầu nghi thức",
       switcherHint: "Bạn cũng có thể chuyển sang chế độ 'Cuộn' tại đây để thưởng thức hoạt ảnh 3D mượt mà!",
     },
     sceneMode: {

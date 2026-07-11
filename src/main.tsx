@@ -9,6 +9,7 @@ import "./styles/animations.css";
 import "./styles/dropdowns.css";
 import "./styles/calculator.css";
 import "./styles/header.css";
+import "./styles/redesign.css";
 
 declare global {
   interface Window {

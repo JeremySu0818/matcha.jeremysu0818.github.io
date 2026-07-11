@@ -96,7 +96,7 @@ export const idCopy: LocaleCopy = {
       waterTemp: "Suhu Air",
       back: "Kembali ke Beranda",
       replay: "Ulangi lagi",
-      start: "Start Ritual",
+      start: "Mulai Ritual",
       switcherHint: "Anda juga dapat beralih ke mode 'Gulir' di sini untuk menikmati animasi 3D yang mulus!",
     },
     sceneMode: {

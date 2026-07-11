@@ -30,81 +30,99 @@ export function useLandingScrollNavigation() {
     let observer: ResizeObserver | null = null;
 
     if (savedPosition !== null) {
-      let animationQueued = false;
-      let animated = false;
-      const startTime = performance.now();
-      const easeInOutCubic = (progress: number) =>
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
-      const animateScrollRestore = (targetTop: number) => {
-        const fromTop = container.scrollTop;
-        const distance = targetTop - fromTop;
-        const duration = Math.min(
-          1400,
-          Math.max(900, Math.abs(distance) * 0.6),
-        );
-        const animationStart = performance.now();
-
-        const step = (now: number) => {
-          const progress = Math.min(1, (now - animationStart) / duration);
-          const eased = easeInOutCubic(progress);
+      if (prefersReducedMotion) {
+        rafId = requestAnimationFrame(() => {
+          const maxScrollTop = Math.max(
+            0,
+            container.scrollHeight - container.clientHeight,
+          );
           container.scrollTo({
-            top: fromTop + distance * eased,
+            top: Math.min(savedPosition, maxScrollTop),
             behavior: "auto",
           });
+          clearSavedScrollPosition();
+        });
+      } else {
+        let animationQueued = false;
+        let animated = false;
+        const startTime = performance.now();
+        const easeInOutCubic = (progress: number) =>
+          progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
-          if (progress < 1) {
-            rafId = requestAnimationFrame(step);
+        const animateScrollRestore = (targetTop: number) => {
+          const fromTop = container.scrollTop;
+          const distance = targetTop - fromTop;
+          const duration = Math.min(
+            1400,
+            Math.max(900, Math.abs(distance) * 0.6),
+          );
+          const animationStart = performance.now();
+
+          const step = (now: number) => {
+            const progress = Math.min(1, (now - animationStart) / duration);
+            const eased = easeInOutCubic(progress);
+            container.scrollTo({
+              top: fromTop + distance * eased,
+              behavior: "auto",
+            });
+
+            if (progress < 1) {
+              rafId = requestAnimationFrame(step);
+              return;
+            }
+
+            clearSavedScrollPosition();
+          };
+
+          rafId = requestAnimationFrame(step);
+        };
+
+        const tryRestore = () => {
+          if (animated) return;
+
+          const maxScrollTop = Math.max(
+            0,
+            container.scrollHeight - container.clientHeight,
+          );
+          const targetTop = Math.min(savedPosition, maxScrollTop);
+          const readyToAnimate =
+            maxScrollTop >= savedPosition ||
+            performance.now() - startTime > 1500;
+
+          if (readyToAnimate) {
+            animationQueued = true;
+            container.scrollTo({ top: 0, behavior: "auto" });
+            animationDelayTimeoutId = window.setTimeout(() => {
+              animated = true;
+              animateScrollRestore(targetTop);
+            }, SCROLL_RESTORE_DELAY_MS);
             return;
           }
 
-          clearSavedScrollPosition();
+          rafId = requestAnimationFrame(tryRestore);
         };
 
-        rafId = requestAnimationFrame(step);
-      };
-
-      const tryRestore = () => {
-        if (animated) return;
-
-        const maxScrollTop = Math.max(
-          0,
-          container.scrollHeight - container.clientHeight,
-        );
-        const targetTop = Math.min(savedPosition, maxScrollTop);
-        const readyToAnimate =
-          maxScrollTop >= savedPosition ||
-          performance.now() - startTime > 1500;
-
-        if (readyToAnimate) {
-          animationQueued = true;
-          container.scrollTo({ top: 0, behavior: "auto" });
-          animationDelayTimeoutId = window.setTimeout(() => {
-            animated = true;
-            animateScrollRestore(targetTop);
-          }, SCROLL_RESTORE_DELAY_MS);
-          return;
-        }
-
         rafId = requestAnimationFrame(tryRestore);
-      };
 
-      rafId = requestAnimationFrame(tryRestore);
+        observer = new ResizeObserver(() => {
+          if (!animationQueued) {
+            tryRestore();
+          }
+        });
+        observer.observe(container);
 
-      observer = new ResizeObserver(() => {
-        if (!animationQueued) {
-          tryRestore();
-        }
-      });
-      observer.observe(container);
-
-      timeoutId = window.setTimeout(() => {
-        if (!animationQueued) {
-          tryRestore();
-        }
-      }, 1600);
+        timeoutId = window.setTimeout(() => {
+          if (!animationQueued) {
+            tryRestore();
+          }
+        }, 1600);
+      }
     }
 
     return () => {
@@ -149,7 +167,9 @@ export function useLandingScrollNavigation() {
     if (el && container) {
       container.scrollTo({
         top: el.offsetTop,
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
       });
     }
   };
