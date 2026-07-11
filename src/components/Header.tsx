@@ -7,6 +7,7 @@ interface HeaderProps {
   activeLink: "home" | "3d" | "make";
   darkTheme?: boolean;
   pointerEventsNone?: boolean;
+  transparent?: boolean;
   onLoadAnimation?: boolean;
   sceneMode?: SceneMode;
   onSceneModeChange?: (mode: SceneMode) => void;
@@ -18,6 +19,7 @@ export function Header({
   activeLink,
   darkTheme = false,
   pointerEventsNone = false,
+  transparent = false,
   onLoadAnimation = false,
   sceneMode,
   onSceneModeChange,
@@ -46,7 +48,7 @@ export function Header({
     <header
       className={`site-header ${darkTheme ? "site-header--light" : "site-header--ink"} ${
         pointerEventsNone ? "site-header--passthrough" : ""
-      } ${animationClass}`}
+      } ${transparent ? "site-header--transparent" : ""} ${animationClass}`}
     >
       <a className="site-header__brand" href="#" aria-label={t.header.title}>
         <span>{t.header.title}</span>

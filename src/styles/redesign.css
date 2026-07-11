@@ -269,6 +269,10 @@ html[dir="rtl"] .editorial-action i::after {
   background: transparent;
 }
 
+.site-header--transparent {
+  background: transparent;
+}
+
 .site-header--passthrough {
   pointer-events: none;
 }
@@ -2751,11 +2755,22 @@ html[dir="rtl"] .scene-scroll-cue {
   border-block-start: 2px solid var(--ink);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 550ms ease;
+  will-change: top, left, transform, opacity;
+  transition:
+    top 720ms var(--ease-editorial),
+    left 720ms var(--ease-editorial),
+    transform 720ms var(--ease-editorial),
+    opacity 300ms ease;
 }
 
 .manual-tutorial.is-visible {
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manual-tutorial {
+    transition: opacity 150ms linear;
+  }
 }
 
 .manual-tutorial > span {

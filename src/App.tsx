@@ -216,8 +216,9 @@ function App() {
 
             <Header
               activeLink="3d"
-              darkTheme
+              darkTheme={sceneMode === "manual" && !manualStarted}
               pointerEventsNone={true}
+              transparent
               onLoadAnimation={false}
               sceneMode={sceneMode}
               onSceneModeChange={handleSceneModeChange}
