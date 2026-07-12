@@ -1,12 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type JSX,
+} from "react";
 import { createPortal } from "react-dom";
-import type { SceneMode } from "../app/sceneMode";
 import { SCENE_MODES } from "../app/sceneMode";
 import { useTranslation } from "../i18n";
 import {
   getDropdownPosition,
   getInitialDropdownPosition,
 } from "../utils/dropdownPosition";
+import type { SceneMode } from "../app/sceneMode";
 
 interface SceneModeSelectorProps {
   mode: SceneMode;
@@ -22,10 +28,9 @@ export function SceneModeSelector({
   onModeChange,
   showHint = false,
   onHintDismiss,
-}: SceneModeSelectorProps) {
+}: Readonly<SceneModeSelectorProps>): JSX.Element {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [hintVisible, setHintVisible] = useState(showHint);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuPos, setMenuPos] = useState(getInitialDropdownPosition);
@@ -38,10 +43,6 @@ export function SceneModeSelector({
     setMenuPos(getDropdownPosition(rect));
     setButtonWidth(rect.width);
   }, []);
-
-  useEffect(() => {
-    setHintVisible(showHint);
-  }, [showHint]);
 
   useEffect(() => {
     if (!isOpen && !showHint) return undefined;
@@ -81,7 +82,6 @@ export function SceneModeSelector({
     if (!isInteractive) return;
     if (!isOpen) {
       onHintDismiss?.();
-      setHintVisible(false);
       updatePosition();
     }
     setIsOpen((open) => !open);
@@ -115,7 +115,7 @@ export function SceneModeSelector({
               <button
                 type="button"
                 key={nextMode}
-                onClick={() => handleModeChange(nextMode)}
+                onClick={() => { handleModeChange(nextMode); }}
                 className={`mode-menu__option ${isSelected ? "is-selected" : ""}`}
                 role="option"
                 aria-selected={isSelected}
@@ -130,7 +130,7 @@ export function SceneModeSelector({
       )
     : null;
 
-  const hint = hintVisible && !isOpen
+  const hint = showHint && !isOpen
     ? createPortal(
         <div
           className={`mode-hint ${darkTheme ? "mode-hint--dark" : "mode-hint--paper"}`}

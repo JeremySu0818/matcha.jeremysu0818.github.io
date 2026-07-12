@@ -1,6 +1,8 @@
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 
-export function SectionTitle({ children }: { children: ReactNode }) {
+export function SectionTitle({
+  children,
+}: Readonly<{ children: ReactNode }>): JSX.Element {
   return <h2 className="calculator-card-title">{children}</h2>;
 }
 
@@ -8,11 +10,11 @@ export function GlassSlot({
   children,
   className = "",
   shape = "card",
-}: {
+}: Readonly<{
   children: ReactNode;
   className?: string;
   shape?: "tab" | "reset" | "card";
-}) {
+}>): JSX.Element {
   return (
     <div
       className={`calculator-glass-slot calculator-glass-slot-${shape} ${className}`}

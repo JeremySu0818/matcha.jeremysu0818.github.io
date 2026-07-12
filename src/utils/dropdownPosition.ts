@@ -1,6 +1,6 @@
-export const DROPDOWN_VIEWPORT_GAP = 16;
-export const DROPDOWN_MENU_WIDTH_REM = 11;
-export const DROPDOWN_MAX_HEIGHT = 260;
+const DROPDOWN_VIEWPORT_GAP = 16;
+const DROPDOWN_MENU_WIDTH_REM = 11;
+const DROPDOWN_MAX_HEIGHT = 260;
 
 export interface DropdownPosition {
   top: number;
@@ -13,8 +13,8 @@ export function getInitialDropdownPosition(): DropdownPosition {
   return {
     top: 0,
     right: DROPDOWN_VIEWPORT_GAP,
-    maxHeight: `${DROPDOWN_MAX_HEIGHT}px`,
-    maxWidth: `calc(100vw - ${DROPDOWN_VIEWPORT_GAP * 2}px)`,
+    maxHeight: `${String(DROPDOWN_MAX_HEIGHT)}px`,
+    maxWidth: `calc(100vw - ${String(DROPDOWN_VIEWPORT_GAP * 2)}px)`,
   };
 }
 
@@ -40,7 +40,7 @@ export function getDropdownPosition(anchorRect: DOMRect): DropdownPosition {
   return {
     top,
     right,
-    maxHeight: `${Math.min(DROPDOWN_MAX_HEIGHT, availableHeight)}px`,
-    maxWidth: `calc(100vw - ${DROPDOWN_VIEWPORT_GAP * 2}px)`,
+    maxHeight: `${String(Math.min(DROPDOWN_MAX_HEIGHT, availableHeight))}px`,
+    maxWidth: `calc(100vw - ${String(DROPDOWN_VIEWPORT_GAP * 2)}px)`,
   };
 }

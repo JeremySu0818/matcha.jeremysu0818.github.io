@@ -1,34 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { getBrowserLanguage } from "./language";
-import type { SupportedLanguage } from "./language";
 import { getTranslationCopy } from "./selectors";
+import type { SupportedLanguage } from "./language";
 
-export { getBrowserLanguage };
 export {
   getCalculatorCopy,
-  getLocaleCopy,
   getShadeCopy,
   getToolsCopy,
-  getTranslationCopy,
 } from "./selectors";
 export type {
   CalculatorCopy,
-  LocaleCopy,
-  ShadeCopy,
-  ToolsCopy,
   TranslationSchema,
 } from "./types";
 export type { SupportedLanguage };
 
-export function useTranslation() {
-  const [lang, setLang] = useState<SupportedLanguage>(() => {
-    return getBrowserLanguage();
-  });
+interface TranslationResult {
+  readonly lang: SupportedLanguage;
+  readonly t: ReturnType<typeof getTranslationCopy>;
+}
 
-  useEffect(() => {
-    const detectedLang = getBrowserLanguage();
-    setLang(detectedLang);
-  }, []);
+export function useTranslation(): TranslationResult {
+  const lang = useMemo(() => getBrowserLanguage(), []);
 
   useEffect(() => {
     const t = getTranslationCopy(lang);

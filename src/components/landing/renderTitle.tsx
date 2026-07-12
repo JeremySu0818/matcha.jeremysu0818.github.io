@@ -1,10 +1,11 @@
-import React from "react";
+import { Fragment, type ReactNode } from "react";
 
-export function renderTitle(text: string) {
-  return text.split("\n").map((line, i) => (
-    <React.Fragment key={i}>
+export function renderTitle(text: string): ReactNode[] {
+  const lines = text.split("\n");
+  return lines.map((line, index) => (
+    <Fragment key={String(index)}>
       {line}
-      {i < text.split("\n").length - 1 && <br />}
-    </React.Fragment>
+      {index < lines.length - 1 && <br />}
+    </Fragment>
   ));
 }

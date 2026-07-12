@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { useTranslation } from "../i18n";
 
 interface ManualCompletionOverlayProps {
@@ -10,7 +11,7 @@ export function ManualCompletionOverlay({
   visible,
   actionLabel,
   onAction,
-}: ManualCompletionOverlayProps) {
+}: Readonly<ManualCompletionOverlayProps>): JSX.Element | null {
   const { t } = useTranslation();
 
   if (!visible) {

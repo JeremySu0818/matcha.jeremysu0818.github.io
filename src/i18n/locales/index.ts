@@ -1,5 +1,3 @@
-import type { SupportedLanguage } from "../language";
-import type { LocaleCopy } from "../types";
 import { arCopy } from "./ar";
 import { csCopy } from "./cs";
 import { deCopy } from "./de";
@@ -20,6 +18,8 @@ import { trCopy } from "./tr";
 import { viCopy } from "./vi";
 import { zhCnCopy } from "./zh-cn";
 import { zhTwCopy } from "./zh-tw";
+import type { SupportedLanguage } from "../language";
+import type { LocaleCopy } from "../types";
 
 export const localeCopies: Record<SupportedLanguage, LocaleCopy> = {
   "ar": arCopy,

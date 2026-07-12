@@ -1,26 +1,54 @@
 import { useCallback, useEffect, useState } from "react";
 
-export function useLoadingGate(trigger: unknown, minDuration = 800) {
-  const [ready, setReady] = useState(false);
-  const [minTimePassed, setMinTimePassed] = useState(false);
+interface LoadingGateResult {
+  readonly loaded: boolean;
+  readonly markReady: () => void;
+}
+
+interface LoadingGateState {
+  readonly minTimePassed: boolean;
+  readonly ready: boolean;
+  readonly trigger: unknown;
+}
+
+export function useLoadingGate(
+  trigger: unknown,
+  minDuration = 800,
+): LoadingGateResult {
+  const [state, setState] = useState<LoadingGateState>(() => ({
+    minTimePassed: false,
+    ready: false,
+    trigger,
+  }));
 
   useEffect(() => {
-    setReady(false);
-    setMinTimePassed(false);
-
     const timer = window.setTimeout(() => {
-      setMinTimePassed(true);
+      setState((current) => ({
+        minTimePassed: true,
+        ready: Object.is(current.trigger, trigger) && current.ready,
+        trigger,
+      }));
     }, minDuration);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, [trigger, minDuration]);
 
   const markReady = useCallback(() => {
-    setReady(true);
-  }, []);
+    setState((current) => ({
+      minTimePassed:
+        Object.is(current.trigger, trigger) && current.minTimePassed,
+      ready: true,
+      trigger,
+    }));
+  }, [trigger]);
 
   return {
-    loaded: ready && minTimePassed,
+    loaded:
+      Object.is(state.trigger, trigger) &&
+      state.ready &&
+      state.minTimePassed,
     markReady,
   };
 }

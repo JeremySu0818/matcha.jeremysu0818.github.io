@@ -1,21 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type JSX } from "react";
 import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import {
+  SCROLL_RESTORE_MOTION,
+  startScrollAnimation,
+} from "../utils/scrollAnimation";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
 } from "../utils/scrollRegistry";
 
 const MAX_SCROLL_RESTORE_FRAMES = 30;
-const SCROLL_RESTORE_DELAY_MS = 300;
-const MIN_SCROLL_RESTORE_DURATION_MS = 900;
-const MAX_SCROLL_RESTORE_DURATION_MS = 1400;
 
 type RestorableScrollState = ReturnType<typeof useScroll> & {
   scroll: { current: number };
 };
 
-export function SceneReadyTrigger({ onReady }: { onReady: () => void }) {
+export function SceneReadyTrigger({
+  onReady,
+}: Readonly<{ onReady: () => void }>): null {
   useEffect(() => {
     onReady();
   }, [onReady]);
@@ -34,15 +37,10 @@ export function SceneScrollController({
   onStepChange,
   stepCount,
   enabled = true,
-}: SceneScrollControllerProps) {
+}: Readonly<SceneScrollControllerProps>): JSX.Element | null {
   const scroll = useScroll() as RestorableScrollState;
   const activeStepRef = useRef(0);
-  const easeInOutCubic = (progress: number) =>
-    progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-  const syncStepFromScrollElement = () => {
+  const syncStepFromScrollElement = useCallback(() => {
     if (!enabled) return;
 
     const maxScrollTop = Math.max(
@@ -60,16 +58,16 @@ export function SceneScrollController({
       activeStepRef.current = step;
       onStepChange(step);
     }
-  };
+  }, [enabled, onStepChange, scroll.el, stepCount]);
 
   useEffect(() => {
     onScrollElementChange(scroll.el);
-    return () => onScrollElementChange(null);
+    return () => { onScrollElementChange(null); };
   }, [onScrollElementChange, scroll.el]);
 
   useEffect(() => {
-    const handleScroll = () => syncStepFromScrollElement();
-    const handleResize = () => syncStepFromScrollElement();
+    const handleScroll = () => { syncStepFromScrollElement(); };
+    const handleResize = () => { syncStepFromScrollElement(); };
 
     scroll.el.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
@@ -79,7 +77,7 @@ export function SceneScrollController({
       scroll.el.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [scroll.el, onStepChange, stepCount, enabled]);
+  }, [scroll.el, syncStepFromScrollElement]);
 
   useEffect(() => {
     const savedPosition = readSavedScrollPosition("#3d");
@@ -89,8 +87,9 @@ export function SceneScrollController({
     let frameCount = 0;
     let delayTimeoutId = 0;
     let animationQueued = false;
+    let cancelScrollAnimation = (): void => undefined;
 
-    const syncScrollState = (top: number) => {
+    const syncScrollState = (top: number): void => {
       const maxScrollTop = Math.max(0, scroll.el.scrollHeight - scroll.el.clientHeight);
       const restoredPosition = Math.min(top, maxScrollTop);
       const restoredProgress =
@@ -102,32 +101,13 @@ export function SceneScrollController({
       syncStepFromScrollElement();
     };
 
-    const animateScrollRestore = (targetTop: number) => {
-      const fromTop = scroll.el.scrollTop;
-      const distance = targetTop - fromTop;
-      const duration = Math.min(
-        MAX_SCROLL_RESTORE_DURATION_MS,
-        Math.max(
-          MIN_SCROLL_RESTORE_DURATION_MS,
-          Math.abs(distance) * 0.6,
-        ),
-      );
-      const animationStart = performance.now();
-
-      const step = (now: number) => {
-        const progress = Math.min(1, (now - animationStart) / duration);
-        const eased = easeInOutCubic(progress);
-        syncScrollState(fromTop + distance * eased);
-
-        if (progress < 1) {
-          frameId = requestAnimationFrame(step);
-          return;
-        }
-
-        clearSavedScrollPosition();
-      };
-
-      frameId = requestAnimationFrame(step);
+    const animateScrollRestore = (targetTop: number): void => {
+      cancelScrollAnimation = startScrollAnimation({
+        fromTop: scroll.el.scrollTop,
+        onComplete: clearSavedScrollPosition,
+        onUpdate: syncScrollState,
+        targetTop,
+      });
     };
 
     const restoreScrollPosition = () => {
@@ -147,16 +127,17 @@ export function SceneScrollController({
       syncScrollState(0);
       delayTimeoutId = window.setTimeout(() => {
         animateScrollRestore(restoredPosition);
-      }, SCROLL_RESTORE_DELAY_MS);
+      }, SCROLL_RESTORE_MOTION.delayMs);
     };
 
     frameId = requestAnimationFrame(restoreScrollPosition);
 
     return () => {
       cancelAnimationFrame(frameId);
+      cancelScrollAnimation();
       window.clearTimeout(delayTimeoutId);
     };
-  }, [scroll.el, enabled]);
+  }, [enabled, scroll.el, scroll.scroll, syncStepFromScrollElement]);
 
   useFrame(() => {
     if (!enabled) return;

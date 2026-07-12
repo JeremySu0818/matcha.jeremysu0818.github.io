@@ -1,0 +1,307 @@
+
+.shade-section {
+  display: grid;
+  grid-template-columns: minmax(16rem, 4fr) minmax(30rem, 7fr);
+  gap: clamp(3rem, 8vw, 10rem);
+  min-height: 140svh;
+  color: var(--paper-soft);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    var(--forest);
+  background-size: 7.5rem 100%, 100% 7.5rem, auto;
+}
+
+.shade-section__copy {
+  position: sticky;
+  inset-block-start: calc(var(--header-height) + 3rem);
+  align-self: start;
+}
+
+.shade-section__body {
+  max-width: 35rem;
+  margin-block-start: 3.5rem;
+}
+
+.shade-section__footnote {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1.5rem;
+  max-width: 35rem;
+  margin: 3.5rem 0 0;
+  padding-block-start: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 300;
+  line-height: 1.72;
+  border-block-start: 1px solid var(--rule-light);
+  opacity: 0.6;
+}
+
+.shade-section__footnote span {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+}
+
+.shade-section__instrument {
+  align-self: center;
+  margin-block-start: 10vh;
+}
+
+.shade-instrument {
+  --leaf-color: rgb(var(--leaf-r), var(--leaf-g), var(--leaf-b));
+  position: relative;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 2.5rem 7rem rgba(0, 0, 0, 0.25);
+}
+
+.shade-instrument::after {
+  position: absolute;
+  inset: 0.8rem;
+  content: "";
+  border: 1px solid rgba(21, 32, 25, 0.13);
+  pointer-events: none;
+}
+
+.shade-instrument__header {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1.5rem;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border-block-end: 1px solid var(--rule-dark);
+}
+
+.shade-instrument__header > span {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+}
+
+.shade-instrument__header h3 {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.shade-instrument__header p {
+  max-width: 34rem;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 300;
+  line-height: 1.7;
+  opacity: 0.65;
+}
+
+.shade-instrument__display {
+  display: grid;
+  grid-template-columns: minmax(15rem, 1.15fr) minmax(14rem, 1fr);
+  min-height: 25rem;
+}
+
+.shade-instrument__leaf-field {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 25rem;
+  overflow: hidden;
+  border-inline-end: 1px solid var(--rule-dark);
+}
+
+.shade-instrument__aperture {
+  position: absolute;
+  width: min(75%, 20rem);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(var(--leaf-r), var(--leaf-g), var(--leaf-b), 0.22), transparent 68%);
+  border: 1px solid rgba(21, 32, 25, 0.18);
+  border-radius: 50%;
+  transform: scale(calc(0.82 + var(--shade) * 0.0026));
+  transition: transform 900ms var(--ease-editorial), background 900ms ease;
+}
+
+.shade-instrument__aperture::before,
+.shade-instrument__aperture::after {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  content: "";
+  background: rgba(21, 32, 25, 0.16);
+}
+
+.shade-instrument__aperture::before {
+  width: calc(100% + 4rem);
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.shade-instrument__aperture::after {
+  width: 1px;
+  height: calc(100% + 4rem);
+  transform: translate(-50%, -50%);
+}
+
+.shade-instrument__leaf {
+  position: relative;
+  z-index: 1;
+  width: min(34%, 8.5rem);
+  filter: drop-shadow(0 1rem 1.5rem rgba(21, 32, 25, 0.2));
+  transform: rotate(-7deg) scale(calc(0.95 + var(--shade) * 0.0008));
+  transition: transform 900ms var(--ease-editorial), filter 900ms ease;
+}
+
+html[dir="rtl"] .shade-instrument__leaf {
+  transform: rotate(7deg) scale(calc(0.95 + var(--shade) * 0.0008));
+}
+
+.shade-instrument__leaf-fill {
+  fill: var(--leaf-color);
+  fill-opacity: calc(0.45 + var(--shade) * 0.0055);
+  transition: fill 900ms ease, fill-opacity 900ms ease;
+}
+
+.shade-instrument__leaf-outline,
+.shade-instrument__veins path {
+  fill: none;
+  stroke: rgba(21, 32, 25, 0.58);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.shade-instrument__veins path:not(:first-child) {
+  stroke-width: 2;
+  opacity: 0.55;
+}
+
+.shade-instrument__value {
+  position: absolute;
+  inset-block-end: 2rem;
+  inset-inline-start: 2rem;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 3.2vw, 3rem);
+  letter-spacing: -0.05em;
+}
+
+.shade-instrument__readings {
+  display: flex;
+  flex-direction: column;
+}
+
+.shade-reading {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  grid-template-rows: 1fr 1px;
+  gap: 1rem;
+  flex: 1;
+  align-items: center;
+  padding: 1.25rem 1.75rem 0;
+  border-block-end: 1px solid var(--rule-dark);
+}
+
+.shade-reading:last-child {
+  border-block-end: 0;
+}
+
+.shade-reading > span {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  opacity: 0.5;
+}
+
+.shade-reading > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shade-reading p,
+.shade-reading strong {
+  margin: 0;
+}
+
+.shade-reading p {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.shade-reading strong {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.shade-reading i {
+  grid-column: 1 / -1;
+  width: var(--reading);
+  height: 1px;
+  background: var(--ink);
+  transition: width 750ms var(--ease-editorial);
+}
+
+.shade-instrument__control {
+  padding: 2rem clamp(2rem, 4vw, 3.5rem);
+  border-block-start: 1px solid var(--rule-dark);
+}
+
+.shade-instrument__scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-block-end: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.58;
+}
+
+.shade-instrument__control input[type="range"] {
+  width: 100%;
+  height: 1.8rem;
+  margin: 0;
+  appearance: none;
+  color: var(--ink);
+  background:
+    linear-gradient(currentColor, currentColor) 0 50% / calc(var(--shade) * 1%) 1px no-repeat,
+    linear-gradient(rgba(21, 32, 25, 0.22), rgba(21, 32, 25, 0.22)) 0 50% / 100% 1px no-repeat;
+  cursor: ew-resize;
+}
+
+.shade-instrument__control input[type="range"]::-webkit-slider-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  appearance: none;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+.shade-instrument__control input[type="range"]::-moz-range-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+
+.shade-instrument__state {
+  min-height: 6.5rem;
+  margin: 0;
+  padding: 1.5rem clamp(2rem, 4vw, 3.5rem) 2.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.72;
+  border-block-start: 1px solid var(--rule-dark);
+  opacity: 0.72;
+}
+

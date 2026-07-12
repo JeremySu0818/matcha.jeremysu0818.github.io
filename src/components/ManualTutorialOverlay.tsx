@@ -1,13 +1,14 @@
-import type { ManualStage } from "./scene/MatchaScene";
-import { useTranslation } from "../i18n";
+import type { CSSProperties, JSX } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useTranslation } from "../i18n";
+import type { ManualStage } from "./scene/MatchaScene";
 
 interface ManualTutorialOverlayProps {
   stage: ManualStage;
   visible: boolean;
 }
 
-const DESKTOP_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
+const DESKTOP_STAGE_COORDINATES: Record<ManualStage, CSSProperties> = {
   "sieve-drag": { top: "30%", left: "15%" },
   "sieve-ready": { top: "60%", left: "20%" },
   "sieve-shaking": { top: "60%", left: "20%" },
@@ -22,7 +23,7 @@ const DESKTOP_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "done": { top: "25%", left: "75%" },
 };
 
-const MOBILE_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
+const MOBILE_STAGE_COORDINATES: Record<ManualStage, CSSProperties> = {
   "sieve-drag": { top: "24%", left: "50%", transform: "translateX(-50%)" },
   "sieve-ready": { top: "54%", left: "50%", transform: "translateX(-50%)" },
   "sieve-shaking": { top: "54%", left: "50%", transform: "translateX(-50%)" },
@@ -37,11 +38,20 @@ const MOBILE_STAGE_COORDINATES: Record<ManualStage, React.CSSProperties> = {
   "done": { top: "61%", left: "50%", transform: "translateX(-50%)" },
 };
 
-export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayProps) {
+function getSequence(stage: ManualStage): string {
+  if (stage.startsWith("sieve")) return "01";
+  if (stage.startsWith("kettle") || stage === "pouring") return "02";
+  return stage === "done" ? "04" : "03";
+}
+
+export function ManualTutorialOverlay({
+  stage,
+  visible,
+}: Readonly<ManualTutorialOverlayProps>): JSX.Element {
   const { t } = useTranslation();
   const isMobile = useMediaQuery("(max-width: 720px)");
 
-  const getTutorialText = () => {
+  const getTutorialText = (): string => {
     switch (stage) {
       case "sieve-drag":
         return t.manualTutorial.sieveDrag;
@@ -65,33 +75,22 @@ export function ManualTutorialOverlay({ stage, visible }: ManualTutorialOverlayP
         return t.manualTutorial.chasenReturn;
       case "done":
         return t.manualTutorial.done;
-      default:
-        return "";
     }
   };
 
   const text = getTutorialText();
   const rawStyle =
-    (isMobile ? MOBILE_STAGE_COORDINATES : DESKTOP_STAGE_COORDINATES)[stage] || {
-      top: "50%",
-      left: "50%",
-      transform: "translateX(-50%)",
-    };
+    (isMobile ? MOBILE_STAGE_COORDINATES : DESKTOP_STAGE_COORDINATES)[stage];
 
   const positionStyle = isMobile
     ? {
         ...rawStyle,
-        transform: rawStyle.transform ? `${rawStyle.transform} scale(0.8)` : "scale(0.8)",
+        transform: rawStyle.transform
+          ? `${String(rawStyle.transform)} scale(0.8)`
+          : "scale(0.8)",
       }
     : rawStyle;
-
-  const sequence = stage.startsWith("sieve")
-    ? "01"
-    : stage.startsWith("kettle") || stage === "pouring"
-      ? "02"
-      : stage === "done"
-        ? "04"
-        : "03";
+  const sequence = getSequence(stage);
 
   return (
     <div

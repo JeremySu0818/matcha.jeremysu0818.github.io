@@ -23,23 +23,29 @@ export const SUPPORTED_LANGUAGES = [
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
+function isSupportedLanguage(value: string): value is SupportedLanguage {
+  return (SUPPORTED_LANGUAGES as readonly string[]).includes(value);
+}
+
 export function getBrowserLanguage(): SupportedLanguage {
   if (typeof window !== "undefined") {
     const saved = window.localStorage.getItem("matcha_language");
-    if (saved && (SUPPORTED_LANGUAGES as readonly string[]).includes(saved)) {
-      return saved as SupportedLanguage;
+    if (saved && isSupportedLanguage(saved)) {
+      return saved;
     }
   }
 
   if (typeof navigator === "undefined") return "en";
 
-  const languages = navigator.languages || [navigator.language];
+  const languages =
+    navigator.languages.length > 0
+      ? navigator.languages
+      : [navigator.language];
   for (const lang of languages) {
-    if (!lang) continue;
     const normalized = lang.toLowerCase();
 
-    if (SUPPORTED_LANGUAGES.includes(normalized as SupportedLanguage)) {
-      return normalized as SupportedLanguage;
+    if (isSupportedLanguage(normalized)) {
+      return normalized;
     }
 
     const base = normalized.split("-")[0];
@@ -59,8 +65,8 @@ export function getBrowserLanguage(): SupportedLanguage {
       return "pt-br";
     }
 
-    if (SUPPORTED_LANGUAGES.includes(base as SupportedLanguage)) {
-      return base as SupportedLanguage;
+    if (isSupportedLanguage(base)) {
+      return base;
     }
   }
 

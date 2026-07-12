@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type JSX,
+} from "react";
 import { createPortal } from "react-dom";
 import {
   type SupportedLanguage,
@@ -6,13 +12,13 @@ import {
   getBrowserLanguage,
 } from "../i18n/language";
 import {
-  getScrollPositionForRoute,
-  saveScrollPosition,
-} from "../utils/scrollRegistry";
-import {
   getDropdownPosition,
   getInitialDropdownPosition,
 } from "../utils/dropdownPosition";
+import {
+  getScrollPositionForRoute,
+  saveScrollPosition,
+} from "../utils/scrollRegistry";
 
 const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
   "zh-tw": "繁體中文",
@@ -41,7 +47,9 @@ interface LanguageSelectorProps {
   darkTheme?: boolean;
 }
 
-export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
+export function LanguageSelector({
+  darkTheme = false,
+}: Readonly<LanguageSelectorProps>): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -95,7 +103,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
         ?.querySelector<HTMLElement>('[aria-selected="true"]')
         ?.scrollIntoView({ block: "nearest" });
     });
-    return () => cancelAnimationFrame(frame);
+    return () => { cancelAnimationFrame(frame); };
   }, [isOpen]);
 
   const handleLanguageChange = (langCode: SupportedLanguage) => {
@@ -134,7 +142,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
                 <button
                   type="button"
                   key={langCode}
-                  onClick={() => handleLanguageChange(langCode)}
+                  onClick={() => { handleLanguageChange(langCode); }}
                   className={`language-menu__option ${
                     isSelected ? "is-selected" : ""
                   }`}
@@ -161,7 +169,7 @@ export function LanguageSelector({ darkTheme = false }: LanguageSelectorProps) {
       <button
         ref={buttonRef}
         type="button"
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => { setIsOpen((open) => !open); }}
         className="header-control language-trigger"
         aria-label={LANGUAGE_NAMES[currentLang]}
         aria-haspopup="listbox"

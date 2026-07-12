@@ -1,7 +1,8 @@
-import type { SceneMode } from "../app/sceneMode";
+import type { JSX } from "react";
 import { getCalculatorCopy, useTranslation } from "../i18n";
 import { LanguageSelector } from "./LanguageSelector";
 import { SceneModeSelector } from "./SceneModeSelector";
+import type { SceneMode } from "../app/sceneMode";
 
 interface HeaderProps {
   activeLink: "home" | "3d" | "make";
@@ -25,7 +26,7 @@ export function Header({
   onSceneModeChange,
   showSwitcherHint = false,
   onSwitcherHintDismiss,
-}: HeaderProps) {
+}: Readonly<HeaderProps>): JSX.Element {
   const { t, lang } = useTranslation();
   const calculatorCopy = getCalculatorCopy(lang);
   const showSceneModeSelector = Boolean(sceneMode && onSceneModeChange);

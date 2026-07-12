@@ -1,0 +1,124 @@
+
+.section-index {
+  --index-color: var(--ink);
+  --index-panel: rgba(235, 231, 220, 0.96);
+  position: fixed;
+  inset-block-start: 50%;
+  inset-inline-end: 1.4rem;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  color: var(--index-color);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.section-index--light {
+  --index-color: rgba(245, 242, 232, 0.92);
+  --index-panel: rgba(12, 19, 14, 0.96);
+}
+
+.section-index__track {
+  position: absolute;
+  inset-block: 0.85rem;
+  inset-inline-start: 50%;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+
+.section-index__item {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.section-index__number {
+  position: absolute;
+  inset-inline-end: calc(100% + 0.25rem);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.section-index__dot {
+  position: relative;
+  z-index: 1;
+  width: 0.28rem;
+  height: 0.28rem;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.46;
+  transition: width 450ms var(--ease-editorial), height 450ms var(--ease-editorial), opacity 250ms ease;
+}
+
+.section-index__item:hover .section-index__dot,
+.section-index__item:focus-visible .section-index__dot,
+.section-index__item.is-active .section-index__dot {
+  width: 0.68rem;
+  height: 0.68rem;
+  opacity: 1;
+}
+
+.section-index__item.is-active .section-index__number {
+  opacity: 0.85;
+}
+
+.section-index__label {
+  position: absolute;
+  inset-inline-end: calc(100% + 0.85rem);
+  display: grid;
+  gap: 0.25rem;
+  width: min(15rem, 32vw);
+  padding: 0.85rem 1rem;
+  color: var(--index-color);
+  text-align: start;
+  background: var(--index-panel);
+  border: 1px solid currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0.6rem);
+  transition: opacity 250ms ease, transform 450ms var(--ease-editorial);
+}
+
+html[dir="rtl"] .section-index__label {
+  transform: translateX(-0.6rem);
+}
+
+.section-index__item:hover .section-index__label,
+.section-index__item:focus-visible .section-index__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section-index__label small {
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.56;
+}
+
+.section-index__label strong {
+  overflow-wrap: anywhere;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+

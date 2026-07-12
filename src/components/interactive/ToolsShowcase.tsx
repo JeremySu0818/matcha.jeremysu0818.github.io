@@ -1,26 +1,28 @@
-import { Suspense, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useState, type JSX } from "react";
 import { Center, OrbitControls, Stage } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { createPortal } from "react-dom";
 import { SceneReadyTrigger } from "../../app/SceneScrollController";
-import { LoaderOverlay } from "../LoaderOverlay";
-import { Model } from "../scene/Model";
 import { useLoadingGate } from "../../hooks/useLoadingGate";
 import { getToolsCopy, type SupportedLanguage } from "../../i18n";
+import { LoaderOverlay } from "../LoaderOverlay";
+import { Model } from "../scene/Model";
 import { ToolIcon } from "./ToolIcon";
 import { TOOL_RENDER_CONFIGS, VIEWER_BACKGROUND } from "./toolRenderConfig";
 
-export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
+export function ToolsShowcase({
+  lang,
+}: Readonly<{ lang: SupportedLanguage }>): JSX.Element {
   const t = getToolsCopy(lang);
   const [activeToolId, setActiveToolId] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const { loaded, markReady } = useLoadingGate(activeToolId);
 
   useEffect(() => {
-    const checkViewport = () => setIsMobile(window.innerWidth < 768);
+    const checkViewport = () => { setIsMobile(window.innerWidth < 768); };
     checkViewport();
     window.addEventListener("resize", checkViewport);
-    return () => window.removeEventListener("resize", checkViewport);
+    return () => { window.removeEventListener("resize", checkViewport); };
   }, []);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
       if (event.key === "Escape") setActiveToolId(null);
     };
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => { document.removeEventListener("keydown", handleKeyDown); };
   }, [activeToolId]);
 
   const activeTool = t.tools.find((tool) => tool.id === activeToolId);
@@ -50,7 +52,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
 
       <button
         type="button"
-        onClick={() => setActiveToolId(null)}
+        onClick={() => { setActiveToolId(null); }}
         className="tool-viewer__close"
         aria-label={t.close3D}
       >
@@ -130,7 +132,7 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
             className={`tool-index-item ${
               activeToolId === tool.id ? "is-selected" : ""
             }`}
-            onClick={() => setActiveToolId(tool.id)}
+            onClick={() => { setActiveToolId(tool.id); }}
             aria-pressed={activeToolId === tool.id}
           >
             <span className="tool-index-item__number" aria-hidden="true">
@@ -161,11 +163,11 @@ export function ToolsShowcase({ lang }: { lang: SupportedLanguage }) {
         createPortal(
           <div
             className="tool-viewer-modal"
-            onClick={() => setActiveToolId(null)}
+            onClick={() => { setActiveToolId(null); }}
           >
             <div
               className="tool-viewer-modal__frame"
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) => { event.stopPropagation(); }}
             >
               {viewer}
             </div>

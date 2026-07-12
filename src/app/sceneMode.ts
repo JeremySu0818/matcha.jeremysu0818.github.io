@@ -2,9 +2,9 @@ export type SceneMode = "scroll" | "manual";
 
 export const SCENE_MODE_STORAGE_KEY = "matcha_scene_mode";
 
-export const SCENE_MODES: SceneMode[] = ["scroll", "manual"];
+export const SCENE_MODES: readonly SceneMode[] = ["scroll", "manual"];
 
-export function isSceneMode(value: string | null): value is SceneMode {
+function isSceneMode(value: string | null): value is SceneMode {
   return value === "scroll" || value === "manual";
 }
 
@@ -17,7 +17,7 @@ export function readSceneMode(): SceneMode {
   return isSceneMode(saved) ? saved : "manual";
 }
 
-export function saveSceneMode(mode: SceneMode) {
+export function saveSceneMode(mode: SceneMode): void {
   if (typeof window === "undefined") {
     return;
   }

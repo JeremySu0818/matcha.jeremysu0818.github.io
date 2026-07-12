@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import type { SceneMode } from "../app/sceneMode";
-import { Header } from "./Header";
+import { useEffect, type JSX } from "react";
 import { TeaCalculator } from "../features/calculator/TeaCalculator";
 import { getCalculatorCopy, useTranslation } from "../i18n";
 import {
@@ -8,12 +6,16 @@ import {
   readSavedScrollPosition,
   registerScrollPositionGetter,
 } from "../utils/scrollRegistry";
+import { Header } from "./Header";
+import type { SceneMode } from "../app/sceneMode";
 
 interface CalculatorPageProps {
   sceneMode: SceneMode;
 }
 
-export function CalculatorPage({ sceneMode }: CalculatorPageProps) {
+export function CalculatorPage({
+  sceneMode,
+}: Readonly<CalculatorPageProps>): JSX.Element {
   const { lang } = useTranslation();
   const copy = getCalculatorCopy(lang);
 

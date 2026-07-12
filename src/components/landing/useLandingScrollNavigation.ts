@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  SCROLL_RESTORE_MOTION,
+  startScrollAnimation,
+} from "../../utils/scrollAnimation";
 import {
   clearSavedScrollPosition,
   readSavedScrollPosition,
@@ -6,9 +10,12 @@ import {
 } from "../../utils/scrollRegistry";
 import { LANDING_SECTION_IDS } from "./landingNavigation";
 
-const SCROLL_RESTORE_DELAY_MS = 300;
+interface LandingScrollNavigation {
+  readonly activeStep: number;
+  readonly handleStepClick: (index: number) => void;
+}
 
-export function useLandingScrollNavigation() {
+export function useLandingScrollNavigation(): LandingScrollNavigation {
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
@@ -28,6 +35,7 @@ export function useLandingScrollNavigation() {
     let timeoutId = 0;
     let animationDelayTimeoutId = 0;
     let observer: ResizeObserver | null = null;
+    let cancelScrollAnimation = (): void => undefined;
 
     if (savedPosition !== null) {
       const prefersReducedMotion = window.matchMedia(
@@ -50,37 +58,18 @@ export function useLandingScrollNavigation() {
         let animationQueued = false;
         let animated = false;
         const startTime = performance.now();
-        const easeInOutCubic = (progress: number) =>
-          progress < 0.5
-            ? 4 * progress * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-        const animateScrollRestore = (targetTop: number) => {
-          const fromTop = container.scrollTop;
-          const distance = targetTop - fromTop;
-          const duration = Math.min(
-            1400,
-            Math.max(900, Math.abs(distance) * 0.6),
-          );
-          const animationStart = performance.now();
-
-          const step = (now: number) => {
-            const progress = Math.min(1, (now - animationStart) / duration);
-            const eased = easeInOutCubic(progress);
+        const animateScrollRestore = (targetTop: number): void => {
+          cancelScrollAnimation = startScrollAnimation({
+            fromTop: container.scrollTop,
+            onComplete: clearSavedScrollPosition,
+            onUpdate: (top) => {
             container.scrollTo({
-              top: fromTop + distance * eased,
+                top,
               behavior: "auto",
             });
-
-            if (progress < 1) {
-              rafId = requestAnimationFrame(step);
-              return;
-            }
-
-            clearSavedScrollPosition();
-          };
-
-          rafId = requestAnimationFrame(step);
+            },
+            targetTop,
+          });
         };
 
         const tryRestore = () => {
@@ -101,7 +90,7 @@ export function useLandingScrollNavigation() {
             animationDelayTimeoutId = window.setTimeout(() => {
               animated = true;
               animateScrollRestore(targetTop);
-            }, SCROLL_RESTORE_DELAY_MS);
+            }, SCROLL_RESTORE_MOTION.delayMs);
             return;
           }
 
@@ -127,6 +116,7 @@ export function useLandingScrollNavigation() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      cancelScrollAnimation();
       window.clearTimeout(timeoutId);
       window.clearTimeout(animationDelayTimeoutId);
       observer?.disconnect();
@@ -156,10 +146,10 @@ export function useLandingScrollNavigation() {
     container.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => container.removeEventListener("scroll", handleScroll);
+    return () => { container.removeEventListener("scroll", handleScroll); };
   }, []);
 
-  const handleStepClick = (index: number) => {
+  const handleStepClick = useCallback((index: number) => {
     const el = document.getElementById(
       `section-${LANDING_SECTION_IDS[index]}`,
     );
@@ -172,7 +162,7 @@ export function useLandingScrollNavigation() {
           : "smooth",
       });
     }
-  };
+  }, []);
 
   return { activeStep, handleStepClick };
 }

@@ -1,33 +1,33 @@
 export type TeaType = "koicha" | "usucha" | "latte";
 
 export interface TeaConfig {
-  labelKey: TeaType;
-  servingMin: number;
-  servingMax: number;
-  servingDefault: number;
-  concentrationMin: number;
-  concentrationMax: number;
-  concentrationDefault: number;
-  temperatureMin: number;
-  temperatureMax: number;
-  temperatureDefault: number;
-  milkRatioMin?: number;
-  milkRatioMax?: number;
-  milkRatioDefault?: number;
+  readonly concentrationDefault: number;
+  readonly concentrationMax: number;
+  readonly concentrationMin: number;
+  readonly labelKey: TeaType;
+  readonly milkRatioDefault?: number;
+  readonly milkRatioMax?: number;
+  readonly milkRatioMin?: number;
+  readonly servingDefault: number;
+  readonly servingMax: number;
+  readonly servingMin: number;
+  readonly temperatureDefault: number;
+  readonly temperatureMax: number;
+  readonly temperatureMin: number;
 }
 
 export interface CalculationResult {
-  powderG: number;
-  waterMl: number;
-  milkMl: number;
-  targetTemperature: number;
-  hotWaterMl: number;
-  coldWaterMl: number;
-  hotTemperature: number;
-  coldTemperature: number;
+  readonly coldTemperature: number;
+  readonly coldWaterMl: number;
+  readonly hotTemperature: number;
+  readonly hotWaterMl: number;
+  readonly milkMl: number;
+  readonly powderG: number;
+  readonly targetTemperature: number;
+  readonly waterMl: number;
 }
 
-export const TEA_TYPES: TeaType[] = ["koicha", "usucha", "latte"];
+export const TEA_TYPES: readonly TeaType[] = ["koicha", "usucha", "latte"];
 
 export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
   koicha: {
@@ -76,7 +76,7 @@ export function calculateWaterMix(
   targetTemperature: number,
   coldTemperature: number,
   hotTemperature: number,
-) {
+): { readonly coldMl: number; readonly hotMl: number } {
   if (
     hotTemperature === coldTemperature ||
     targetTemperature >= hotTemperature

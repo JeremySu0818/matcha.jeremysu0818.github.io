@@ -1,14 +1,16 @@
+import type { JSX } from "react";
+
 interface StepItem {
-  id: string;
-  label: string;
-  subLabel?: string;
+  readonly id: string;
+  readonly label: string;
+  readonly subLabel?: string;
 }
 
 interface NavigationDotsProps {
-  steps: StepItem[];
-  activeStep: number;
-  onStepClick: (index: number) => void;
-  darkTheme?: boolean;
+  readonly activeStep: number;
+  readonly darkTheme?: boolean;
+  readonly onStepClick: (index: number) => void;
+  readonly steps: readonly StepItem[];
 }
 
 export function NavigationDots({
@@ -16,7 +18,7 @@ export function NavigationDots({
   activeStep,
   onStepClick,
   darkTheme = false,
-}: NavigationDotsProps) {
+}: Readonly<NavigationDotsProps>): JSX.Element {
   return (
     <nav
       className={`section-index ${darkTheme ? "section-index--light" : "section-index--ink"}`}
@@ -31,7 +33,7 @@ export function NavigationDots({
             type="button"
             key={step.id}
             className={`section-index__item ${isActive ? "is-active" : ""}`}
-            onClick={() => onStepClick(index)}
+            onClick={() => { onStepClick(index); }}
             aria-label={`${number} — ${step.label}`}
             aria-current={isActive ? "step" : undefined}
           >

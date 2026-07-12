@@ -10,7 +10,7 @@ export function LoaderOverlay({
   text,
   contained = false,
   variant = "light",
-}: LoaderOverlayProps) {
+}: Readonly<LoaderOverlayProps>): JSX.Element {
   return (
     <div
       className={`loader-overlay ${loaded ? "loaded" : ""} ${contained ? "loader-overlay-contained" : ""} ${
@@ -32,3 +32,4 @@ export function LoaderOverlay({
     </div>
   );
 }
+import type { JSX } from "react";

@@ -1,14 +1,15 @@
+import type { JSX } from "react";
 import { useTranslation } from "../i18n";
-import type { SceneMode } from "../app/sceneMode";
-import { Header } from "./Header";
-import { NavigationDots } from "./NavigationDots";
 import { InkTextReveal } from "./effects/InkTextReveal";
+import { Header } from "./Header";
 import { ShadeSimulator } from "./interactive/ShadeSimulator";
 import { ToolsShowcase } from "./interactive/ToolsShowcase";
 import { getLandingSteps } from "./landing/landingNavigation";
 import { renderTitle } from "./landing/renderTitle";
 import { useLandingHeaderTheme } from "./landing/useLandingHeaderTheme";
 import { useLandingScrollNavigation } from "./landing/useLandingScrollNavigation";
+import { NavigationDots } from "./NavigationDots";
+import type { SceneMode } from "../app/sceneMode";
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -17,7 +18,10 @@ interface LandingPageProps {
 
 const landingScroller = "#landing-scroll-container";
 
-export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
+export function LandingPage({
+  onEnter,
+  sceneMode,
+}: Readonly<LandingPageProps>): JSX.Element {
   const { t, lang } = useTranslation();
   const { activeStep, handleStepClick } = useLandingScrollNavigation();
   const steps = getLandingSteps(t);
@@ -162,12 +166,10 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
             </header>
 
             <InkTextReveal
-              as="div"
               text={[t.chapters.chapter2.p1, t.chapters.chapter2.p2].join(
                 "\n\n",
               )}
               scroller={landingScroller}
-              lockPrintHeadToViewport
               className="ink-text-reveal--light editorial-body shade-section__body"
             />
 
@@ -191,14 +193,12 @@ export function LandingPage({ onEnter, sceneMode }: LandingPageProps) {
           <div className="tools-section__essay">
             <span className="tools-section__folio" aria-hidden="true">03</span>
             <InkTextReveal
-              as="div"
               text={[
                 t.chapters.chapter3.p1,
                 t.chapters.chapter3.p2,
                 t.chapters.chapter3.p3,
               ].join("\n\n")}
               scroller={landingScroller}
-              lockPrintHeadToViewport
               className="ink-text-reveal--dark editorial-body"
             />
           </div>

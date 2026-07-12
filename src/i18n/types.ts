@@ -135,7 +135,7 @@ export interface LocaleCopy {
   calculator: CalculatorCopy;
 }
 
-export interface ChapterCopy {
+interface ChapterCopy {
   eyebrow: string;
   title: string;
   p1: string;
@@ -143,7 +143,7 @@ export interface ChapterCopy {
   p3: string;
 }
 
-export interface Chapter1Copy extends ChapterCopy {
+interface Chapter1Copy extends ChapterCopy {
   card1Title: string;
   card1Badge: string;
   card2Title: string;
@@ -152,7 +152,7 @@ export interface Chapter1Copy extends ChapterCopy {
   card3Badge: string;
 }
 
-export interface Chapter4Copy extends ChapterCopy {
+interface Chapter4Copy extends ChapterCopy {
   waTitle: string;
   waDesc: string;
   keiTitle: string;
@@ -163,7 +163,7 @@ export interface Chapter4Copy extends ChapterCopy {
   jakuDesc: string;
 }
 
-export interface Chapter5Copy extends ChapterCopy {
+interface Chapter5Copy extends ChapterCopy {
   card1Title: string;
   card1Badge: string;
   card2Title: string;

@@ -1,6 +1,10 @@
 import type { TranslationSchema } from "../i18n";
 
-export function getSceneSteps(t: TranslationSchema) {
+export function getSceneSteps(t: TranslationSchema): readonly {
+  readonly id: string;
+  readonly label: string;
+  readonly subLabel: string;
+}[] {
   return [
     { id: "intro", label: t.steps.intro.title, subLabel: t.overlay.ritual },
     {

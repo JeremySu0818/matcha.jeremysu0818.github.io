@@ -1,0 +1,194 @@
+
+.manual-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  align-items: end;
+  padding: calc(var(--header-height) + 2rem) var(--page-gutter) clamp(3rem, 8vh, 7rem);
+  color: var(--paper-soft);
+  background: linear-gradient(100deg, rgba(5, 9, 6, 0.88), rgba(5, 9, 6, 0.5) 58%, rgba(5, 9, 6, 0.18));
+  pointer-events: auto;
+}
+
+.manual-intro__frame {
+  position: absolute;
+  inset: calc(var(--header-height) + 1rem) var(--page-gutter) 2rem;
+  border: 1px solid rgba(240, 237, 226, 0.22);
+  pointer-events: none;
+}
+
+.manual-intro__folio {
+  position: absolute;
+  inset-block-start: calc(var(--header-height) + 2.5rem);
+  inset-inline-start: calc(var(--page-gutter) + 1.5rem);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  opacity: 0.55;
+}
+
+.manual-intro__copy {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 66rem);
+  margin-inline-start: clamp(1rem, 4vw, 5rem);
+}
+
+.manual-intro .editorial-eyebrow {
+  margin-block-end: 1.4rem;
+  opacity: 0.62;
+}
+
+.manual-intro h1 {
+  max-width: 10ch;
+  font-size: clamp(5rem, 11vw, 12rem);
+  line-height: 0.78;
+}
+
+.manual-intro__body {
+  max-width: 38rem;
+  margin: 2rem 0 2.5rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 1.1vw, 1.08rem);
+  font-weight: 300;
+  line-height: 1.72;
+  opacity: 0.8;
+}
+
+.manual-tutorial {
+  position: absolute;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: start;
+  width: clamp(11rem, 16vw, 15rem);
+  min-height: 5.5rem;
+  padding: 1rem 1.1rem;
+  color: var(--ink);
+  text-align: start;
+  background: rgba(238, 235, 224, 0.94);
+  border-block-start: 2px solid var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  will-change: top, left, transform, opacity;
+  transition:
+    top 1000ms var(--ease-editorial),
+    left 1000ms var(--ease-editorial),
+    transform 1000ms var(--ease-editorial),
+    opacity 300ms ease;
+}
+
+.manual-tutorial.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manual-tutorial {
+    transition: opacity 150ms linear;
+  }
+}
+
+.manual-tutorial > span {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  opacity: 0.55;
+}
+
+.manual-tutorial p {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.manual-tutorial i {
+  position: absolute;
+  inset-block-start: -0.55rem;
+  inset-inline-start: 2rem;
+  width: 1px;
+  height: 0.55rem;
+  background: var(--ink);
+}
+
+.manual-completion {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--header-height) + 1rem) 1.25rem 2rem;
+  pointer-events: none;
+}
+
+.manual-completion__sheet {
+  width: min(34rem, 100%);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  color: var(--ink);
+  background: rgba(237, 233, 222, 0.94);
+  border: 1px solid rgba(21, 32, 25, 0.32);
+  box-shadow: 0 2rem 6rem rgba(21, 32, 25, 0.18);
+  pointer-events: auto;
+  animation: completion-reveal 900ms var(--ease-editorial) both;
+}
+
+@keyframes completion-reveal {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+.manual-completion__folio {
+  float: inline-end;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  opacity: 0.45;
+}
+
+.manual-completion .editorial-eyebrow {
+  margin-block-end: 1rem;
+  opacity: 0.55;
+}
+
+.manual-completion h2 {
+  margin-block-end: 1.75rem;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.88;
+}
+
+.manual-completion__recipe {
+  margin-block-end: 1.5rem;
+  border-block-start: 1px solid var(--rule-dark);
+}
+
+.manual-completion__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-block: 0.8rem;
+  border-block-end: 1px solid var(--rule-dark);
+}
+
+.manual-completion__row span,
+.manual-completion__row strong {
+  font-size: 0.74rem;
+}
+
+.manual-completion__row span {
+  font-family: var(--font-sans);
+  opacity: 0.62;
+}
+
+.manual-completion__row strong {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.manual-completion__body {
+  margin: 0 0 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  line-height: 1.7;
+  opacity: 0.72;
+}
+

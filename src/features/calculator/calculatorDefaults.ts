@@ -1,18 +1,17 @@
 import { TEA_CONFIGS, TEA_TYPES, type TeaType } from "./calculator";
 
-export type CalculatorValues = Record<
-  TeaType,
-  {
-    serving: number;
-    concentration: number;
-    temperature: number;
-    milkRatio: number;
-    coldTemperature: number;
-    hotTemperature: number;
-  }
->;
+export interface CalculatorValue {
+  readonly coldTemperature: number;
+  readonly concentration: number;
+  readonly hotTemperature: number;
+  readonly milkRatio: number;
+  readonly serving: number;
+  readonly temperature: number;
+}
 
-export const getDefaultValues = () =>
+export type CalculatorValues = Record<TeaType, CalculatorValue>;
+
+export const getDefaultValues = (): CalculatorValues =>
   Object.fromEntries(
     TEA_TYPES.map((type) => {
       const config = TEA_CONFIGS[type];

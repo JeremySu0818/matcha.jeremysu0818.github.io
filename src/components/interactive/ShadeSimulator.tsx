@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { useState, type CSSProperties, type JSX } from "react";
 import { getShadeCopy, type SupportedLanguage } from "../../i18n";
 
 interface ShadeSimulatorProps {
@@ -13,7 +13,9 @@ type ShadeStyle = CSSProperties & {
   "--leaf-b"?: number;
 };
 
-export function ShadeSimulator({ lang }: ShadeSimulatorProps) {
+export function ShadeSimulator({
+  lang,
+}: Readonly<ShadeSimulatorProps>): JSX.Element {
   const [shadeValue, setShadeValue] = useState(0);
   const t = getShadeCopy(lang);
 
@@ -23,12 +25,12 @@ export function ShadeSimulator({ lang }: ShadeSimulatorProps) {
     { label: t.catechin, value: Math.round(100 - shadeValue * 0.75) },
   ];
 
-  const stateDescription =
-    shadeValue > 80
-      ? t.shadeStateFull
-      : shadeValue > 30
-        ? t.shadeStateMed
-        : t.shadeStateSun;
+  let stateDescription = t.shadeStateSun;
+  if (shadeValue > 80) {
+    stateDescription = t.shadeStateFull;
+  } else if (shadeValue > 30) {
+    stateDescription = t.shadeStateMed;
+  }
   const r = Math.round(180 - (shadeValue / 100) * 162);
   const g = Math.round(210 - (shadeValue / 100) * 150);
   const b = Math.round(110 - (shadeValue / 100) * 70);
@@ -87,7 +89,9 @@ export function ShadeSimulator({ lang }: ShadeSimulatorProps) {
             <div
               className="shade-reading"
               key={reading.label}
-              style={{ "--reading": `${reading.value}%` } as ShadeStyle}
+              style={{
+                "--reading": `${String(reading.value)}%`,
+              } as ShadeStyle}
             >
               <span aria-hidden="true">0{index + 1}</span>
               <div>
@@ -110,9 +114,9 @@ export function ShadeSimulator({ lang }: ShadeSimulatorProps) {
           min="0"
           max="100"
           value={shadeValue}
-          onChange={(event) => setShadeValue(Number(event.target.value))}
+          onChange={(event) => { setShadeValue(Number(event.target.value)); }}
           onInput={(event) =>
-            setShadeValue(Number((event.target as HTMLInputElement).value))
+            { setShadeValue(Number((event.target as HTMLInputElement).value)); }
           }
           aria-label={t.shadeTitle}
         />

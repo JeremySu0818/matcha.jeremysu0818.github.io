@@ -1,8 +1,10 @@
-type ToolIconProps = {
-  id: "chawan" | "chasen" | "chashaku";
-};
+import type { JSX } from "react";
 
-export function ToolIcon({ id }: ToolIconProps) {
+interface ToolIconProps {
+  readonly id: "chawan" | "chasen" | "chashaku";
+}
+
+export function ToolIcon({ id }: Readonly<ToolIconProps>): JSX.Element {
   switch (id) {
     case "chawan":
       return (

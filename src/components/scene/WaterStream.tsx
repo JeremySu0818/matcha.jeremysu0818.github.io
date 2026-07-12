@@ -1,37 +1,49 @@
-import { useMemo, useRef, type RefObject } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  type ComponentRef,
+  type JSX,
+  type RefObject,
+} from "react";
 import { MeshTransmissionMaterial, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { CatmullRomCurve3, Group, Mesh, TubeGeometry, Vector3 } from "three";
+import {
+  CatmullRomCurve3,
+  type Group,
+  type Mesh,
+  TubeGeometry,
+  Vector3,
+} from "three";
 import { range, smoothstep } from "../../utils/easing";
+import { WATER_STREAM_CONFIG } from "./config/liquids";
 
-type WaterStreamProps = {
-  mobile: boolean;
+interface WaterStreamProps {
   kettleRef: RefObject<Group | null>;
   progressRef?: RefObject<number>;
-};
+}
 
-const tubularSegments = 128;
-const radialSegments = 18;
-const streamRadius = 0.016;
-
-function createWaterGeometry(curve: CatmullRomCurve3) {
+function createWaterGeometry(curve: CatmullRomCurve3): TubeGeometry {
+  const config = WATER_STREAM_CONFIG.curve;
   const geometry = new TubeGeometry(
     curve,
-    tubularSegments,
-    streamRadius,
-    radialSegments,
+    config.tubeSegments,
+    config.radiusWorld,
+    config.radialSegments,
     false,
   );
   const position = geometry.attributes.position;
 
-  for (let ring = 0; ring <= tubularSegments; ring += 1) {
-    const t = ring / tubularSegments;
+  for (let ring = 0; ring <= config.tubeSegments; ring += 1) {
+    const t = ring / config.tubeSegments;
     const center = curve.getPointAt(t);
-    const sourceTaper = smoothstep(range(t, 0, 0.5));
-    const radiusScale = Math.max(0.001, sourceTaper);
+    const sourceTaper = smoothstep(
+      range(t, ...config.sourceTaperProgress),
+    );
+    const radiusScale = Math.max(config.minimumRadiusScale, sourceTaper);
 
-    for (let radial = 0; radial <= radialSegments; radial += 1) {
-      const index = ring * (radialSegments + 1) + radial;
+    for (let radial = 0; radial <= config.radialSegments; radial += 1) {
+      const index = ring * (config.radialSegments + 1) + radial;
       const x = position.getX(index);
       const y = position.getY(index);
       const z = position.getZ(index);
@@ -52,76 +64,110 @@ function createWaterGeometry(curve: CatmullRomCurve3) {
 }
 
 export function WaterStream({
-  mobile,
   kettleRef,
   progressRef,
-}: WaterStreamProps) {
+}: Readonly<WaterStreamProps>): JSX.Element {
   const streamRef = useRef<Group>(null);
   const meshRef = useRef<Mesh>(null);
-  const materialRef = useRef<any>(null);
+  const materialRef = useRef<ComponentRef<typeof MeshTransmissionMaterial>>(null);
   const scroll = useScroll();
 
   const curve = useMemo(
     () =>
       new CatmullRomCurve3([
-        new Vector3(-0.46, 1.64, 0.11),
-        new Vector3(-0.31, 1.1, 0.07),
-        new Vector3(-0.16, 0.47, 0.036),
-        new Vector3(0.11, -0.15, 0.0),
+        ...WATER_STREAM_CONFIG.curve.initialPointsWorld.map(
+          (point) => new Vector3(...point),
+        ),
       ]),
     [],
   );
 
   const tube = useMemo(() => createWaterGeometry(curve), [curve]);
+  const currentGeometryRef = useRef(tube);
+  const scratch = useMemo(
+    () => ({
+      bowlPoint: new Vector3(),
+      lowerControlPoint: new Vector3(),
+      sourceDirection: new Vector3(),
+      sourcePoint: new Vector3(),
+      spoutPoint: new Vector3(),
+      targetPoint: new Vector3(),
+      upperControlPoint: new Vector3(),
+    }),
+    [],
+  );
+
+  useEffect(
+    () => () => {
+      currentGeometryRef.current.dispose();
+    },
+    [],
+  );
 
   useFrame(({ clock }) => {
     const progress = progressRef?.current ?? scroll.offset;
+    const motion = WATER_STREAM_CONFIG.motion;
     const pour =
-      smoothstep(range(progress, 0.49, 0.52)) *
-      (1 - smoothstep(range(progress, 0.62, 0.64)));
-    const isVisible = pour > 0.02;
+      smoothstep(range(progress, ...motion.pourStartProgress)) *
+      (1 - smoothstep(range(progress, ...motion.pourEndProgress)));
+    const isVisible = pour > motion.visibleThreshold;
 
     if (streamRef.current) {
       streamRef.current.visible = isVisible;
     }
 
-    if (isVisible && kettleRef?.current && meshRef.current) {
+    if (isVisible && kettleRef.current && meshRef.current) {
       kettleRef.current.updateMatrixWorld(true);
 
-      const p0 = new Vector3();
-      const spout = kettleRef.current.getObjectByName("kettle_spout");
+      const curveConfig = WATER_STREAM_CONFIG.curve;
+      const spout = kettleRef.current.getObjectByName(
+        curveConfig.spoutObjectName,
+      );
+      const p0 = scratch.spoutPoint;
       if (spout) {
-        spout.localToWorld(p0.set(-12.5852, 11.6278, 0.0));
+        spout.localToWorld(p0.set(...curveConfig.spoutLocalPoint));
       } else {
-        p0.set(-0.46, 1.64, 0.11);
+        p0.set(...curveConfig.fallbackSourceWorld);
       }
 
-      const pourProgress = range(progress, 0.49, 0.64);
-      const bowlPoint = new Vector3(
-        -pourProgress * 0.3 + 0.11,
-        -0.15,
-        -pourProgress * 0.1,
+      const pourProgress = range(progress, ...motion.pourPathProgress);
+      const bowlPoint = scratch.bowlPoint.set(
+        pourProgress * curveConfig.targetProgressXWorld +
+          curveConfig.targetEndWorld[0],
+        curveConfig.targetEndWorld[1],
+        pourProgress * curveConfig.targetProgressZWorld,
       );
-      const streamDirection = bowlPoint.clone().sub(p0).normalize();
-      const sourcePoint = p0.clone().addScaledVector(streamDirection, 0.06);
-      sourcePoint.x -= 0.01;
-      sourcePoint.y += 0.02;
-      sourcePoint.z += 0.05;
-      const targetPoint = bowlPoint
-        .clone()
-        .addScaledVector(streamDirection, 0.08);
+      const streamDirection = scratch.sourceDirection
+        .copy(bowlPoint)
+        .sub(p0)
+        .normalize();
+      const sourcePoint = scratch.sourcePoint
+        .copy(p0)
+        .addScaledVector(
+          streamDirection,
+          curveConfig.sourceDirectionOffsetWorld,
+        );
+      sourcePoint.x += curveConfig.sourceOffsetWorld[0];
+      sourcePoint.y += curveConfig.sourceOffsetWorld[1];
+      sourcePoint.z += curveConfig.sourceOffsetWorld[2];
+      const targetPoint = scratch.targetPoint
+        .copy(bowlPoint)
+        .addScaledVector(
+          streamDirection,
+          curveConfig.targetDirectionOffsetWorld,
+        );
       const dx = targetPoint.x - sourcePoint.x;
       const dz = targetPoint.z - sourcePoint.z;
 
-      const p1 = new Vector3(
-        sourcePoint.x + dx * 0.25,
-        sourcePoint.y - 0.025,
-        sourcePoint.z + dz * 0.25,
+      const p1 = scratch.upperControlPoint.set(
+        sourcePoint.x + dx * curveConfig.upperControl.horizontalRatio,
+        sourcePoint.y + curveConfig.upperControl.yOffsetWorld,
+        sourcePoint.z + dz * curveConfig.upperControl.horizontalRatio,
       );
-      const p2 = new Vector3(
-        sourcePoint.x + dx * 0.65,
-        targetPoint.y + 0.35,
-        sourcePoint.z + dz * 0.65,
+      const p2 = scratch.lowerControlPoint.set(
+        sourcePoint.x + dx * curveConfig.lowerControl.horizontalRatio,
+        targetPoint.y + curveConfig.lowerControl.yOffsetFromTargetWorld,
+        sourcePoint.z + dz * curveConfig.lowerControl.horizontalRatio,
       );
 
       curve.points[0].copy(sourcePoint);
@@ -129,13 +175,17 @@ export function WaterStream({
       curve.points[2].copy(p2);
       curve.points[3].copy(targetPoint);
 
-      meshRef.current.geometry.dispose();
-      meshRef.current.geometry = createWaterGeometry(curve);
+      currentGeometryRef.current.dispose();
+      const nextGeometry = createWaterGeometry(curve);
+      currentGeometryRef.current = nextGeometry;
+      meshRef.current.geometry = nextGeometry;
     }
 
     if (materialRef.current) {
-      materialRef.current.opacity = pour * 0.95;
-      materialRef.current.time = clock.elapsedTime * 2.0;
+      materialRef.current.opacity =
+        pour * WATER_STREAM_CONFIG.material.maximumOpacity;
+      materialRef.current.time =
+        clock.elapsedTime * WATER_STREAM_CONFIG.material.timeScale;
     }
   });
 
@@ -144,17 +194,17 @@ export function WaterStream({
       <mesh ref={meshRef} geometry={tube}>
         <MeshTransmissionMaterial
           ref={materialRef}
-          color="#ffffff"
-          roughness={0.05}
-          transmission={0.9}
-          thickness={0.5}
-          ior={1.33}
-          distortion={0.3}
-          distortionScale={0.8}
-          temporalDistortion={0.5}
+          color={WATER_STREAM_CONFIG.material.color}
+          roughness={WATER_STREAM_CONFIG.material.roughness}
+          transmission={WATER_STREAM_CONFIG.material.transmission}
+          thickness={WATER_STREAM_CONFIG.material.thickness}
+          ior={WATER_STREAM_CONFIG.material.indexOfRefraction}
+          distortion={WATER_STREAM_CONFIG.material.distortion}
+          distortionScale={WATER_STREAM_CONFIG.material.distortionScale}
+          temporalDistortion={WATER_STREAM_CONFIG.material.temporalDistortion}
           transparent
           depthWrite={false}
-          envMapIntensity={1.5}
+          envMapIntensity={WATER_STREAM_CONFIG.material.environmentIntensity}
         />
       </mesh>
     </group>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 
 interface CalculatorSliderProps {
   label: string;
@@ -22,7 +22,7 @@ export function CalculatorSlider({
   onChange,
   minLabel,
   maxLabel,
-}: CalculatorSliderProps) {
+}: Readonly<CalculatorSliderProps>): JSX.Element {
   const [inputValue, setInputValue] = useState(String(value));
   const inputRef = useRef<HTMLInputElement>(null);
   const percentage = max === min ? 0 : ((value - min) / (max - min)) * 100;
@@ -54,14 +54,14 @@ export function CalculatorSlider({
                 onChange(Math.min(max, Math.max(min, nextValue)));
               }
             }}
-            onBlur={() => setInputValue(String(value))}
+            onBlur={() => { setInputValue(String(value)); }}
           />
           <span>{unit}</span>
         </label>
       </div>
       <div className="calculator-range-wrap">
         <div className="calculator-range-track">
-          <span style={{ width: `${percentage}%` }} />
+          <span style={{ width: `${String(percentage)}%` }} />
         </div>
         <input
           aria-label={label}
@@ -70,9 +70,9 @@ export function CalculatorSlider({
           max={max}
           step={step}
           value={value}
-          onChange={(event) => onChange(Number(event.target.value))}
+          onChange={(event) => { onChange(Number(event.target.value)); }}
           onInput={(event) =>
-            onChange(Number((event.target as HTMLInputElement).value))
+            { onChange(Number((event.target as HTMLInputElement).value)); }
           }
         />
       </div>

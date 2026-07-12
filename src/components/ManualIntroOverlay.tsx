@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { useTranslation } from "../i18n";
 
 interface ManualIntroOverlayProps {
@@ -5,7 +6,10 @@ interface ManualIntroOverlayProps {
   onAction: () => void;
 }
 
-export function ManualIntroOverlay({ visible, onAction }: ManualIntroOverlayProps) {
+export function ManualIntroOverlay({
+  visible,
+  onAction,
+}: Readonly<ManualIntroOverlayProps>): JSX.Element | null {
   const { t } = useTranslation();
 
   if (!visible) return null;

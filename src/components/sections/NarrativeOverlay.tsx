@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type JSX } from "react";
 import { useScroll } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -6,13 +6,13 @@ import { useTranslation } from "../../i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export type Step = {
-  id: string;
-  eyebrow?: string;
-  title: string;
-  body: string;
-  align: "left" | "right" | "center";
-};
+interface Step {
+  readonly align: "left" | "right" | "center";
+  readonly body: string;
+  readonly eyebrow?: string;
+  readonly id: string;
+  readonly title: string;
+}
 
 interface NarrativeOverlayProps {
   hidden?: boolean;
@@ -24,7 +24,7 @@ export function NarrativeOverlay({
   hidden = false,
   onAction,
   actionLabel,
-}: NarrativeOverlayProps) {
+}: Readonly<NarrativeOverlayProps>): JSX.Element | null {
   const rootRef = useRef<HTMLDivElement>(null);
   const scroll = useScroll();
   const { t } = useTranslation();
@@ -111,7 +111,7 @@ export function NarrativeOverlay({
         });
     }, rootRef);
 
-    return () => ctx.revert();
+    return () => { ctx.revert(); };
   }, [hidden, scroll.el]);
 
   if (hidden) return null;
@@ -130,7 +130,7 @@ export function NarrativeOverlay({
             } ${isFinal ? "is-final" : ""}`}
             aria-label={step.title}
           >
-            {isIntro ? (
+            {isIntro && (
               <div className="scene-intro-copy">
                 <div className="scene-intro-copy__folio" aria-hidden="true">
                   01 / 06
@@ -141,7 +141,8 @@ export function NarrativeOverlay({
                 <h1>{step.title}</h1>
                 <p className="scene-intro-copy__body">{step.body}</p>
               </div>
-            ) : isFinal ? (
+            )}
+            {isFinal && (
               <div className="scene-recipe-sheet">
                 <div className="scene-recipe-sheet__folio" aria-hidden="true">
                   06 / 06
@@ -164,7 +165,8 @@ export function NarrativeOverlay({
                   <i aria-hidden="true" />
                 </button>
               </div>
-            ) : (
+            )}
+            {!isIntro && !isFinal && (
               <div className="scene-annotation">
                 <div className="scene-annotation__line" aria-hidden="true" />
                 <span className="scene-annotation__index" aria-hidden="true">

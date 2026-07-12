@@ -8,9 +8,13 @@ export const LANDING_SECTION_IDS = [
   "chapter-4",
   "chapter-5",
   "final",
-];
+] as const;
 
-export function getLandingSteps(t: TranslationSchema) {
+export function getLandingSteps(t: TranslationSchema): readonly {
+  readonly id: string;
+  readonly label: string;
+  readonly subLabel: string;
+}[] {
   return [
     {
       id: "hero",
