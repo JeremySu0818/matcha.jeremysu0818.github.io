@@ -355,7 +355,7 @@
   .landing-hero__title {
     max-width: 8.5ch;
     font-size: clamp(4.4rem, 21vw, 7.25rem);
-    line-height: 0.8;
+    line-height: 0.88;
   }
 
   .landing-hero__note {

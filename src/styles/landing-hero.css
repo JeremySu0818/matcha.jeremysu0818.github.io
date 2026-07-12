@@ -70,7 +70,8 @@
 .landing-hero__title {
   max-width: 10ch;
   font-size: clamp(4.5rem, min(13.5vw, 19vh), 13rem);
-  line-height: 0.78;
+  line-height: 0.88;
+  padding-block-end: 0.12em;
   text-wrap: balance;
   filter: drop-shadow(0 1.2rem 2.5rem rgba(0, 0, 0, 0.3));
   clip-path: inset(0 100% 0 0);
@@ -185,4 +186,3 @@ html[dir="rtl"] .landing-hero__scroll {
 .section-heading--compact h2 {
   font-size: clamp(3.3rem, 5.8vw, 6.8rem);
 }
-
