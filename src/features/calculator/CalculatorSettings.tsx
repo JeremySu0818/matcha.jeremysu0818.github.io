@@ -36,8 +36,7 @@ export function CalculatorSettings({
                 aria-label={copy.serving}
                 inputMode="decimal"
                 value={current.serving}
-                min={config.servingMin}
-                max={config.servingMax}
+                min={0}
                 step={5}
                 onChange={(event) => {
                   const value = Number(event.target.value);
@@ -45,10 +44,7 @@ export function CalculatorSettings({
                 }}
                 onBlur={() => {
                   update({
-                    serving: Math.min(
-                      config.servingMax,
-                      Math.max(config.servingMin, current.serving),
-                    ),
+                    serving: Math.max(0, current.serving),
                   });
                 }}
               />

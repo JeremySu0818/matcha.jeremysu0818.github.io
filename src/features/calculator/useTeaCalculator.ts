@@ -41,7 +41,6 @@ export function useTeaCalculator(): TeaCalculatorController {
     saveCalculatorValues(values);
   }, [values]);
   const reset = useCallback(() => {
-    setTeaType("usucha");
     setValues(getDefaultValues());
   }, []);
   const update = useCallback(

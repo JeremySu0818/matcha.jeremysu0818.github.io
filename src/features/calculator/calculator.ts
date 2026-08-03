@@ -9,8 +9,6 @@ export interface TeaConfig {
   readonly milkRatioMax?: number;
   readonly milkRatioMin?: number;
   readonly servingDefault: number;
-  readonly servingMax: number;
-  readonly servingMin: number;
   readonly temperatureDefault: number;
   readonly temperatureMax: number;
   readonly temperatureMin: number;
@@ -32,8 +30,6 @@ export const TEA_TYPES: readonly TeaType[] = ["koicha", "usucha", "latte"];
 export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
   koicha: {
     labelKey: "koicha",
-    servingMin: 20,
-    servingMax: 120,
     servingDefault: 40,
     concentrationMin: 8.3,
     concentrationMax: 14.3,
@@ -44,8 +40,6 @@ export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
   },
   usucha: {
     labelKey: "usucha",
-    servingMin: 40,
-    servingMax: 200,
     servingDefault: 70,
     concentrationMin: 2,
     concentrationMax: 4,
@@ -56,8 +50,6 @@ export const TEA_CONFIGS: Record<TeaType, TeaConfig> = {
   },
   latte: {
     labelKey: "latte",
-    servingMin: 100,
-    servingMax: 400,
     servingDefault: 380,
     concentrationMin: 5,
     concentrationMax: 20,
