@@ -20,6 +20,7 @@ import {
   Vector3,
 } from "three";
 import { mix, range, smoothstep } from "../../utils/easing";
+import { glslFloat } from "../../utils/glsl";
 import { createBowlCrossSectionGeometry } from "./bowlCrossSectionGeometry";
 import { FOAM_SURFACE_CONFIG } from "./config/liquids";
 import { MatchaTextureDeformer } from "./matchaFluid";
@@ -50,12 +51,12 @@ const fragmentShader = `
   varying vec2 vSurface;
 
   void main() {
-    vec2 oversizedUv = vSurface / uImageSize + vec2(${String(FOAM_SURFACE_CONFIG.material.shaderUvCenter)});
+    vec2 oversizedUv = vSurface / uImageSize + vec2(${glslFloat(FOAM_SURFACE_CONFIG.material.shaderUvCenter)});
     vec4 texel = texture2D(uTexture, oversizedUv);
-    vec3 color = mix(texel.rgb, texel.rgb * uTint, ${String(FOAM_SURFACE_CONFIG.material.shaderTintBlendRatio)});
+    vec3 color = mix(texel.rgb, texel.rgb * uTint, ${glslFloat(FOAM_SURFACE_CONFIG.material.shaderTintBlendRatio)});
     float alpha = texel.a * uOpacity;
 
-    if (alpha < ${String(FOAM_SURFACE_CONFIG.material.discardOpacityThreshold)}) {
+    if (alpha < ${glslFloat(FOAM_SURFACE_CONFIG.material.discardOpacityThreshold)}) {
       discard;
     }
 

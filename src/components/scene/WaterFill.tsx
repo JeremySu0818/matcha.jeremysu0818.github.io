@@ -17,6 +17,7 @@ import {
   type ShaderMaterial,
 } from "three";
 import { mix, range, smoothstep } from "../../utils/easing";
+import { glslFloat } from "../../utils/glsl";
 import { createBowlCrossSectionGeometry } from "./bowlCrossSectionGeometry";
 import { WATER_FILL_CONFIG } from "./config/liquids";
 
@@ -62,14 +63,14 @@ const fragmentShader = `
   varying float vDist;
 
   void main() {
-    float ripple = sin(vUv.x * ${String(waterShader.rippleSpatialFrequency)} + uTime * ${String(waterShader.rippleTimeFrequencyX)}) * cos(vUv.y * ${String(waterShader.rippleSpatialFrequency)} + uTime * ${String(waterShader.rippleTimeFrequencyY)}) * ${String(waterShader.rippleAmplitude)};
-    float ring = sin(vDist * ${String(waterShader.ringSpatialFrequency)} - uTime * ${String(waterShader.ringTimeFrequency)}) * ${String(waterShader.ringAmplitude)};
-    float edgeFade = smoothstep(0.0, 1.0, vDist / ${String(waterShader.edgeDistanceWorld)});
+    float ripple = sin(vUv.x * ${glslFloat(waterShader.rippleSpatialFrequency)} + uTime * ${glslFloat(waterShader.rippleTimeFrequencyX)}) * cos(vUv.y * ${glslFloat(waterShader.rippleSpatialFrequency)} + uTime * ${glslFloat(waterShader.rippleTimeFrequencyY)}) * ${glslFloat(waterShader.rippleAmplitude)};
+    float ring = sin(vDist * ${glslFloat(waterShader.ringSpatialFrequency)} - uTime * ${glslFloat(waterShader.ringTimeFrequency)}) * ${glslFloat(waterShader.ringAmplitude)};
+    float edgeFade = smoothstep(0.0, 1.0, vDist / ${glslFloat(waterShader.edgeDistanceWorld)});
     vec3 color = mix(uColorDeep, uColorEdge, edgeFade + ripple + ring);   
-    float rim = pow(edgeFade, ${String(waterShader.rimExponent)}) * ${String(waterShader.rimAmplitude)};
+    float rim = pow(edgeFade, ${glslFloat(waterShader.rimExponent)}) * ${glslFloat(waterShader.rimAmplitude)};
     color += vec3(rim);
-    float alpha = uOpacity * (1.0 - edgeFade * ${String(waterShader.alphaEdgeMultiplier)});
-    if (alpha < ${String(waterShader.discardOpacityThreshold)}) discard;
+    float alpha = uOpacity * (1.0 - edgeFade * ${glslFloat(waterShader.alphaEdgeMultiplier)});
+    if (alpha < ${glslFloat(waterShader.discardOpacityThreshold)}) discard;
     gl_FragColor = vec4(color, alpha);
   }
 `;

@@ -32,7 +32,7 @@ export const FOAM_SURFACE_CONFIG = {
     rippleAmplitudeWorld: 0.003,
     rippleFrequency: 1.4,
   },
-  positionWorld: [0, -0.62, 0] as const,
+  positionWorld: [0, -0.12, 0] as const,
   renderOrder: 2,
   rotationRadians: [-1.5707963267948966, 0, 0] as const,
 } as const;

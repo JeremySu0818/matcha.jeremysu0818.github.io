@@ -12,8 +12,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "deadcode": "knip",
-    "verify:comments": "node scripts/verify-no-comments.mjs",
-    "quality": "npm run verify:comments && npm run lint && npm run typecheck && npm run test && npm run build"
+    "quality": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

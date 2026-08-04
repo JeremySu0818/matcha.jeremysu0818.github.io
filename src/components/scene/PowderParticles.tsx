@@ -10,6 +10,7 @@ import {
   type Points,
   type ShaderMaterial,
 } from "three";
+import { glslFloat } from "../../utils/glsl";
 import { POWDER_PARTICLE_CONFIG } from "./config/effects";
 import {
   createPowderParticleData,
@@ -30,7 +31,7 @@ const vertexShader = `
   void main() {
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mvPosition;
-    gl_PointSize = uSize * aSize * (${String(POWDER_PARTICLE_CONFIG.shader.perspectiveScalePixels)} / -mvPosition.z);
+    gl_PointSize = uSize * aSize * (${glslFloat(POWDER_PARTICLE_CONFIG.shader.perspectiveScalePixels)} / -mvPosition.z);
   }
 `;
 
@@ -40,11 +41,11 @@ const fragmentShader = `
   uniform vec3 uColorB;
   uniform float uOpacity;
   void main() {
-    float dist = length(gl_PointCoord - vec2(${String(POWDER_PARTICLE_CONFIG.shader.circleCenter)}));
-    if (dist > ${String(POWDER_PARTICLE_CONFIG.shader.maximumDistance)}) discard;
-    float alpha = 1.0 - smoothstep(0.0, ${String(POWDER_PARTICLE_CONFIG.shader.alphaMaximumDistance)}, dist);
-    vec3 color = mix(uColorA, uColorB, gl_PointCoord.y * ${String(POWDER_PARTICLE_CONFIG.shader.colorMixScale)} + ${String(POWDER_PARTICLE_CONFIG.shader.colorMixOffset)});
-    gl_FragColor = vec4(color, alpha * uOpacity * ${String(POWDER_PARTICLE_CONFIG.shader.opacityMultiplier)});
+    float dist = length(gl_PointCoord - vec2(${glslFloat(POWDER_PARTICLE_CONFIG.shader.circleCenter)}));
+    if (dist > ${glslFloat(POWDER_PARTICLE_CONFIG.shader.maximumDistance)}) discard;
+    float alpha = 1.0 - smoothstep(0.0, ${glslFloat(POWDER_PARTICLE_CONFIG.shader.alphaMaximumDistance)}, dist);
+    vec3 color = mix(uColorA, uColorB, gl_PointCoord.y * ${glslFloat(POWDER_PARTICLE_CONFIG.shader.colorMixScale)} + ${glslFloat(POWDER_PARTICLE_CONFIG.shader.colorMixOffset)});
+    gl_FragColor = vec4(color, alpha * uOpacity * ${glslFloat(POWDER_PARTICLE_CONFIG.shader.opacityMultiplier)});
   }
 `;
 
