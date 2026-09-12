@@ -54,7 +54,9 @@ export function RitualPage({
   const showNarrative = sceneMode === "scroll";
   const showCompletion = sceneMode === "manual" && session.manualDone;
   const interactionStyle =
-    sceneMode === "manual" ? manualInteractionStyle : scrollInteractionStyle;
+    sceneMode === "manual" && !session.manualDone
+      ? manualInteractionStyle
+      : scrollInteractionStyle;
   const canvasConfig = SCENE_CAMERA_CONFIG;
 
   useEffect(() => {

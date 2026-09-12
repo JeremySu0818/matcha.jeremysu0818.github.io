@@ -72,11 +72,22 @@ export function useManualRitualDrag({
   const dragPointRef = useRef(new Vector3());
   const pointerRef = useRef(new Vector2());
 
+  const releasePointerCapture = useCallback(
+    (pointerId: number) => {
+      if (canvas.hasPointerCapture(pointerId)) {
+        canvas.releasePointerCapture(pointerId);
+      }
+    },
+    [canvas],
+  );
+
   const cancelDrag = useCallback(() => {
     cleanupListenersRef.current?.();
     cleanupListenersRef.current = null;
+    const drag = dragRef.current;
+    if (drag) releasePointerCapture(drag.pointerId);
     dragRef.current = null;
-  }, [dragRef]);
+  }, [dragRef, releasePointerCapture]);
 
   useEffect(() => cancelDrag, [cancelDrag]);
 
@@ -174,6 +185,7 @@ export function useManualRitualDrag({
       };
       dragRef.current = drag;
       canvas.setPointerCapture(event.pointerId);
+      let finished = false;
 
       const removeDocumentListeners = () => {
         document.removeEventListener("pointermove", handlePointerMove);
@@ -183,12 +195,15 @@ export function useManualRitualDrag({
         document.removeEventListener("touchcancel", handleTouchEnd);
       };
       const finishDrag = (endEvent: PointerEvent | TouchEvent) => {
+        if (finished) return;
+        finished = true;
         endEvent.preventDefault();
         endEvent.stopPropagation();
-        canvas.releasePointerCapture(drag.pointerId);
         removeDocumentListeners();
         cleanupListenersRef.current = null;
+        releasePointerCapture(drag.pointerId);
         finishManualDrag(tool);
+        if (dragRef.current === drag) dragRef.current = null;
       };
       const handlePointerMove = (moveEvent: PointerEvent) => {
         if (moveEvent.pointerId === drag.pointerId) {
@@ -227,6 +242,7 @@ export function useManualRitualDrag({
       mode,
       positionsRef,
       projectPointerToDragPlane,
+      releasePointerCapture,
       stageRef,
     ],
   );
